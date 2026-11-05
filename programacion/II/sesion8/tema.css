@@ -179,3 +179,5 @@ pre.codigo.con-foco .linea.foco { background: var(--tinte); opacity: 1; }
 .suave { color: var(--suave); }
 .extra { position: absolute; left: var(--x0); top: 830px; width: 1500px; font-size: 34px; line-height: 1.35; }
 .extra .mono { color: var(--acento); font-weight: 700; }
+
+.sello { position: absolute; right: 150px; top: 50%; translate: 0 -50%; width: 340px; height: auto; }
