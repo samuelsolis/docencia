@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Programación · Sesión 8 · Vectores</title>
+  <link rel="stylesheet" href="tema.css">
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+<div id="marco">
+<div id="escenario">
+
+<!-- 1 · Portada -->
+<section class="escena" data-id="portada" data-titulo="Portada">
+  <div class="portada">
+    <h1>Vectores</h1>
+    <div class="regla"></div>
+    <p>Programación · Sesión 8</p>
+    <p>Ingeniería Informática · Escuela Politécnica · Universidad de Extremadura</p>
+  </div>
+  <aside class="nota" data-beat="1">La sesión 7 era trabajo en casa, así que empezamos repasando lo básico de vectores, en C/C++, que es el lenguaje que usamos. Unos 10-15 minutos; luego vemos la práctica 8.</aside>
+</section>
+
+<!-- 2 · Qué es un vector -->
+<section class="escena" data-id="concepto" data-titulo="Qué es un vector">
+  <div class="pila" style="height:auto">
+    <h2 class="titular" data-out="2">Una variable simple guarda un valor</h2>
+    <h2 class="titular" data-in="2" data-out="3">¿Y si necesitamos 10 valores?</h2>
+    <div data-in="3" data-out="6">
+      <h2 class="titular">Un vector: elementos agrupados</h2>
+      <p class="sub">Una estructura de datos · todos del mismo tipo · un solo nombre</p>
+    </div>
+    <h2 class="titular" data-in="6">Las posiciones empiezan en 0</h2>
+  </div>
+
+  <div class="vec" id="vec-concepto" data-nombre="v"
+       data-on="1-1:sola 2-2:suelta 1-2:sin-nombre 5:con-indices 6:extremos"></div>
+
+  <p class="cod-suelto" data-out="2"><b>int</b> x = 5;</p>
+  <p class="cod-suelto" data-in="2" data-out="3"><b>int</b> x0, x1, x2, x3, x4, x5, x6, x7, x8, x9;</p>
+
+  <div class="fantasma" data-in="6">✕</div>
+  <p class="bajo" style="--i:0" data-in="6">primera</p>
+  <p class="bajo" style="--i:9" data-in="6">última</p>
+  <p class="bajo mal" style="--i:10" data-in="6"><span class="mono">v[10]</span>no existe</p>
+
+  <aside class="nota" data-beat="1">Lo que ya conocen: una variable de tipo simple es una caja con un valor.</aside>
+  <aside class="nota" data-beat="2">Si necesitamos las notas de 10 estudiantes: ¿10 variables sueltas? Con 1000 sería inviable, y no podríamos recorrerlas con un bucle.</aside>
+  <aside class="nota" data-beat="3">Las agrupamos. Un vector es una estructura de datos que agrupa una colección de elementos, todos del mismo tipo, bajo un único nombre.</aside>
+  <aside class="nota" data-beat="4">Este es el vector de ejemplo del guion: v, 10 elementos de tipo int. Cada caja guarda un int.</aside>
+  <aside class="nota" data-beat="5">Para acceder a un elemento indicamos su posición: v[0], v[1], v[2]…</aside>
+  <aside class="nota" data-beat="6">El primer elemento siempre ocupa la posición 0. Con 10 elementos, el último es v[9]. v[10] no existe: es el error típico, y normalmente el compilador no avisa.</aside>
+</section>
+
+<!-- 3 · Definición -->
+<section class="escena" data-id="definicion" data-titulo="Cómo se define">
+  <h2 class="titular">Cómo se define en C/C++</h2>
+
+  <div class="defs">
+    <div style="height:34px"></div>
+    <div><span class="c-pal">const int</span> MAX = 10;</div>
+    <div class="anotado" data-in="2">
+      <span class="seg"><span class="c-pal">typedef</span></span>
+      <span class="seg"><span class="c-pal">int</span><i>tipo de<br>cada celda</i></span>
+      <span class="seg"><span>TipoVector</span><i>nombre del<br>nuevo tipo</i></span>
+      <span class="seg"><span>[MAX];</span><i>tamaño</i></span>
+    </div>
+    <div data-in="4">TipoVector v, w, z;</div>
+  </div>
+
+  <p class="aparte" data-in="3" data-out="4">Define un tipo, no una variable<span>Es un molde: aún no existe ningún vector</span></p>
+
+  <p class="rotulo-molde" data-in="3" data-out="4">TipoVector</p>
+  <div class="vec" id="vec-def" data-nombre="v" data-on="1-2:con-indices 3-3:molde 3-3:sin-nombre"></div>
+  <div class="vec sale" id="vec-def-w" data-nombre="w" style="--y:640px; --desde:-140px" data-on="4:fuera"></div>
+  <div class="vec sale" id="vec-def-z" data-nombre="z" style="--y:780px; --desde:-280px" data-on="4:fuera"></div>
+
+  <div class="llave" data-out="3">MAX = 10 celdas</div>
+
+  <aside class="nota" data-beat="1">El tamaño va en una constante. Si mañana son 5 estudiantes, se cambia en un solo sitio. Así está en lib_vector.h.</aside>
+  <aside class="nota" data-beat="2">typedef define un tipo nuevo. Se lee: TipoVector es un vector de MAX celdas de tipo int.</aside>
+  <aside class="nota" data-beat="3">Importante: esto no crea ninguna variable. Es el molde; todavía no hay ningún vector.</aside>
+  <aside class="nota" data-beat="4">Con el molde definimos las variables que queramos, y también parámetros. Son tres vectores distintos con la misma estructura. Recién definidos no sabemos qué contienen: por eso las interrogaciones.</aside>
+</section>
+
+<!-- 4 · Acceso -->
+<section class="escena" data-id="acceso" data-titulo="Acceder y modificar">
+  <h2 class="titular">Cada celda es una variable de tipo int</h2>
+
+  <div class="panel cod4">
+<pre class="codigo" data-foco="1-1:1 2-2:2 3-3:3 4-4:4 5-5:5">
+v[0] = 7;
+cin >> v[3];
+cout &lt;&lt; v[7] &lt;&lt; endl;
+if ( v[0] == v[9] && v[1] &lt; 100 ) ...
+i = 4;  cout &lt;&lt; v[i] &lt;&lt; endl;
+</pre>
+  </div>
+
+  <div class="consola">
+    <h3>Consola</h3>
+    <div class="ent" data-in="2">12</div>
+    <div data-in="3">50</div>
+    <div data-in="5">42</div>
+  </div>
+
+  <div class="vec" id="vec-acceso" data-nombre="v" data-on="1:con-indices"></div>
+
+  <div class="evalua" data-in="4" data-out="5">
+    7 == 75 &nbsp;&amp;&amp;&nbsp; 6 &lt; 100 &nbsp;→&nbsp; false &amp;&amp; true &nbsp;→&nbsp; <b>false</b>
+  </div>
+  <div class="puntero" style="--i:4; top:700px" data-in="5">i = 4</div>
+
+  <aside class="nota" data-beat="1">Con cada celda podemos hacer lo mismo que con un int. Asignar: v[0] pasa de 5 a 7.</aside>
+  <aside class="nota" data-beat="2">Leer de teclado: el usuario escribe 12 y se guarda en v[3].</aside>
+  <aside class="nota" data-beat="3">Escribir por pantalla: sale el valor de v[7], un 50.</aside>
+  <aside class="nota" data-beat="4">Usar celdas en una condición: la primera parte es falsa, así que el if no se cumple.</aside>
+  <aside class="nota" data-beat="5">Y lo más importante: el índice puede ser una variable. v[i] con i = 4 es v[4]. Eso es lo que nos permite recorrer un vector con un bucle.</aside>
+</section>
+
+<!-- 5 · Lo que no se puede -->
+<section class="escena" data-id="prohibido" data-titulo="Lo que no se puede hacer">
+  <div class="pila" style="height:auto">
+    <h2 class="titular" data-out="3">¿Y con el vector entero?</h2>
+    <h2 class="titular" data-in="3">El vector entero no se opera como un int</h2>
+  </div>
+
+  <div class="comp" data-out="3">
+    <span class="mono">v = w;</span><span class="no">✕</span><span class="err">error: invalid array assignment</span>
+    <span class="mono" data-in="2">x = y;</span><span class="si" data-in="2">✓</span><span data-in="2">dato simple: un solo valor</span>
+    <span class="fin" data-in="2">v y w son estructuras: 10 valores cada una</span>
+  </div>
+
+  <div class="vec" id="vec-p-v" data-nombre="v" style="--y:520px" data-out="3"></div>
+  <div class="vec" id="vec-p-w" data-nombre="w" style="--y:670px" data-out="3"></div>
+
+  <table class="tabla" data-in="3">
+    <tr><th>Instrucción</th><th>Qué ocurre</th><th data-in="4">Lo que hay que usar</th></tr>
+    <tr><td>v = w;</td><td class="no">No compila</td><td data-in="4">copiar(w, v);</td></tr>
+    <tr><td>v = 5;</td><td class="no">No compila</td><td data-in="4">rellenar(v, 5);<span class="etiqueta">práctica 8</span></td></tr>
+    <tr><td>cin >> v;</td><td class="no">No compila</td><td data-in="4">iniciarTeclado(v);</td></tr>
+    <tr><td>cout &lt;&lt; v;</td><td><span class="aviso">Compila, pero imprime una dirección</span><small>0x7fffddbc1190</small></td><td data-in="4">mostrar(v);</td></tr>
+    <tr><td>if ( v == w )</td><td><span class="aviso">Compila, pero compara direcciones</span><small>distintos, aunque el contenido sea igual</small></td><td data-in="4">sonIguales(v, w)</td></tr>
+  </table>
+
+  <aside class="nota" data-beat="1">Tentación: copiar un vector en otro con una asignación. No compila; este es el mensaje real de g++.</aside>
+  <aside class="nota" data-beat="2">Con un int funciona porque es un dato simple. Un vector es una estructura: no hay asignación del vector completo.</aside>
+  <aside class="nota" data-beat="3">El guion dice que ninguna es correcta, y es así. Pero hay un matiz: las dos últimas compilan, y no hacen lo que parece. Comprobado con g++ 9.4 y las opciones por defecto, sin ningún aviso: cout imprime la dirección de memoria, y v == w dio «distintos» con dos vectores de idéntico contenido. Es peor que un error de compilación, porque no os enteráis.</aside>
+  <aside class="nota" data-beat="4">La solución: operar celda a celda, dentro de módulos que se comportan como esas operaciones. Ya los tenéis en lib_vector. Ojo con el orden en copiar: copia el primero en el segundo, así que v = w sería copiar(w, v). rellenar es una de las operaciones de hoy.</aside>
+</section>
+
+<!-- 6 · iniciarAleatorio -->
+<section class="escena" data-id="aleatorio" data-titulo="Inicializar: iniciarAleatorio">
+  <h2 class="titular">Inicializar: recorrer con un for</h2>
+
+  <div class="panel cod6" style="top:150px">
+<pre class="codigo" id="cod-aleatorio">
+void iniciarAleatorio ( TipoVector &v, int maxValor ) {
+    int i; // índice de 0 a MAX-1
+    for ( i = 0; i &lt; MAX; i++ ) {
+        v[i] = rand() % ( maxValor + 1 ); // valores en [0, maxValor]
+    }
+}
+</pre>
+  </div>
+
+  <div class="vec" id="vec-aleatorio" data-nombre="v" style="--y:520px" data-on="1:con-indices"></div>
+  <div class="puntero" id="ptr-aleatorio" style="top:705px" data-in="2">i</div>
+  <div class="traza" id="traza-aleatorio" style="top:790px" data-in="2"></div>
+  <div class="llamada" style="top:880px">iniciarAleatorio(v, 9);</div>
+  <p class="ilustrativo" data-in="2">Valores de ejemplo</p>
+
+  <aside class="nota" data-beat="1">Este módulo ya lo tenéis hecho en lib_vector.cpp. Es el esquema de casi todo lo de hoy: un for con i desde 0 hasta MAX-1, y en el cuerpo se trabaja con v[i]. El parámetro va por referencia, con &, porque el módulo modifica el vector.</aside>
+  <aside class="nota" data-beat="2">Animación: i recorre las posiciones y cada celda recibe un valor en [0, 9], que es lo que da rand() % 10. Fijaos en el final: cuando i llega a 10, i &lt; MAX es falso y el bucle acaba, sin tocar v[10]. Se usa sobre todo para agilizar las pruebas.</aside>
+</section>
+
+<!-- 7 · sumarVectores -->
+<section class="escena" data-id="suma" data-titulo="Sumar dos vectores">
+  <h2 class="titular">Sumar dos vectores: celda a celda</h2>
+
+  <div class="panel cod7">
+<pre class="codigo" id="cod-suma" style="font-size:29px">
+void sumarVectores ( TipoVector v, TipoVector w, TipoVector &suma ) {
+    int i; // índice de 0 a MAX-1
+    for ( i = 0; i &lt; MAX; i++ ) {
+        suma[i] = v[i] + w[i];
+    }
+}
+</pre>
+  </div>
+
+  <div class="vec compacta" id="vec-s-v" data-nombre="v" style="--y:440px"></div>
+  <div class="vec compacta" id="vec-s-w" data-nombre="w" style="--y:562px"></div>
+  <div class="separa"></div>
+  <div class="vec compacta con-indices" id="vec-s-suma" data-nombre="suma" style="--y:702px"></div>
+  <div class="columna-i" id="col-suma" data-in="2" data-out="3"><span>i</span></div>
+
+  <p class="cierre" data-in="3">Un solo índice i recorre los tres vectores</p>
+  <p class="ilustrativo">Valores de ejemplo</p>
+
+  <aside class="nota" data-beat="1">v es el vector que acabamos de iniciar; w, el de antes. suma aún no tiene valores. También está hecho en lib_vector.cpp. Solo suma lleva &, porque es el único que se modifica.</aside>
+  <aside class="nota" data-beat="2">Animación: en cada vuelta se suman v[i] y w[i], y el resultado va a suma[i]. Las celdas de la misma posición se tratan juntas.</aside>
+  <aside class="nota" data-beat="3">Idea para quedarse: con vectores del mismo tamaño, un único índice sirve para todos. Esto os sirve hoy para productoEscalar y dueloDeVectores. Y con esto pasamos a la práctica 8.</aside>
+</section>
+
+<!-- 8 · Plan de hoy -->
+<section class="escena" data-id="plan" data-titulo="¿Qué vamos a hacer hoy?">
+  <h2 class="titular grande">¿Qué vamos a hacer hoy?</h2>
+  <div class="partes">
+    <div class="parte" data-in="2">
+      <h3>Parte 1</h3>
+      <p>Crear más funciones dentro de <span class="mono">lib_vector</span></p>
+    </div>
+    <div class="parte" data-in="3">
+      <h3>Parte 2</h3>
+      <p>Implementar un pequeño programa que use esos módulos</p>
+    </div>
+  </div>
+  <aside class="nota" data-beat="1">Pasamos a la práctica 8. Quien no hiciera la sesión 7, que la haga y, en cuanto acabe, se ponga con esta. De todas formas, el proyecto de hoy, vectorDeEnterosAmpl.zip, ya trae esas funciones hechas.</aside>
+  <aside class="nota" data-beat="2">Parte 1: el ejercicio 1. Ampliar la librería con operaciones nuevas. Ahora lo hacéis todo vosotros: cabecera, implementación y pruebas.</aside>
+  <aside class="nota" data-beat="3">Parte 2: el ejercicio 2. Un programa en el main que use la librería. Cuando queden unos 25 minutos, pasad a la parte 2 aunque no hayáis acabado la 1, y terminad el resto en casa.</aside>
+</section>
+
+<!-- 9 · Parte 1 -->
+<section class="escena" data-id="parte1" data-titulo="Parte 1: más funciones">
+  <h2 class="titular">Parte 1 · Más funciones en lib_vector</h2>
+
+  <div class="ops" data-out="2">
+    <span>rellenar</span><span>multiplicarPorEscalar</span><span>sustituir</span>
+    <span>buscar</span><span>contarVeces</span><span>contarPares</span>
+    <span>productoEscalar</span><span>posMinimo</span><span>invertir</span>
+    <span>esSimetrico</span><span>estaOrdenado</span><span>contarDiferentes</span>
+    <span>mezclar</span><span>dueloDeVectores</span>
+  </div>
+
+  <ol class="pasos">
+    <li data-in="2" data-on="2-2:activo"><b>Cabecera con PRE, POST y complejidad</b><span class="mono">lib_vector.h</span></li>
+    <li data-in="3" data-on="3-3:activo"><b>Módulo e implementación</b><span class="mono">lib_vector.cpp</span></li>
+    <li data-in="4" data-on="4-4:activo"><b>Cabecera del test, con las pruebas a realizar</b><span class="mono">lib_test_vector.h</span></li>
+    <li data-in="5" data-on="5-5:activo"><b>Implementar las pruebas</b><span class="mono">lib_test_vector.cpp</span></li>
+    <li data-in="6" data-on="6-6:activo"><b>Añadir la prueba a todasLasPruebas</b><span class="mono">lib_test_vector.cpp</span></li>
+    <li data-in="7" data-on="7-7:activo"><b>Verificar que pasan las pruebas</b><span class="mono">ejecutar el proyecto</span></li>
+  </ol>
+
+  <div class="ejemplo pila">
+    <div class="panel" data-in="2" data-out="3">
+      <p class="fichero">lib_vector.h</p>
+<pre class="codigo">
+// PRE: Los vectores v y w han sido iniciados
+//      correctamente. El vector suma puede
+//      estar iniciado o no
+// POST: El vector suma contiene la suma de
+//       los dos vectores v y w
+// COMPLEJIDAD: O(n)
+
+void sumarVectores ( TipoVector v, TipoVector w,
+                     TipoVector &suma );
+</pre>
+    </div>
+    <div class="panel" data-in="3" data-out="4">
+      <p class="fichero">lib_vector.cpp</p>
+<pre class="codigo">
+void sumarVectores ( TipoVector v, TipoVector w,
+                     TipoVector &suma ) {
+    int i; // índice de 0 a MAX-1
+    for ( i = 0; i &lt; MAX; i++ ) {
+        suma[i] = v[i] + w[i];
+    }
+}
+</pre>
+    </div>
+    <div class="panel" data-in="4" data-out="5">
+      <p class="fichero">lib_test_vector.h</p>
+<pre class="codigo">
+// Prueba supervisada
+// Se rellenan dos vectores v y w con valores
+// aleatorios entre 0 y 10, se suman, y se
+// muestran los tres vectores para comprobar
+// que el tercero es suma de los otros dos
+void pruebaSumarVectores ( );
+</pre>
+      <p class="aviso-pasos">Al menos 3 pruebas por operación</p>
+    </div>
+    <div class="panel" data-in="5" data-out="6">
+      <p class="fichero">lib_test_vector.cpp</p>
+<pre class="codigo">
+void pruebaSumarVectores ( ) {
+    TipoVector v, w, suma;
+    ...
+    iniciarAleatorio ( v, 10 );
+    cout &lt;&lt; "Vector v = \t";
+    mostrar ( v );
+    iniciarAleatorio ( w, 10 );
+    cout &lt;&lt; "Vector w = \t";
+    mostrar ( w );
+    sumarVectores ( v, w, suma );
+    cout &lt;&lt; "v + w = \t";
+    mostrar ( suma );
+    ...
+}
+</pre>
+    </div>
+    <div class="panel" data-in="6" data-out="7">
+      <p class="fichero">lib_test_vector.cpp</p>
+<pre class="codigo" data-foco="6:5">
+void todasLasPruebas ( ) {
+    pruebaIniciarTeclado();
+    pruebaIniciarAleatorio();
+    pruebaCopiar ( );
+    pruebaSumarVectores ( );
+    pruebaSonIguales ( );
+    ...
+}
+</pre>
+    </div>
+    <div class="consola salida" data-in="7">
+      <h3>Consola · salida real, abreviada</h3>
+<div class="txt">sumarVectores: inicio del módulo de pruebas
+Prueba supervisada
+Vector v = {6, 5, 5, 0, 2, 6, 1, 5, 9, 0}
+Vector w = {10, 8, 3, 1, 10, 0, 0, 5, 2, 4}
+v + w =    {16, 13, 8, 1, 12, 6, 1, 10, 11, 4}
+sumarVectores: fin del módulo de pruebas</div>
+    </div>
+  </div>
+
+  <aside class="nota" data-beat="1">Estas son las 14 operaciones del guion. No hace falta acabarlas todas hoy. Las especificaciones están en el guion; empezad por las sencillas.</aside>
+  <aside class="nota" data-beat="2">Para cada función, siempre los mismos pasos. Lo vemos con sumarVectores, que ya está en el proyecto: podéis abrirla y fijaros. Paso 1: la cabecera en el .h, con precondición, postcondición y complejidad.</aside>
+  <aside class="nota" data-beat="3">Paso 2: el módulo en el .cpp, con su implementación. Recordad indicar el rol de las variables, como ese comentario de la i.</aside>
+  <aside class="nota" data-beat="4">Paso 3: la cabecera de la prueba en lib_test_vector.h, describiendo qué se va a probar. Es donde se diseña el juego de pruebas: al menos 3 pruebas por operación. Pensad en los casos que pueden fallar: primera y última posición, valor que no está, valores repetidos.</aside>
+  <aside class="nota" data-beat="5">Paso 4: implementar las pruebas. La mayoría pueden ser supervisadas: se inicia el vector, se muestra, se ejecuta la función y se muestra el resultado. También podéis poner valores directamente en el vector cuando la operación lo pida.</aside>
+  <aside class="nota" data-beat="6">Paso 5: añadir la llamada en todasLasPruebas. Si se olvida, la prueba existe pero nunca se ejecuta.</aside>
+  <aside class="nota" data-beat="7">Paso 6: ejecutar el proyecto y comprobar el resultado. Esta es la salida real de esta prueba; en una supervisada, quien comprueba sois vosotros. Si se puede, enseñar aquí los pasos sobre el proyecto en Eclipse.</aside>
+</section>
+
+<!-- 10 · Parte 2 -->
+<section class="escena" data-id="parte2" data-titulo="Parte 2: un programa">
+  <h2 class="titular">Parte 2 · Un programa que use lib_vector</h2>
+
+  <div class="panel cod10">
+    <p class="fichero">main · vectorDeEnteros.cpp</p>
+<pre class="codigo">
+TipoVector notas;
+iniciarAleatorio ( notas, 10 );
+</pre>
+  </div>
+
+  <div class="vec notas" id="vec-notas" data-nombre="notas" style="--y:380px"></div>
+  <p class="ilustrativo">Valores de ejemplo</p>
+
+  <ul class="pide" data-in="2">
+    <li>Mostrar el vector</li>
+    <li>Nota mínima, máxima y media</li>
+    <li>Número de suspensos <span class="suave">(nota &lt; 5)</span></li>
+    <li>Número de aprobados <span class="suave">(nota ≥ 5)</span></li>
+    <li data-on="3:nueva">Nota media de los suspensos</li>
+    <li data-on="3:nueva">Nota media de los aprobados</li>
+  </ul>
+
+  <p class="extra" data-in="3">Si falta algo, se crea en <span class="mono">lib_vector</span>, con los mismos 6 pasos: <span class="mono">mediaSuspensos</span>, <span class="mono">mediaAprobados</span></p>
+
+  <aside class="nota" data-beat="1">El programa va en el main de vectorDeEnteros.cpp. El vector representa las notas de 10 estudiantes. Cuando las pruebas pasen, podéis comentar la llamada a todasLasPruebas en el main.</aside>
+  <aside class="nota" data-beat="2">Esto es lo que debe mostrar, según las especificaciones del guion, usando los módulos de la librería. Casi todo está ya hecho en la sesión anterior.</aside>
+  <aside class="nota" data-beat="3">Las dos medias no están en la librería: podéis crear módulos nuevos, con los mismos pasos que en la parte 1. Al final el guion plantea dos preguntas: qué cambia si son 5 estudiantes y qué cambia si las notas son números reales. Ahí se ve la utilidad de MAX y del typedef. Y ahora, a trabajar.</aside>
+</section>
+
+  <div id="progreso"></div>
+</div>
+</div>
+
+<div id="general"></div>
+<div id="apagon"></div>
+<div id="ayuda">→ / clic: siguiente · ← : anterior · O: escenas · P: presentador · F: pantalla completa · B: negro</div>
+
+<script src="motor.js"></script>
+<script src="escenas.js"></script>
+</body>
+</html>

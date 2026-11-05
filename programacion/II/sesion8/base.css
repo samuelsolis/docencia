@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Mecánica de la presentación: escenario, beats y capas del operador.
+   Aquí no hay estética: eso va en tema.css. Normalmente este fichero no se toca.
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+h1, h2, h3, p { margin: 0; font-weight: inherit; }
+
+#marco { position: fixed; inset: 0; display: grid; place-items: center; }
+#escenario {
+  position: relative; width: 1920px; height: 1080px; flex: none;
+  overflow: hidden; transform-origin: center center; cursor: default;
+  background: var(--fondo); color: var(--texto); font-family: var(--letra);
+}
+
+.escena {
+  position: absolute; inset: 0; padding: var(--margen);
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--t) ease, visibility 0s linear var(--t);
+}
+.escena[data-fuera] { display: none; }
+.escena.activa { opacity: 1; visibility: visible; transition: opacity var(--t) ease; }
+
+[data-in], [data-out] { transition: opacity var(--t) var(--curva), translate var(--t) var(--curva), scale var(--t) var(--curva); }
+.sin-transicion * { transition: none !important; }
+.oculto { opacity: 0 !important; translate: 0 16px; pointer-events: none; }
+svg .oculto { translate: none; }
+.nota { display: none; }
+.sin-movimiento *, .sin-movimiento *::before, .sin-movimiento *::after { transition: none !important; animation: none !important; }
+
+/* maquetación: piezas apiladas en el mismo sitio, columnas y filas */
+.pila { display: grid; width: 100%; height: 100%; }
+.pila > * { grid-area: 1 / 1; min-width: 0; min-height: 0; }
+.columna { display: flex; flex-direction: column; gap: 26px; }
+.fila { display: flex; align-items: center; gap: 36px; }
+.dos { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; height: 100%; }
+.centro { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 34px; height: 100%; }
+svg { display: block; max-width: 100%; height: auto; }
+
+/* código con líneas resaltadas por beat (data-foco) */
+pre.codigo { margin: 0; white-space: pre; text-align: left; }
+pre.codigo .linea { display: block; transition: opacity .3s ease, background .3s ease; }
+pre.codigo.con-foco .linea { opacity: .25; }
+pre.codigo.con-foco .linea.foco { opacity: 1; }
+
+/* capas del operador */
+#progreso { position: absolute; left: 0; bottom: 0; height: 6px; background: var(--acento); transition: width .3s ease; }
+#apagon { position: fixed; inset: 0; background: #000; z-index: 50; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+#apagon.activo { opacity: 1; }
+#general { position: fixed; inset: 0; z-index: 40; background: rgba(15, 18, 22, .97); color: #fff; font-family: system-ui, sans-serif; padding: 50px 70px; overflow: auto; display: none; }
+#general.activo { display: block; }
+#general h2 { font-size: 20px; margin-bottom: 26px; }
+#general ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+#general li { background: #2a2f36; padding: 18px 22px; cursor: pointer; }
+#general li.actual, #general li:hover { background: #454c56; }
+#general li b { display: block; font-size: 22px; margin-bottom: 4px; }
+#general li span { font-size: 15px; opacity: .7; }
+#ayuda { position: fixed; top: 14px; left: 50%; translate: -50% 0; z-index: 30; font: 14px system-ui, sans-serif; color: #000; background: #fff; padding: 6px 14px; opacity: 0; transition: opacity .4s ease; pointer-events: none; }
+#ayuda.visible { opacity: 1; }

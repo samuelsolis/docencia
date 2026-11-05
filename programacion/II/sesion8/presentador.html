@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Presentador</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; height: 100vh; overflow: hidden;
+      background: #1f2328; color: #111;
+      font-family: system-ui, "DejaVu Sans", sans-serif;
+      display: grid; grid-template-columns: 1.35fr 1fr; grid-template-rows: auto 1fr auto;
+      gap: 12px; padding: 12px;
+    }
+    .ventana { background: #fff; border-radius: 6px; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+    .barra { background: #e7e9ec; color: #333; font-weight: 600; font-size: 14px; padding: 5px 10px; }
+    .cuerpo { padding: 12px 14px; flex: 1; min-height: 0; overflow: auto; }
+    .marco { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; overflow: hidden; }
+    .marco iframe { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; border: 0; transform-origin: 0 0; pointer-events: none; }
+    #cabecera { grid-column: 1 / -1; display: flex; gap: 12px; align-items: stretch; }
+    #cabecera .ventana { flex: 1; }
+    #posicion { font-size: 22px; font-weight: 700; }
+    #reloj { font-family: ui-monospace, "DejaVu Sans Mono", monospace; font-size: 34px; font-weight: 700; }
+    #izquierda, #derecha { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+    #nota { font-size: 26px; line-height: 1.45; background: #fffbe6; }
+    #nota-siguiente { font-size: 18px; line-height: 1.4; color: #333; }
+    #pie { grid-column: 1 / -1; display: flex; gap: 10px; }
+    button { font: inherit; font-size: 17px; padding: 8px 20px; background: #e7e9ec; border: 0; border-radius: 4px; cursor: pointer; }
+    .aviso { color: #fff; font-size: 14px; align-self: center; margin-left: auto; }
+  </style>
+</head>
+<body>
+  <div id="cabecera">
+    <div class="ventana"><div class="barra">Dónde estamos</div><div class="cuerpo" style="display: flex; align-items: center; gap: 16px;">
+      <div id="posicion" style="flex: 1;">Buscando la presentación…</div>
+      <button id="b-abrir">Abrir la presentación</button>
+    </div></div>
+    <div class="ventana" style="flex: 0 0 300px;"><div class="barra">Cronómetro</div><div class="cuerpo"><span id="reloj">00:00</span></div></div>
+  </div>
+
+  <div id="izquierda">
+    <div class="ventana"><div class="barra">Ahora</div><div class="cuerpo" style="padding: 6px;"><div class="marco"><iframe id="actual" title="Beat actual"></iframe></div></div></div>
+    <div class="ventana" style="flex: 1;"><div class="barra">Qué decir</div><div class="cuerpo" id="nota"></div></div>
+  </div>
+
+  <div id="derecha">
+    <div class="ventana"><div class="barra">Siguiente</div><div class="cuerpo" style="padding: 6px;"><div class="marco"><iframe id="siguiente" title="Beat siguiente"></iframe></div></div></div>
+    <div class="ventana" style="flex: 1;"><div class="barra">Nota del siguiente</div><div class="cuerpo" id="nota-siguiente"></div></div>
+  </div>
+
+  <div id="pie">
+    <button id="b-anterior">← Anterior</button>
+    <button id="b-siguiente">Siguiente →</button>
+    <button id="b-reloj">Reiniciar cronómetro</button>
+    <span class="aviso">→ / ← o el mando también funcionan en esta ventana</span>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+  let canal = null;
+  try { canal = new BroadcastChannel("beats:" + location.pathname.replace(/[^/]*$/, "")); } catch (e) { canal = null; }
+
+  const $ = (id) => document.getElementById(id);
+  const base = location.href.replace(/presentador\.html.*$/, "index.html").replace(/#.*$/, "");
+  let inicio = Date.now();
+  let conectado = false;
+  let principal = null;   // la ventana de la presentación, si la ha abierto este presentador
+
+  // Las órdenes salen por los tres caminos posibles: canal, ventana que nos abrió y ventana que abrimos.
+  function ordenar(m) {
+    const msg = { tipo: "orden", id: `${Date.now()}-${Math.random()}`, ...m };
+    try { canal?.postMessage(msg); } catch (e) { /* nada */ }
+    try { window.opener?.postMessage(msg, "*"); } catch (e) { /* nada */ }
+    try { if (principal && !principal.closed) principal.postMessage(msg, "*"); } catch (e) { /* nada */ }
+  }
+
+  function abrirPrincipal() {
+    principal = window.open(base + (location.hash || "#1.1"), "presentacion-principal");
+    setTimeout(() => ordenar({ orden: "estado" }), 1200);
+  }
+
+  function escalarMarcos() {
+    document.querySelectorAll(".marco").forEach((m) => {
+      m.querySelector("iframe").style.transform = `scale(${m.clientWidth / 1920})`;
+    });
+  }
+
+  function ponerMarco(iframe, escena, beat) {
+    const url = `${base}?vista=miniatura#${escena + 1}.${beat}`;
+    if (!iframe.dataset.cargado) { iframe.src = url; iframe.dataset.cargado = "1"; }
+    else iframe.src = url;
+  }
+
+  function recibir(m) {
+    if (!m || m.tipo !== "estado") return;
+    conectado = true;
+    $("b-abrir").style.display = "none";
+    $("posicion").textContent = `${m.escena + 1}/${m.totalEscenas} · ${m.titulo} · beat ${m.beat}/${m.beats}`;
+    $("nota").innerHTML = m.nota || "<i>(sin nota)</i>";
+    $("nota-siguiente").innerHTML = m.notaSiguiente || "<i>(fin)</i>";
+    ponerMarco($("actual"), m.escena, m.beat);
+    if (m.beat < m.beats) ponerMarco($("siguiente"), m.escena, m.beat + 1);
+    else if (m.escena + 1 < m.totalEscenas) ponerMarco($("siguiente"), m.escena + 1, 1);
+  }
+
+  if (canal) canal.onmessage = (ev) => recibir(ev.data);
+  window.addEventListener("message", (ev) => recibir(ev.data));
+
+  document.addEventListener("keydown", (ev) => {
+    if (["ArrowRight", "ArrowDown", "PageDown", " "].includes(ev.key)) { ev.preventDefault(); ordenar({ orden: "siguiente" }); }
+    if (["ArrowLeft", "ArrowUp", "PageUp"].includes(ev.key)) { ev.preventDefault(); ordenar({ orden: "anterior" }); }
+  });
+  $("b-siguiente").onclick = () => ordenar({ orden: "siguiente" });
+  $("b-anterior").onclick = () => ordenar({ orden: "anterior" });
+  $("b-reloj").onclick = () => { inicio = Date.now(); };
+  $("b-abrir").onclick = abrirPrincipal;
+
+  setInterval(() => {
+    const s = Math.floor((Date.now() - inicio) / 1000);
+    $("reloj").textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+  }, 500);
+
+  window.addEventListener("resize", escalarMarcos);
+  escalarMarcos();
+
+  // Mientras no haya presentación conectada, las miniaturas enseñan el principio.
+  ponerMarco($("actual"), 0, 1);
+  ponerMarco($("siguiente"), 0, 2);
+  ordenar({ orden: "estado" });
+  setTimeout(() => {
+    if (!conectado) {
+      $("posicion").innerHTML = "No encuentro la presentación. Pulsa <b>Abrir la presentación</b> " +
+        "(o abre la presentación y pulsa <b>P</b> en ella).";
+    }
+  }, 1500);
+  // reintento periódico por si la presentación se abre después
+  setInterval(() => { if (!conectado) ordenar({ orden: "estado" }); }, 2000);
+})();
+</script>
+</body>
+</html>
