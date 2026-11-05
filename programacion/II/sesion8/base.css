@@ -7,9 +7,9 @@
 html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
 h1, h2, h3, p { margin: 0; font-weight: inherit; }
 
-#marco { position: fixed; inset: 0; display: grid; place-items: center; }
+#marco { position: fixed; inset: 0; overflow: hidden; }
 #escenario {
-  position: relative; width: 1920px; height: 1080px; flex: none;
+  position: absolute; left: 50%; top: 50%; margin: -540px 0 0 -960px; width: 1920px; height: 1080px;
   overflow: hidden; transform-origin: center center; cursor: default;
   background: var(--fondo); color: var(--texto); font-family: var(--letra);
 }
