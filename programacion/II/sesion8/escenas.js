@@ -98,6 +98,14 @@
     todos(ctx.el.querySelector("#vec-p-w"), W);
   });
 
+  /* ---- 6 · memoria -------------------------------------------------------- */
+  Charla.escena("memoria", (ctx) => {
+    const vec = ctx.el.querySelector("#vec-memoria");
+    todos(vec, V_TRAS_ACCESO);
+    celdas(vec).forEach((c, i) => { c.querySelector(".apodo").textContent = `+${i * 4}`; });
+    marca(vec, ...(ctx.beat === 2 ? [5] : []));
+  });
+
   /* ---- 6 · iniciarAleatorio ---------------------------------------------- */
   Charla.escena("aleatorio", async (ctx) => {
     const vec = ctx.el.querySelector("#vec-aleatorio");

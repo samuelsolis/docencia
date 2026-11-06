@@ -181,3 +181,20 @@ pre.codigo.con-foco .linea.foco { background: var(--tinte); opacity: 1; }
 .extra .mono { color: var(--acento); font-weight: 700; }
 
 .sello { position: absolute; right: 150px; top: 50%; translate: 0 -50%; height: 440px; width: auto; }
+
+/* ---- memoria ------------------------------------------------------------- */
+.mem-base { position: absolute; left: var(--x0); top: 165px; width: 1400px; display: flex; justify-content: space-between; font: 400 40px var(--mono); }
+.mem-base b { color: var(--acento); }
+.mem-base span { color: var(--suave); }
+.vec.con-offset .apodo { opacity: 1; font-size: 26px; }
+.salto { position: absolute; left: var(--x0); top: 338px; width: calc(5 * var(--celda)); border-top: 4px solid var(--acento); transition: width .7s var(--curva), opacity var(--t) ease, border-color .3s ease; }
+.salto.lejos { width: calc(10 * var(--celda)); border-top-color: var(--error); }
+.salto::after { content: ""; position: absolute; right: -2px; top: -12px; border-left: 16px solid var(--acento); border-top: 10px solid transparent; border-bottom: 10px solid transparent; transition: border-color .3s ease; }
+.salto.lejos::after { border-left-color: var(--error); }
+.salto span { position: absolute; right: 0; bottom: 8px; font: 700 30px var(--mono); color: var(--acento); white-space: nowrap; }
+.salto .lejos-txt { color: var(--error); }
+.mem-cuenta { position: absolute; left: var(--x0); top: 680px; display: grid; font: 400 44px var(--mono); }
+.mem-cuenta > * { grid-area: 1 / 1; }
+.mem-cuenta b { color: var(--acento); }
+.mem-cuenta b.mal { color: var(--error); }
+.mem-fin { position: absolute; left: var(--x0); top: 790px; font-size: 38px; font-weight: 700; color: var(--error); }

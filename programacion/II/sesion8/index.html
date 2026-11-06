@@ -153,7 +153,34 @@ i = 4;  cout &lt;&lt; v[i] &lt;&lt; endl;
   <aside class="nota" data-beat="4">La solución: operar celda a celda, dentro de módulos que se comportan como esas operaciones. Ya los tenéis en lib_vector. Ojo con el orden en copiar: copia el primero en el segundo, así que v = w sería copiar(w, v). rellenar es una de las operaciones de hoy.</aside>
 </section>
 
-<!-- 6 · iniciarAleatorio -->
+<!-- 6 · Memoria -->
+<section class="escena" data-id="memoria" data-titulo="Un vector en memoria">
+  <h2 class="titular">Por dentro: una dirección y celdas consecutivas</h2>
+
+  <div class="mem-base"><div><b>v</b> → 0x7fffddbc1190</div><span>sizeof(int) = 4 bytes</span></div>
+
+  <div class="salto" data-in="2" data-on="3:lejos">
+    <span data-out="3">+20 bytes</span>
+    <span class="lejos-txt" data-in="3">+40 bytes</span>
+  </div>
+
+  <div class="vec con-offset con-indices" id="vec-memoria" data-nombre="v" style="--y:400px"></div>
+  <div class="fantasma" style="top:400px" data-in="3">?</div>
+  <p class="bajo mal" style="--i:10; top:540px" data-in="3"><span class="mono">v[10]</span>fuera del vector</p>
+
+  <div class="mem-cuenta">
+    <p data-out="2">10 celdas × 4 bytes = 40 bytes seguidos</p>
+    <p data-in="2" data-out="3">v[5] → v + 5 × sizeof(int) → v + <b>20</b></p>
+    <p data-in="3">v[10] → v + 10 × sizeof(int) → v + <b class="mal">40</b></p>
+  </div>
+  <p class="mem-fin" data-in="3">C++ no comprueba los límites: va a esa dirección, haya lo que haya</p>
+
+  <aside class="nota" data-beat="1">Esa dirección es la que nos imprimía cout &lt;&lt; v: un vector es, en el fondo, la dirección de su primera celda. A partir de ahí hay MAX elementos seguidos en memoria, cada uno de sizeof(tipo) bytes. Con int son 4 bytes aquí, así que 40 en total.</aside>
+  <aside class="nota" data-beat="2">Por eso se empieza en 0: el índice es un desplazamiento. v[5] no busca nada: va a la dirección de v y avanza 5 veces el tamaño del tipo, 20 bytes. Es una cuenta, y por eso acceder a cualquier celda cuesta lo mismo.</aside>
+  <aside class="nota" data-beat="3">v[10] hace la misma cuenta y cae 40 bytes después, justo tras la última celda. Nadie lo comprueba. No es un error definido: es comportamiento indefinido. Puede no pasar nada visible y machacar otra variable, abortar, o dar un segmentation fault si cae en memoria no accesible. Probado con g++ en un main con v[10] = 99: el programa siguió y, al terminar, abortó con «stack smashing detected». Que no falle no significa que esté bien. Típico: i &lt;= MAX en el for.</aside>
+</section>
+
+<!-- 7 · iniciarAleatorio -->
 <section class="escena" data-id="aleatorio" data-titulo="Inicializar: iniciarAleatorio">
   <h2 class="titular">Inicializar: recorrer con un for</h2>
 
@@ -178,7 +205,7 @@ void iniciarAleatorio ( TipoVector &v, int maxValor ) {
   <aside class="nota" data-beat="2">Animación: i recorre las posiciones y cada celda recibe un valor en [0, 9], que es lo que da rand() % 10. Fijaos en el final: cuando i llega a 10, i &lt; MAX es falso y el bucle acaba, sin tocar v[10]. Se usa sobre todo para agilizar las pruebas.</aside>
 </section>
 
-<!-- 7 · sumarVectores -->
+<!-- 8 · sumarVectores -->
 <section class="escena" data-id="suma" data-titulo="Sumar dos vectores">
   <h2 class="titular">Sumar dos vectores: celda a celda</h2>
 
@@ -207,7 +234,7 @@ void sumarVectores ( TipoVector v, TipoVector w, TipoVector &suma ) {
   <aside class="nota" data-beat="3">Idea para quedarse: con vectores del mismo tamaño, un único índice sirve para todos. Esto os sirve hoy para productoEscalar y dueloDeVectores. Y con esto pasamos a la práctica 8.</aside>
 </section>
 
-<!-- 8 · Plan de hoy -->
+<!-- 9 · Plan de hoy -->
 <section class="escena" data-id="plan" data-titulo="¿Qué vamos a hacer hoy?">
   <h2 class="titular grande">¿Qué vamos a hacer hoy?</h2>
   <div class="partes">
@@ -225,7 +252,7 @@ void sumarVectores ( TipoVector v, TipoVector w, TipoVector &suma ) {
   <aside class="nota" data-beat="3">Parte 2: el ejercicio 2. Un programa en el main que use la librería. Cuando queden unos 25 minutos, pasad a la parte 2 aunque no hayáis acabado la 1, y terminad el resto en casa.</aside>
 </section>
 
-<!-- 9 · Parte 1 -->
+<!-- 10 · Parte 1 -->
 <section class="escena" data-id="parte1" data-titulo="Parte 1: más funciones">
   <h2 class="titular">Parte 1 · Más funciones en lib_vector</h2>
 
@@ -337,7 +364,7 @@ sumarVectores: fin del módulo de pruebas</div>
   <aside class="nota" data-beat="7">Paso 6: ejecutar el proyecto y comprobar el resultado. Esta es la salida real de esta prueba; en una supervisada, quien comprueba sois vosotros. Si se puede, enseñar aquí los pasos sobre el proyecto en Eclipse.</aside>
 </section>
 
-<!-- 10 · Parte 2 -->
+<!-- 11 · Parte 2 -->
 <section class="escena" data-id="parte2" data-titulo="Parte 2: un programa">
   <h2 class="titular">Parte 2 · Un programa que use lib_vector</h2>
 
