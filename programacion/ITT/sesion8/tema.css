@@ -1,0 +1,206 @@
+/* ==========================================================================
+   Tema Sesión 8: sobrio, de aula. Fondo blanco, un acento verde oscuro y
+   rojo/ámbar solo para lo que falla. Letra grande: se proyecta en laboratorio.
+   ========================================================================== */
+
+:root {
+  --fondo: #ffffff;
+  --texto: #1c2024;
+  --suave: #474d56;
+  --linea: #1c2024;
+  --acento: #0b5d3b;
+  --tinte: #cde5d7;
+  --error: #a32020;
+  --aviso: #8a5a00;
+  --letra: "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  --mono: "Liberation Mono", Consolas, Menlo, "DejaVu Sans Mono", monospace;
+  --margen: 60px 110px 60px;
+  --t: .4s;
+  --curva: cubic-bezier(.2, .7, .2, 1);
+  --celda: 140px;   /* paso entre celdas */
+  --alto: 130px;
+  --x0: 210px;      /* x de la primera celda */
+}
+
+.titular { font-size: 58px; line-height: 1.15; font-weight: 700; }
+.sub { font-size: 34px; line-height: 1.3; color: var(--suave); margin-top: 12px; }
+.ilustrativo { position: absolute; left: 110px; bottom: 26px; font-size: 22px; font-style: italic; color: var(--suave); }
+
+/* portada */
+.portada { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.portada h1 { font-size: 130px; font-weight: 700; line-height: 1.05; }
+.portada .regla { width: 180px; height: 6px; background: var(--acento); margin: 36px 0; }
+.portada p { font-size: 40px; line-height: 1.4; }
+.portada p + p { color: var(--suave); font-size: 32px; }
+
+/* código */
+.panel { border-left: 6px solid var(--acento); background: #eceef0; padding: 14px 26px; }
+pre.codigo { font-family: var(--mono); font-size: 32px; line-height: 1.42; }
+pre.codigo.con-foco .linea { opacity: .5; }
+pre.codigo.con-foco .linea.foco { background: var(--tinte); opacity: 1; }
+.c-com { color: var(--suave); }
+.c-pal { color: var(--acento); font-weight: 700; }
+.mono { font-family: var(--mono); }
+
+/* ---- vector: fila de celdas ---------------------------------------------- */
+.vec { position: absolute; left: 110px; top: var(--y, 500px); display: flex; align-items: center; transition: opacity var(--t) ease, translate .6s var(--curva); }
+.vec-nombre { width: 100px; padding-right: 22px; text-align: right; font: 700 46px var(--mono); color: var(--acento); transition: opacity var(--t) ease; }
+.celdas { display: flex; }
+.celda {
+  position: relative; flex: none; width: calc(var(--celda) + 2px); height: var(--alto); margin-right: -2px;
+  display: grid; place-items: center; border: 2px solid var(--linea); background: #fff;
+  font: 700 48px var(--mono);
+  transition: transform .75s var(--curva), opacity .4s ease, background .25s ease, border-color .25s ease;
+  transition-delay: calc(var(--i) * 18ms), 0s, 0s, 0s;
+}
+.celda.marca { background: var(--tinte); border-color: var(--acento); z-index: 2; outline: 3px solid var(--acento); outline-offset: -3px; }
+.val.vacio { color: #6b7280; font-weight: 400; }
+.val.nuevo { animation: nuevo .45s var(--curva); }
+@keyframes nuevo { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+.idx { position: absolute; top: calc(100% + 8px); left: 0; right: 0; text-align: center; font: 400 30px var(--mono); color: var(--suave); opacity: 0; transition: opacity var(--t) ease, color .25s ease; }
+.apodo { position: absolute; bottom: calc(100% + 6px); left: 0; right: 0; text-align: center; font: 400 30px var(--mono); color: var(--suave); opacity: 0; transition: opacity var(--t) ease; }
+
+.vec.con-indices .idx { opacity: 1; }
+.vec.sin-nombre .vec-nombre { opacity: 0; }
+
+/* antes de agruparse: una sola caja y luego diez sueltas */
+.vec.sola .celda, .vec.suelta .celda { transform: translate(var(--dx), var(--dy)); }
+.vec.sola .celda { opacity: 0; }
+.vec.sola .celda:first-child { opacity: 1; transform: translate(680px, 0); }
+.vec.sola .celda:first-child .apodo, .vec.suelta .apodo { opacity: 1; }
+
+/* extremos del vector */
+.vec.extremos .celda:first-child, .vec.extremos .celda:last-child { background: var(--tinte); border-color: var(--acento); z-index: 2; }
+.vec.extremos .celda:first-child .idx, .vec.extremos .celda:last-child .idx { color: var(--acento); font-weight: 700; }
+.fantasma {
+  position: absolute; left: calc(var(--x0) + 10 * var(--celda)); top: 500px; width: var(--celda); height: var(--alto);
+  display: grid; place-items: center; border: 2px dashed var(--error); color: var(--error); font: 700 56px var(--mono);
+}
+.bajo { position: absolute; top: 690px; width: 240px; margin-left: -50px; left: calc(var(--x0) + var(--i) * var(--celda)); text-align: center; font-size: 30px; line-height: 1.2; color: var(--acento); }
+.bajo.mal { color: var(--error); }
+.bajo.mal .mono { display: block; }
+
+/* molde */
+.vec.molde .celda { border-style: dashed; border-color: var(--suave); }
+.vec.molde .val { opacity: 0; }
+.rotulo-molde { position: absolute; left: var(--x0); top: 452px; font: 700 32px var(--mono); color: var(--suave); }
+.vec.sale { translate: 0 var(--desde, -140px); opacity: 0; }
+.vec.sale.fuera { translate: 0 0; opacity: 1; }
+.llave { position: absolute; left: var(--x0); top: 690px; width: calc(10 * var(--celda)); border-top: 3px solid var(--acento); padding-top: 10px; text-align: center; font: 700 32px var(--mono); color: var(--acento); }
+
+/* línea de código suelta, centrada */
+.cod-suelto { position: absolute; left: 0; right: 0; top: 800px; text-align: center; font: 400 40px var(--mono); }
+.cod-suelto b { color: var(--acento); }
+
+/* definición anotada */
+.defs { position: absolute; left: 110px; top: 150px; font: 400 42px var(--mono); }
+.defs .c-pal { font-weight: 700; }
+.defs > * { margin-bottom: 10px; }
+.anotado { display: flex; align-items: flex-start; gap: 18px; }
+.seg { display: flex; flex-direction: column; align-items: center; }
+.seg i { font: 400 26px/1.15 var(--letra); color: var(--acento); text-align: center; border-top: 3px solid var(--acento); padding-top: 4px; margin-top: 4px; align-self: stretch; }
+.aparte { position: absolute; left: 1120px; top: 216px; width: 690px; font-size: 38px; line-height: 1.25; font-weight: 700; }
+.aparte span { display: block; font-weight: 400; font-size: 30px; color: var(--suave); margin-top: 8px; }
+
+/* acceso */
+.cod4 { position: absolute; left: 110px; top: 165px; width: 1010px; }
+.consola { position: absolute; left: 1160px; top: 165px; width: 650px; height: 257px; background: #1c2024; color: #e9ecef; padding: 14px 26px; font: 400 34px/1.45 var(--mono); }
+.consola h3 { font: 400 22px var(--letra); color: #c4c8ce; margin-bottom: 6px; }
+.consola .ent { color: #8fd3b0; }
+.puntero { position: absolute; top: 686px; width: var(--celda); left: calc(var(--x0) + var(--i, 0) * var(--celda)); text-align: center; font: 700 34px var(--mono); color: var(--acento); transition: left .22s var(--curva), opacity var(--t) ease; }
+.puntero::before { content: "▲"; display: block; font-size: 24px; line-height: 1; }
+.evalua { position: absolute; left: var(--x0); top: 720px; font: 400 42px/1.5 var(--mono); }
+.evalua b { color: var(--error); }
+
+/* v = w */
+.comp { position: absolute; left: 110px; top: 175px; display: grid; grid-template-columns: 240px 70px auto; row-gap: 14px; align-items: baseline; font-size: 34px; }
+.comp .mono { font-size: 46px; }
+.comp .no { color: var(--error); font-weight: 700; font-size: 46px; }
+.comp .si { color: var(--acento); font-weight: 700; font-size: 46px; }
+.comp .err { font-family: var(--mono); color: var(--error); font-size: 34px; }
+.comp .fin { grid-column: 1 / -1; font-weight: 700; margin-top: 8px; }
+
+.tabla { position: absolute; left: 110px; top: 180px; width: 1700px; border-collapse: collapse; font-size: 32px; }
+.tabla th { text-align: left; font-size: 26px; font-weight: 400; color: var(--suave); padding: 0 24px 12px 0; border-bottom: 3px solid var(--linea); }
+.tabla td { padding: 24px 24px 24px 0; border-bottom: 1px solid #8f969f; vertical-align: top; line-height: 1.3; }
+.tabla td:first-child, .tabla td:last-child { font: 700 36px var(--mono); white-space: nowrap; }
+.tabla td:last-child { color: var(--acento); }
+.tabla .no { color: var(--error); font-weight: 700; }
+.tabla .aviso { color: var(--aviso); font-weight: 700; }
+.tabla small { display: block; font: 400 26px var(--mono); color: var(--suave); }
+.tabla .etiqueta { font: 400 24px var(--letra); color: var(--suave); margin-left: 12px; }
+
+/* recorridos */
+.cod6 { position: absolute; left: 110px; top: 150px; width: 1700px; }
+.traza { position: absolute; left: var(--x0); top: 770px; font: 400 40px var(--mono); }
+.traza b { color: var(--acento); }
+.llamada { position: absolute; right: 110px; top: 770px; font: 400 36px var(--mono); color: var(--suave); }
+
+.vec.compacta { --alto: 116px; }
+.vec.compacta .celda { font-size: 44px; }
+.vec.compacta .vec-nombre { font-size: 36px; }
+.cod7 { position: absolute; left: 110px; top: 150px; width: 1700px; }
+.columna-i { position: absolute; top: 432px; height: 462px; width: calc(var(--celda) + 2px); left: calc(var(--x0) + var(--i, 0) * var(--celda)); border: 5px solid var(--acento); z-index: 3; pointer-events: none; transition: left .22s var(--curva), opacity .25s ease; }
+.columna-i span { position: absolute; bottom: -42px; left: 0; right: 0; text-align: center; font: 700 28px var(--mono); color: var(--acento); }
+.separa { position: absolute; left: var(--x0); top: 688px; width: calc(10 * var(--celda)); border-top: 3px solid var(--linea); }
+.ficha { position: absolute; z-index: 4; display: grid; place-items: center; width: var(--celda); height: 116px; font: 700 44px var(--mono); color: var(--acento); }
+.cierre { position: absolute; left: var(--x0); top: 948px; font-size: 38px; font-weight: 700; }
+
+/* ---- práctica 8 ---------------------------------------------------------- */
+.titular.grande { font-size: 84px; margin-top: 190px; }
+.partes { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 90px; }
+.parte { border-top: 6px solid var(--acento); padding-top: 26px; }
+.parte h3 { font-size: 34px; font-weight: 400; color: var(--acento); margin: 0 0 14px; }
+.parte p { font-size: 50px; line-height: 1.2; font-weight: 700; }
+.parte .mono { font-size: 46px; }
+
+.ops { position: absolute; left: 110px; top: 210px; width: 1700px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px 40px; font: 400 40px var(--mono); }
+
+.pasos { position: absolute; left: 110px; top: 170px; width: 700px; margin: 0; padding: 0; list-style: none; counter-reset: paso; }
+.pasos li { counter-increment: paso; position: relative; padding: 13px 14px 13px 76px; min-height: 124px; font-size: 31px; line-height: 1.2; color: var(--suave); border-left: 6px solid transparent; transition: opacity var(--t) var(--curva), translate var(--t) var(--curva), color .25s ease, background .25s ease, border-color .25s ease; }
+.pasos li::before { content: counter(paso); position: absolute; left: 18px; top: 12px; font: 700 44px var(--mono); }
+.pasos li b { display: block; font-weight: 700; }
+.pasos li .mono { display: block; font-size: 26px; margin-top: 4px; }
+.pasos li.activo { color: var(--texto); background: var(--tinte); border-left-color: var(--acento); }
+.pasos li.activo::before, .pasos li.activo .mono { color: var(--acento); }
+
+.ejemplo.pila { position: absolute; left: 850px; top: 170px; width: 960px; height: auto; }
+.ejemplo pre.codigo { font-size: 28px; }
+.fichero { font: 700 26px var(--mono); color: var(--acento); margin-bottom: 10px; }
+.aviso-pasos { font-size: 32px; font-weight: 700; color: var(--acento); margin-top: 18px; }
+.consola.salida { position: static; width: auto; height: auto; font-size: 28px; line-height: 1.6; }
+.consola .txt { white-space: pre; }
+
+.cod10 { position: absolute; left: 110px; top: 165px; width: 1700px; }
+.vec.notas .vec-nombre { font-size: 30px; padding-right: 8px; }
+.pide { position: absolute; left: var(--x0); top: 560px; width: 1500px; margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 16px 60px; font-size: 36px; }
+.pide li { border-left: 6px solid #8f969f; padding: 4px 0 4px 18px; transition: border-color .25s ease, color .25s ease; }
+.pide li.nueva { border-left-color: var(--acento); color: var(--acento); font-weight: 700; }
+.suave { color: var(--suave); }
+.extra { position: absolute; left: var(--x0); top: 830px; width: 1500px; font-size: 34px; line-height: 1.35; }
+.extra .mono { color: var(--acento); font-weight: 700; }
+
+.sello { position: absolute; right: 150px; top: 50%; translate: 0 -50%; height: 440px; width: auto; }
+
+/* ---- memoria ------------------------------------------------------------- */
+.mem-base { position: absolute; left: var(--x0); top: 165px; width: 1400px; display: flex; justify-content: space-between; font: 400 40px var(--mono); }
+.mem-base b { color: var(--acento); }
+.mem-base span { color: var(--suave); }
+.vec.con-offset .apodo { opacity: 1; font-size: 26px; }
+.salto { position: absolute; left: var(--x0); top: 338px; width: calc(5 * var(--celda)); border-top: 4px solid var(--acento); transition: width .7s var(--curva), opacity var(--t) ease, border-color .3s ease; }
+.salto.lejos { width: calc(10 * var(--celda)); border-top-color: var(--error); }
+.salto::after { content: ""; position: absolute; right: -2px; top: -12px; border-left: 16px solid var(--acento); border-top: 10px solid transparent; border-bottom: 10px solid transparent; transition: border-color .3s ease; }
+.salto.lejos::after { border-left-color: var(--error); }
+.salto span { position: absolute; right: 0; bottom: 8px; font: 700 30px var(--mono); color: var(--acento); white-space: nowrap; }
+.salto .lejos-txt { color: var(--error); }
+.mem-cuenta { position: absolute; left: var(--x0); top: 680px; display: grid; font: 400 44px var(--mono); }
+.mem-cuenta > * { grid-area: 1 / 1; }
+.mem-cuenta b { color: var(--acento); }
+.mem-cuenta b.mal { color: var(--error); }
+.mem-fin { position: absolute; left: var(--x0); top: 790px; font-size: 38px; font-weight: 700; color: var(--error); }
+
+/* Teleco · ejercicio 1: módulos ya hechos frente a los que hay que implementar */
+.ops .hecho { color: var(--suave); }
+.ops .hecho::after { content: " ✓"; color: var(--acento); }
+.leyenda-ops { position: absolute; left: 110px; top: 640px; font-size: 32px; color: var(--suave); }
+.leyenda-ops .marca-hecho { color: var(--acento); }
