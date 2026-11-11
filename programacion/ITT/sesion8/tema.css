@@ -204,3 +204,4 @@ pre.codigo.con-foco .linea.foco { background: var(--tinte); opacity: 1; }
 .ops .hecho::after { content: " ✓"; color: var(--acento); }
 .leyenda-ops { position: absolute; left: 110px; top: 640px; font-size: 32px; color: var(--suave); }
 .leyenda-ops .marca-hecho { color: var(--acento); }
+#col-copiar span { top: -46px; bottom: auto; }

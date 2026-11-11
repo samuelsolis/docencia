@@ -126,7 +126,62 @@
     fin();
   });
 
-  /* ---- 10 · ejercicio 2 ------------------------------------------------------- */
+  /* ---- 8 · copiar --------------------------------------------------------- */
+  const Y_CV = 520, Y_CW = 660;
+  function ficha(ctx, texto, i, y) {
+    const f = document.createElement("div");
+    f.className = "ficha";
+    f.textContent = texto;
+    f.style.left = `${X0 + CELDA * i}px`;
+    f.style.top = `${y}px`;
+    ctx.el.appendChild(f);
+    return f;
+  }
+
+  Charla.escena("copiar", async (ctx) => {
+    const v = ctx.el.querySelector("#vec-c-v");
+    const w = ctx.el.querySelector("#vec-c-w");
+    const pre = ctx.el.querySelector("#cod-copiar");
+    const col = ctx.el.querySelector("#col-copiar");
+    const traza = ctx.el.querySelector("#traza-copiar");
+    ctx.el.querySelectorAll(".ficha").forEach((f) => f.remove());
+    todos(v, V_ALEATORIO);
+    foco(pre);
+    col.style.setProperty("--i", 0);
+    if (ctx.beat === 1) { todos(w, interrogantes()); return; }
+    todos(w, V_ALEATORIO);
+    if (ctx.beat !== 2) return;
+    const fin = () => {
+      col.style.setProperty("--i", MAX - 1);
+      traza.innerHTML = "i = 10 → i &lt; MAX es falso → <b>fin del bucle</b>";
+      foco(pre);
+    };
+    if (!ctx.animar) { fin(); return; }
+
+    todos(w, interrogantes());
+    for (let i = 0; i < MAX; i++) {
+      const lento = i < 3;
+      col.style.setProperty("--i", i);
+      foco(pre, 3);
+      traza.innerHTML = `i = ${i}`;
+      await Charla.esperar(lento ? 600 : 180);
+      if (!ctx.vigente()) return;
+      foco(pre, 4);
+      traza.innerHTML = `w[${i}] = v[${i}] → <b>${V_ALEATORIO[i]}</b>`;
+      const f = ficha(ctx, V_ALEATORIO[i], i, Y_CV);
+      await f.animate(
+        [{ transform: "none" }, { transform: `translateY(${Y_CW - Y_CV}px)` }],
+        { duration: lento ? 700 : 260, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" }).finished;
+      f.remove();
+      if (!ctx.vigente()) return;
+      pon(w, i, V_ALEATORIO[i], true);
+      await Charla.esperar(lento ? 700 : 150);
+      if (!ctx.vigente()) return;
+    }
+    fin();
+  });
+
+  /* ---- 11 · ejercicio 2 ------------------------------------------------------- */
   const azarNotas = Charla.azar(26);
   const NOTAS = V_GUION.map(() => Math.floor(azarNotas() * 11)); // como rand() % 11
   Charla.escena("ejercicio2", (ctx) => todos(ctx.el.querySelector("#vec-notas"), NOTAS));

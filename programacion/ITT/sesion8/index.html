@@ -195,7 +195,36 @@ void iniciarAleatorio ( TipoVector &v, int maxValor ) {
   <aside class="nota" data-beat="2">Animación: i recorre las posiciones y cada celda recibe un valor en [0, 9], que es lo que da rand() % 10. Al final, cuando i llega a 10, i &lt; MAX es falso y el bucle acaba, sin tocar v[10]. Se usa sobre todo para agilizar las pruebas.</aside>
 </section>
 
-<!-- 8 · Plan de hoy -->
+<!-- 8 · copiar -->
+<section class="escena" data-id="copiar" data-titulo="Dos vectores: copiar">
+  <h2 class="titular">Dos vectores, un solo índice: copiar</h2>
+
+  <div class="panel cod7">
+<pre class="codigo" id="cod-copiar">
+void copiar ( TipoVector v, TipoVector &w ) {
+    int i; // índice de 0 a MAX-1
+    for ( i = 0; i &lt; MAX; i++ ) {
+        w[i] = v[i];
+    }
+}
+</pre>
+  </div>
+
+  <div class="vec compacta" id="vec-c-v" data-nombre="v" style="--y:520px"></div>
+  <div class="vec compacta con-indices" id="vec-c-w" data-nombre="w" style="--y:660px"></div>
+  <div class="columna-i" id="col-copiar" style="top:512px; height:270px" data-in="2" data-out="3"><span>i</span></div>
+  <div class="traza" id="traza-copiar" style="top:860px" data-in="2" data-out="3"></div>
+  <div class="llamada" style="top:860px">copiar(v, w);</div>
+
+  <p class="cierre" data-in="3">La misma i señala la misma posición en los dos vectores</p>
+  <p class="ilustrativo">Valores de ejemplo</p>
+
+  <aside class="nota" data-beat="1">Ahora con dos vectores. copiar copia v en w: es lo que haría w = v si se pudiera. v es el vector que acabamos de iniciar; w puede tener cualquier cosa, por eso las interrogaciones. Solo w lleva &, porque es el único que se modifica.</aside>
+  <aside class="nota" data-beat="2">Animación: el mismo for de antes. En cada vuelta, el valor de v[i] baja a w[i]. No hay un índice para v y otro para w: i vale lo mismo para los dos en cada vuelta.</aside>
+  <aside class="nota" data-beat="3">Esto es lo que suele liar: con i = 3 estamos en la posición 3 de v y en la posición 3 de w a la vez. Un solo índice recorre los dos vectores porque tienen el mismo tamaño. sumarVectores es igual, con un vector más.</aside>
+</section>
+
+<!-- 9 · Plan de hoy -->
 <section class="escena" data-id="plan" data-titulo="¿Qué vamos a hacer hoy?">
   <h2 class="titular grande">¿Qué vamos a hacer hoy?</h2>
   <div class="partes">
@@ -213,7 +242,7 @@ void iniciarAleatorio ( TipoVector &v, int maxValor ) {
   <aside class="nota" data-beat="3">Ejercicio 2: un programa en el main que use la librería. Si no da tiempo hoy, se termina la semana que viene, porque en la próxima sesión seguiremos ampliando este mismo proyecto.</aside>
 </section>
 
-<!-- 9 · Ejercicio 1 -->
+<!-- 10 · Ejercicio 1 -->
 <section class="escena" data-id="ejercicio1" data-titulo="Ejercicio 1: implementar">
   <h2 class="titular">Ejercicio 1 · Implementar los módulos de lib_vector</h2>
 
@@ -281,14 +310,14 @@ minimo: fin del módulo de pruebas</div>
     </div>
   </div>
 
-  <aside class="nota" data-beat="1">Estos son los módulos de la librería. Los tres primeros ya están implementados; el resto tiene un // TODO en lib_vector.cpp. Empezad en orden: copiar y sumarVectores son casi iguales a iniciarAleatorio.</aside>
+  <aside class="nota" data-beat="1">Estos son los módulos de la librería. Los tres primeros ya están implementados; el resto tiene un // TODO en lib_vector.cpp. Empezad en orden: copiar ya lo hemos visto, y sumarVectores es casi igual, con un vector más.</aside>
   <aside class="nota" data-beat="2">Para cada módulo, los mismos pasos. Lo vemos con minimo. Paso 1: leer su especificación en lib_vector.h. La PRE y la POST dicen exactamente qué tiene que hacer.</aside>
   <aside class="nota" data-beat="3">Paso 2: sustituir el TODO por la implementación. Ese return -1 solo está para que compile. Recordad indicar el rol de todas las variables y parámetros.</aside>
   <aside class="nota" data-beat="4">Paso 3: las pruebas están en otra librería, lib_test_vector, y ya están hechas. Revisadlas para ver qué casos prueban: las hay automáticas, que avisan con un mensaje de error, y supervisadas, en las que quien comprueba sois vosotros.</aside>
   <aside class="nota" data-beat="5">Paso 4: ejecutar. El main ya llama a todasLasPruebas. Esta es la salida real del proyecto tal como se entrega: sin implementar, fallan los tres casos. Cuando dejen de salir errores, el módulo está bien. En las supervisadas no sale ningún error: hay que mirar los vectores. Si se puede, enseñar aquí el proyecto en Eclipse.</aside>
 </section>
 
-<!-- 10 · Ejercicio 2 -->
+<!-- 11 · Ejercicio 2 -->
 <section class="escena" data-id="ejercicio2" data-titulo="Ejercicio 2: un programa">
   <h2 class="titular">Ejercicio 2 · Un programa que use lib_vector</h2>
 
