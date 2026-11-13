@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Programación · Sesión 9 · Binary</title>
+  <link rel="stylesheet" href="tema.css">
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+<div id="marco">
+<div id="escenario">
+
+<!-- 1 · Portada -->
+<section class="escena" data-id="portada" data-titulo="Portada">
+  <img class="sello" src="logo-uex.png" alt="Logotipo de la Universidad de Extremadura">
+  <div class="portada">
+    <h1>Vectores y<br>entornos gráficos</h1>
+    <div class="regla"></div>
+    <p>Programación · Sesión 9</p>
+    <p>Ingeniería Informática · Escuela Politécnica · Universidad de Extremadura</p>
+  </div>
+  <aside class="nota" data-beat="1">Hoy, un juego con ventana: Binary. Lo nuevo es el entorno gráfico; el vector es lo de siempre. Unos 20 minutos de explicación y a trabajar.</aside>
+</section>
+
+<!-- 2 · El juego -->
+<section class="escena" data-id="juego" data-titulo="El juego Binary">
+  <h2 class="titular">El juego Binary</h2>
+  <div>
+    <img class="captura" src="img/juego-1.png" alt="Pantalla inicial del juego: número 45 y seis bits a 0" data-out="2">
+    <img class="captura" src="img/juego-2.png" alt="Juego con la ayuda activada: pesos 32 a 1 y Tu número: 40" data-in="2" data-out="3">
+    <img class="captura" src="img/juego-3.png" alt="Mensaje de enhorabuena al acertar" data-in="3">
+  </div>
+  <div>
+    <p class="pie-captura" data-out="2">Hay que formar el número en binario cambiando los bits</p>
+    <p class="pie-captura" data-in="2" data-out="3">La ayuda muestra el peso de cada bit y el número formado</p>
+    <p class="pie-captura" data-in="3">Al acertar, se acaba la partida</p>
+  </div>
+  <aside class="nota" data-beat="1">Capturas reales del juego, con TAM = 6. Sale un número en decimal, aquí el 45, y hay que formarlo en binario cambiando los bits con el ratón o con las flechas y Enter. Lo primero que vais a hacer es probar el ejecutable que os damos, para ver cómo funciona.</aside>
+  <aside class="nota" data-beat="2">Con el botón de ayuda se ven los pesos de cada bit, 32, 16, 8, 4, 2, 1, y el número que llevamos formado: con el primer y el tercer bit a 1 llevamos 40.</aside>
+  <aside class="nota" data-beat="3">Cuando el número formado coincide con el objetivo, se acaba. Esc abandona la partida.</aside>
+</section>
+
+<!-- 3 · Recordatorio: binario a decimal -->
+<section class="escena" data-id="binario" data-titulo="Recordatorio: binario a decimal">
+  <h2 class="titular">Recordatorio: de binario a decimal</h2>
+  <p class="bin-regla">decimal = suma de bit × 2<sup>posición</sup> <span>Cada bit se multiplica por 2 elevado a su posición, contando desde la derecha y empezando en 0</span></p>
+  <div class="bin-tabla">
+    <div class="fila cab"><span class="et">posición</span><span>9</span><span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span><span>0</span></div>
+    <div class="fila cab peso"><span class="et">2<sup>pos</sup></span><span>512</span><span>256</span><span>128</span><span>64</span><span>32</span><span>16</span><span>8</span><span>4</span><span>2</span><span>1</span></div>
+    <div class="fila ej" data-in="2"><span class="et"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="b1">1</span><span class="b0">0</span><span class="exp">2<sup>1</sup> = <b>2</b></span></div>
+    <div class="fila ej" data-in="3"><span class="et"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="exp">2<sup>2</sup> + 2<sup>0</sup> = <b>5</b></span></div>
+    <div class="fila ej" data-in="4"><span class="et"></span><span></span><span></span><span></span><span></span><span></span><span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="exp">2<sup>4</sup> + 2<sup>0</sup> = <b>17</b></span></div>
+    <div class="fila ej" data-in="5" data-on="7:destaca"><span class="et"></span><span></span><span></span><span></span><span></span><span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="exp">2<sup>5</sup> + 2<sup>3</sup> + 2<sup>2</sup> + 2<sup>0</sup> = <b>45</b></span></div>
+    <div class="fila ej" data-in="6"><span class="et"></span><span class="b1">1</span><span class="b1">1</span><span class="b1">1</span><span class="b1">1</span><span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b0">0</span><span class="exp">2<sup>9</sup> + 2<sup>8</sup> + 2<sup>7</sup> + 2<sup>6</sup> + 2<sup>5</sup> + 2<sup>3</sup> = <b>1000</b></span></div>
+  </div>
+  <p class="bin-fin" data-in="7">El juego compara ese valor con el número propuesto: si coinciden, has acertado</p>
+  <aside class="nota" data-beat="1">Recordatorio rápido, porque el juego va de esto. Para pasar de binario a decimal, cada bit se multiplica por 2 elevado a su posición y se suma todo. La posición se cuenta desde la derecha y empezando en 0: la posición 0 vale 2 elevado a 0, que es 1; la 1 vale 2; la 2 vale 4; cada una el doble que la anterior. Los ceros no aportan nada, así que basta con sumar las potencias donde hay un 1.</aside>
+  <aside class="nota" data-beat="2">El 10: un 1 en la posición 1. 2 elevado a 1 es 2.</aside>
+  <aside class="nota" data-beat="3">El 101: unos en las posiciones 2 y 0. 2 elevado a 2 más 2 elevado a 0: 4 + 1 = 5.</aside>
+  <aside class="nota" data-beat="4">El 10001: unos en las posiciones 4 y 0. 16 + 1 = 17. Los ceros del medio no suman, pero ocupan su sitio: por eso el primer 1 está en la posición 4.</aside>
+  <aside class="nota" data-beat="5">El 101101: 2 a la 5, más 2 a la 3, más 2 a la 2, más 2 a la 0. 32 + 8 + 4 + 1 = 45. Es el número de la partida que habéis visto, con 6 bits.</aside>
+  <aside class="nota" data-beat="6">Uno más grande, con 10 bits: 1111101000. 512 + 256 + 128 + 64 + 32 + 8 = 1000. El método es el mismo, solo hay más potencias que sumar.</aside>
+  <aside class="nota" data-beat="7">Y esto es justo lo que hace el juego: en el vector tenéis unos y ceros, se calcula su valor en decimal y se compara con el número propuesto. Si los bits del jugador valen 45 y el propuesto era 45, ha acertado. Ese cálculo lo vais a programar vosotros; lo vemos con el vector más adelante.</aside>
+</section>
+
+<!-- 3 · Repaso: bibliotecas -->
+<section class="escena" data-id="bibliotecas" data-titulo="Repaso: bibliotecas">
+  <h2 class="titular">Repaso: una biblioteca es un .h y un .cpp</h2>
+
+  <div class="caja vector" style="left:110px; top:200px; width:640px; height:250px">
+    <h3>vector.h</h3>
+    <p class="que">QUÉ hace</p>
+    <p>constantes, tipos y cabeceras con PRE y POST</p>
+  </div>
+  <div class="caja vector" style="left:110px; top:500px; width:640px; height:250px" data-on="3:apagada">
+    <h3>vector.cpp</h3>
+    <p class="que">CÓMO lo hace</p>
+    <p>la implementación de cada operación</p>
+  </div>
+  <p class="sello-no" style="left:110px; top:770px; width:640px" data-in="3">Ni se incluye ni hace falta leerlo</p>
+
+  <div class="caja principal" style="left:1150px; top:200px; width:660px; height:550px" data-in="2">
+    <h3>binary.cpp</h3>
+<pre class="codigo" data-foco="2-2:1 4-4:4-5">
+#include "vector.h"
+#include "entorno.h"
+
+TVector v;
+iniciarVector ( v );
+</pre>
+  </div>
+  <p class="tachado-inc" style="left:1176px; top:560px" data-in="3">#include "vector.cpp"<b>✕</b></p>
+
+  <svg class="flechas" data-in="2" viewBox="0 0 1920 1080">
+    <defs><marker id="pv" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--acento);stroke:none"/></marker></defs>
+    <line class="v" x1="1150" y1="300" x2="760" y2="300" marker-end="url(#pv)"/>
+  </svg>
+
+  <p class="rotulo fin" data-in="4">Se usa con lo que dice el .h: nombre, parámetros, PRE y POST</p>
+
+  <aside class="nota" data-beat="1">Repaso rápido, porque hoy hay tres bibliotecas. Cada biblioteca son dos ficheros. El .h dice qué hace: constantes, tipos y cabeceras de las operaciones con su PRE y su POST. En el .h nunca se implementa nada. El .cpp dice cómo lo hace: la implementación.</aside>
+  <aside class="nota" data-beat="2">Quien quiere usar la biblioteca incluye su .h, con comillas porque es nuestra. Con eso el compilador conoce los nombres y los parámetros.</aside>
+  <aside class="nota" data-beat="3">El .cpp nunca se incluye. Eclipse compila todos los .cpp del proyecto por separado y luego los junta. Y para usar la biblioteca tampoco hace falta leerlo: hoy, con entorno.cpp, no lo vais a leer.</aside>
+  <aside class="nota" data-beat="4">Y se usa llamando a sus operaciones, como si fueran nuestras. Todo lo que necesitáis saber está en el .h.</aside>
+</section>
+
+<!-- 4 · Las piezas del proyecto -->
+<section class="escena" data-id="piezas" data-titulo="Las piezas del proyecto">
+  <h2 class="titular">Las piezas del proyecto</h2>
+
+  <div class="caja vector" style="left:210px; top:560px; width:560px; height:180px">
+    <h3>vector</h3>
+    <p class="que">el número en binario</p>
+    <p class="suave">vector.h · vector.cpp</p>
+  </div>
+  <div class="caja vector" style="left:210px; top:850px; width:560px; height:150px; border-style:dashed" data-in="2">
+    <h3>pruebasVector</h3>
+    <p class="suave">pruebasVector.h · pruebasVector.cpp</p>
+  </div>
+  <div class="caja entorno" style="left:1150px; top:560px; width:560px; height:180px" data-in="3">
+    <h3>entorno</h3>
+    <p class="que">la ventana, el ratón y el teclado</p>
+    <p class="suave">entorno.h · entorno.cpp · usa Allegro</p>
+  </div>
+  <div class="caja principal" style="left:710px; top:200px; width:500px; height:170px" data-in="4">
+    <h3>binary.cpp</h3>
+    <p class="que" style="color:var(--texto)">las reglas del juego</p>
+  </div>
+
+  <svg class="flechas" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="fv" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--acento);stroke:none"/></marker>
+      <marker id="fe" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--entorno);stroke:none"/></marker>
+    </defs>
+    <g data-in="2"><line class="v" x1="490" y1="850" x2="490" y2="752" marker-end="url(#fv)"/></g>
+    <g data-in="4">
+      <line class="v" x1="860" y1="372" x2="560" y2="548" marker-end="url(#fv)"/>
+      <line class="e" x1="1060" y1="372" x2="1360" y2="548" marker-end="url(#fe)"/>
+      <text x="560" y="450">#include</text>
+      <text x="1230" y="450">#include</text>
+    </g>
+  </svg>
+
+  <p class="rotulo" style="left:830px; top:880px; width:980px" data-in="4">binary.cpp junta las dos: el número y la ventana</p>
+
+  <aside class="nota" data-beat="1">Seguimos el orden del guion. Primero la biblioteca vector: guarda el número en binario y sabe operar con él. Es la que vais a completar.</aside>
+  <aside class="nota" data-beat="2">Al lado, sus pruebas, en otra biblioteca. Cualquier tipo nuevo que hagáis seguirá esta estructura: una biblioteca para el tipo y sus operaciones, y otra para sus pruebas.</aside>
+  <aside class="nota" data-beat="3">Luego el entorno: la ventana, el dibujo, el ratón y el teclado. Por debajo usa Allegro, que está instalada en el laboratorio y en la máquina virtual; en Windows puede dar problemas, así que mejor trabajar aquí o en la máquina virtual.</aside>
+  <aside class="nota" data-beat="4">Y binary.cpp, con las reglas del juego, que incluye las dos. Esto es lo más importante de hoy: el vector no sabe nada de la ventana y el entorno no sabe nada de binario. binary.cpp las junta.</aside>
+</section>
+
+<!-- 5 · La biblioteca vector -->
+<section class="escena" data-id="vector" data-titulo="La biblioteca vector">
+  <h2 class="titular">La biblioteca vector: un bit por casilla</h2>
+
+  <div class="decl"><span class="c-pal">const int</span> TAM = 6;&nbsp;&nbsp; <span class="c-pal">typedef int</span> TVector[TAM];</div>
+
+  <div class="vec con-indices" id="vec-bits" data-nombre="v" style="--y:290px" data-on="1-1:extremos"></div>
+  <p class="bajo" style="--i:0; top:470px" data-out="2">más significativo</p>
+  <p class="bajo" style="--i:5; top:470px" data-out="2">menos significativo</p>
+
+  <table class="ops-tabla" data-in="2">
+    <tr><td>iniciarVector</td><td>pone todas las casillas a 0</td></tr>
+    <tr><td>ponerValorEnVector</td><td>pone un 0 o un 1 en una posición</td></tr>
+    <tr><td>obtenerValorDeVector</td><td>devuelve el valor de una posición</td></tr>
+    <tr><td>pesoDePosicion</td><td>devuelve el peso del bit de una posición</td></tr>
+    <tr><td>calcularValorDeVector</td><td>devuelve el valor decimal del vector</td></tr>
+    <tr><td>esCorrectoElNumero</td><td>dice si el vector vale un número dado</td></tr>
+  </table>
+
+  <aside class="nota" data-beat="1">El tipo TVector es un vector de TAM enteros, y cada casilla guarda un bit, 0 o 1. Ojo con el orden: el bit más significativo está en la posición 0 y el menos significativo en la última. Este es el 101101.</aside>
+  <aside class="nota" data-beat="2">Estas son las operaciones de vector.h. Todas, salvo una, son de una línea o un for sencillo. La que tiene algo de miga es calcularValorDeVector: pasar de binario a decimal.</aside>
+</section>
+
+<!-- 6 · De binario a decimal -->
+<section class="escena" data-id="decimal" data-titulo="De binario a decimal">
+  <h2 class="titular">De binario a decimal</h2>
+
+  <div class="decl" data-in="1">peso de pos = 2<sup>TAM-1-pos</sup> <span class="suave" style="font-family:var(--letra); font-size:32px">&nbsp;&nbsp;pesoDePosicion</span></div>
+
+  <div class="vec con-indices con-pesos" id="vec-dec" data-nombre="v" style="--y:360px"></div>
+  <div class="vec compacta" id="vec-prod" data-nombre="" style="--y:600px" data-in="2"></div>
+  <p class="al-lado" style="top:400px">bits</p>
+  <p class="al-lado" style="top:630px" data-in="2">bit × peso</p>
+
+  <p class="suma" id="suma-dec" data-in="3"></p>
+  <p class="rotulo fin" data-in="4">Esto es lo que tiene que calcular <span class="mono">calcularValorDeVector</span></p>
+
+  <aside class="nota" data-beat="1">Cada posición tiene un peso, que es una potencia de 2. Como el más significativo está en la posición 0, el peso de la posición pos es 2 elevado a TAM-1-pos: 32 para la 0, 1 para la última. Eso es lo que devuelve pesoDePosicion.</aside>
+  <aside class="nota" data-beat="2">Cada bit se multiplica por su peso. Los ceros no aportan nada; los unos aportan su peso.</aside>
+  <aside class="nota" data-beat="3">Animación: se recorre el vector acumulando bit × peso en una suma. 32 + 0 + 8 + 4 + 0 + 1 = 45, que era el objetivo de la partida.</aside>
+  <aside class="nota" data-beat="4">Eso es calcularValorDeVector: un recorrido con un acumulador, como los de la sesión pasada. Y como todo depende de TAM, con más o menos bits debe seguir funcionando. No os doy el código: es lo que tenéis que hacer.</aside>
+</section>
+
+<!-- 7 · La biblioteca entorno -->
+<section class="escena" data-id="entorno" data-titulo="La biblioteca entorno">
+  <h2 class="titular">La biblioteca entorno: la ventana</h2>
+
+  <div class="caja principal" style="left:110px; top:430px; width:430px; height:200px">
+    <h3>binary.cpp</h3>
+    <p class="que" style="color:var(--texto)">las reglas</p>
+  </div>
+  <div class="caja entorno" style="left:1380px; top:430px; width:430px; height:200px">
+    <h3>entorno</h3>
+    <p class="que">la ventana</p>
+  </div>
+
+  <svg class="flechas" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ee" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--entorno);stroke:none"/></marker>
+      <marker id="ev" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--acento);stroke:none"/></marker>
+    </defs>
+    <line class="e" x1="545" y1="480" x2="1368" y2="480" marker-end="url(#ee)" data-in="2"/>
+    <line class="v" x1="1375" y1="580" x2="552" y2="580" marker-end="url(#ev)" data-in="3"/>
+  </svg>
+
+  <div class="mensajes" style="left:600px; top:200px" data-in="2">
+    <span class="suave">el programa le dice qué mostrar</span><br>
+    entornoPonerBit ( pos, valor )<br>
+    entornoMarcarPosicion ( pos )<br>
+    entornoDibujarPantalla ( objetivo )<br>
+    entornoMostrarPantalla ( )
+  </div>
+  <div class="mensajes vuelta" style="left:600px; top:610px" data-in="3">
+    entornoLeerEvento ( ) <span class="suave">→ qué ha hecho el jugador</span><br>
+    <span class="suave">clic en un bit, flechas, Enter, ayuda, Esc…</span>
+  </div>
+
+  <p class="rotulo fin" data-in="4">Leed entorno.h con atención. entorno.cpp no hace falta</p>
+
+  <aside class="nota" data-beat="1">El entorno se encarga de la ventana, del dibujo y de leer el ratón y el teclado. No sabe nada de las reglas del juego: es lo que dice el propio entorno.h.</aside>
+  <aside class="nota" data-beat="2">El programa le dice qué mostrar: qué valor tiene cada bit, qué bit está seleccionado, y cuándo dibujar y mostrar la pantalla. Dibujar y mostrar van separados: primero se dibuja todo y luego se muestra.</aside>
+  <aside class="nota" data-beat="3">Y en el otro sentido, el entorno le cuenta al programa qué ha hecho el jugador: entornoLeerEvento espera a que pase algo y lo devuelve.</aside>
+  <aside class="nota" data-beat="4">Hay más módulos: entornoIniciar y entornoTerminar para abrir y cerrar la ventana, entornoMensajeFin, y los de la ayuda. Leed entorno.h con atención: con las PRE y POST basta. La implementación, en entorno.cpp, usa Allegro y no hace falta mirarla.</aside>
+</section>
+
+<!-- 8 · Tipos enumerados -->
+<section class="escena" data-id="enum" data-titulo="Tipos enumerados">
+  <h2 class="titular">Tipos enumerados</h2>
+
+  <div class="panel cod-enum">
+    <p class="fichero">entorno.h</p>
+<pre class="codigo">
+enum TipoEvento {
+    TClic,        // clic en un bit
+    TAyuda,       // botón de ayuda
+    TIzquierda,   // flecha izquierda
+    TDerecha,     // flecha derecha
+    TEnter,       // Enter o Espacio
+    TEsc,         // tecla Esc
+    TCerrar,      // ventana cerrada
+    TRaton        // el ratón cambia de sitio
+};
+</pre>
+  </div>
+
+  <div class="enteros" data-in="2">
+    <h3>Por dentro son enteros</h3>
+    <span class="num">0</span><span>TClic</span>
+    <span class="num">1</span><span>TAyuda</span>
+    <span class="num">2</span><span>TIzquierda</span>
+    <span class="num">3</span><span>TDerecha</span>
+    <span class="num">4</span><span>TEnter</span>
+    <span class="num">5</span><span>TEsc</span>
+    <span class="num">6</span><span>TCerrar</span>
+    <span class="num">7</span><span>TRaton</span>
+  </div>
+
+  <div class="usos" data-in="3">
+    <span class="mono">tipo == TIzquierda</span><span class="si">✓</span><span>se lee solo</span>
+    <span class="mono">cin &gt;&gt; tipo;</span><span class="no">✕</span><span>no compila</span>
+    <span class="mono">cout &lt;&lt; tipo;</span><span class="av">!</span><span>compila, pero escribe 2</span>
+  </div>
+
+  <aside class="nota" data-beat="1">Esto es nuevo. Un tipo enumerado define un tipo con una lista de valores con nombre. TipoEvento son las cosas que puede hacer el jugador. Sirve para que el código se entienda: se escribe TIzquierda en lugar de un código numérico.</aside>
+  <aside class="nota" data-beat="2">Por dentro son enteros, numerados desde 0 en el orden en que se escriben. TIzquierda es un 2.</aside>
+  <aside class="nota" data-beat="3">Se usan para comparar y en un switch. Lo que no se puede es leerlos o escribirlos directamente: cin no compila, y cout sí compila pero escribe el número, no el nombre. Comprobado con g++ 9.4. Es como lo de cout con un vector: compila y no hace lo que esperáis.</aside>
+</section>
+
+<!-- 9 · El bucle del juego -->
+<section class="escena" data-id="bucle" data-titulo="binary.cpp: el bucle">
+  <h2 class="titular">binary.cpp: el bucle del juego</h2>
+
+  <div class="panel cod-bucle">
+    <p class="fichero">binary.cpp · jugar ( ), abreviado</p>
+<pre class="codigo" id="cod-bucle" data-foco="1-1:1-2 2-2:3 3-3:4-12 4-4:8">
+while ( !acabar ) {
+    refrescarPantalla ( vBinario, objetivo, ayuda );
+    evento = entornoLeerEvento ( );
+    switch ( entornoTipoEvento ( evento ) ) {
+    case TClic:
+        pCursor = entornoBitEvento ( evento );
+        entornoMarcarPosicion ( pCursor );
+        cambiarBit ( vBinario, pCursor );
+        if ( esCorrectoElNumero ( vBinario, objetivo ) ) {
+            acabar = true;  acertado = true;
+        }
+        break;
+    case TIzquierda:  // mueve el cursor
+    ...
+    }
+}
+</pre>
+  </div>
+
+  <div class="panel cod-bit" data-in="4">
+    <p class="fichero">binary.cpp</p>
+<pre class="codigo" id="cod-bit">
+void cambiarBit ( TVector &v, int pos ) {
+  if ( obtenerValorDeVector ( v, pos ) == 0 ) {
+    ponerValorEnVector ( v, pos, 1 );
+    entornoPonerBit ( pos, 1 );
+  } else {
+    ponerValorEnVector ( v, pos, 0 );
+    entornoPonerBit ( pos, 0 );
+  }
+}
+</pre>
+  </div>
+
+  <div class="leyenda"><span class="v">■ biblioteca vector</span><span class="e">■ biblioteca entorno</span></div>
+
+  <aside class="nota" data-beat="1">Así se juntan las dos bibliotecas. El juego es un bucle que se repite hasta acabar. En cada vuelta, primero se pinta la pantalla. En verde, lo que es de vector; en azul, lo que es del entorno.</aside>
+  <aside class="nota" data-beat="2">Después se espera a que el jugador haga algo.</aside>
+  <aside class="nota" data-beat="3">Y según lo que haya hecho, un switch sobre el tipo enumerado. El evento no se mira por dentro: se le pregunta al entorno con entornoTipoEvento, y si es un clic, en qué bit con entornoBitEvento. Al hacer clic se cambia el bit y se comprueba si ya es el número.</aside>
+  <aside class="nota" data-beat="4">cambiarBit es el mejor ejemplo de la relación entre las dos: cambia el bit en el vector, que es el dato, y en el entorno, que es lo que se ve. Si vuestro vector no funciona, el juego no funciona aunque la ventana sí. Revisad binary.cpp entero: hay que entender para qué sirve cada función y cada variable.</aside>
+</section>
+
+<!-- 10 · Ejercicio 1 -->
+<section class="escena" data-id="ejercicio1" data-titulo="Ejercicio 1">
+  <h2 class="titular">Ejercicio 1 · Completar la biblioteca vector</h2>
+
+  <ol class="pasos" style="top:160px">
+    <li data-on="1-1:activo"><b>Probar el ejecutable</b><span class="mono">binary_ejecutable.zip</span></li>
+    <li data-in="2" data-on="2-2:activo"><b>Tamaño del problema y complejidad</b><span class="mono">vector.h</span></li>
+    <li data-in="3" data-on="3-3:activo"><b>Implementar las operaciones</b><span class="mono">vector.cpp</span></li>
+    <li data-in="4" data-on="4-4:activo"><b>Llamar a las pruebas desde el main</b><span class="mono">binary.cpp</span></li>
+    <li data-in="5" data-on="5-5:activo"><b>Comprobar las pruebas</b><span class="mono">consola</span></li>
+    <li data-in="6" data-on="6-6:activo"><b>Jugar y cambiar TAM</b><span class="mono">vector.h</span></li>
+  </ol>
+
+  <div class="ejemplo pila" style="top:160px">
+    <div data-out="2">
+      <div class="consola terminal"><div class="txt">$ ./binary</div></div>
+      <img src="img/juego-1.png" alt="Pantalla inicial del juego">
+    </div>
+    <div class="panel" data-in="2" data-out="3">
+      <p class="fichero">vector.h</p>
+<pre class="codigo">
+/*
+ * PRE:  -
+ * POST: v tiene todas las casillas a 0
+ * Complejidad: // TODO
+ */
+void iniciarVector (TVector &v);
+</pre>
+    </div>
+    <div class="panel" data-in="3" data-out="4">
+      <p class="fichero">vector.cpp</p>
+<pre class="codigo">
+int calcularValorDeVector ( TVector v) {
+    // TODO implementar;
+    return -1;
+}
+</pre>
+    </div>
+    <div class="panel" data-in="4" data-out="5">
+      <p class="fichero">binary.cpp</p>
+<pre class="codigo" data-foco="4:3,7">
+#include "vector.h"
+#include "entorno.h"
+#include "pruebasVector.h"
+...
+int main() {
+    ...
+    pruebasVector ( );
+    ...
+}
+</pre>
+    </div>
+    <div class="consola salida" data-in="5" data-out="6">
+      <h3>Consola · salida real, sin implementar (abreviada)</h3>
+<div class="txt">Inicio - pr_obtenerValorDeVector
+Error en la posición 0
+...
+Inicio - pr_calcularValorDeVector
+Error con el valor 0: devuelve -1
+Error con el valor 10: devuelve -1
+Error con el valor 15: devuelve -1
+Fin - pr_calcularValorDeVector</div>
+    </div>
+    <div class="panel" data-in="6">
+      <p class="fichero">vector.h</p>
+<pre class="codigo">
+// Número de bits del juego
+// (el entorno admite como máximo 8)
+const int TAM = 6;
+</pre>
+      <p class="aviso-pasos">Con otro TAM, el juego debe seguir funcionando</p>
+    </div>
+  </div>
+
+  <aside class="nota" data-beat="1">Primero, probad el ejecutable que os damos para entender el juego. Está generado en la máquina virtual: en otros sistemas puede no funcionar.</aside>
+  <aside class="nota" data-beat="2">En vector.h solo falta escribir el tamaño del problema y la complejidad de cada operación.</aside>
+  <aside class="nota" data-beat="3">En vector.cpp está todo con // TODO. Casi todas son inmediatas; la difícil es calcularValorDeVector, lo que acabamos de ver. pesoDePosicion os puede ayudar.</aside>
+  <aside class="nota" data-beat="4">Ojo: el guion dice que el main llama a las pruebas, pero en el proyecto el main solo juega. Para ejecutar las pruebas, añadid el include de pruebasVector.h y la llamada a pruebasVector() al principio del main.</aside>
+  <aside class="nota" data-beat="5">Esta es la salida real del proyecto tal como se entrega: fallan todas. Cuando dejen de salir errores, la biblioteca está bien. Cuidado: las pruebas de calcularValorDeVector y esCorrectoElNumero están pensadas para 4 bits. Con TAM = 6, aunque el código esté bien, dicen que 1010 vale 40 en lugar de 10, porque con 6 bits es 101000. Comprobado con la versión del profesor: probad con TAM = 4.</aside>
+  <aside class="nota" data-beat="6">Con las operaciones bien hechas, el juego funciona sin tocar nada más. Probad a cambiar TAM: con más o menos bits debe seguir funcionando, hasta 8, que es lo que admite el entorno.</aside>
+</section>
+
+<!-- 11 · Ejercicio 2 -->
+<section class="escena" data-id="ejercicio2" data-titulo="Ejercicio 2: ampliaciones">
+  <h2 class="titular">Ejercicio 2 · Ampliaciones a Binary</h2>
+  <ul class="lista-amp">
+    <li class="hecha"><b>a)</b>Mostrar el valor decimal actual: ya lo hace el botón de ayuda</li>
+    <li><b>b)</b>Contar los cambios de bits que se hacen</li>
+    <li><b>c)</b>Terminar si no se acierta antes de n cambios</li>
+    <li><b>d)</b>¿Y si el objetivo pudiera ser 0? Que el juego acabe en ese momento</li>
+    <li><b>e)</b>Empezar con los bits al azar, no todos a 0</li>
+    <li><b>f)</b>Calcular el mínimo de cambios y terminar si se supera</li>
+    <li><b>g)</b>¿Qué cambia si el bit menos significativo está en la posición 0?</li>
+    <li><b>h)</b>¿Y en ternario (0, 1, 2), en octal (0-7) o en hexadecimal?</li>
+  </ul>
+  <aside class="nota" data-beat="1">Con el ejercicio 1 terminado, haced algunas de estas. La a) ya viene hecha en esta versión del proyecto: el botón de ayuda muestra el número formado. Las g) y h) son para pensar: qué habría que cambiar en vector y qué en el resto.</aside>
+</section>
+
+<!-- 12 · Criba -->
+<section class="escena" data-id="criba" data-titulo="Adicional: criba de Eratóstenes">
+  <h2 class="titular">Ejercicio adicional · La criba de Eratóstenes</h2>
+  <div class="criba" id="criba"></div>
+  <p class="criba-txt" id="criba-txt"></p>
+  <ul class="encargo" data-in="4">
+    <li>Proyecto nuevo: los primos hasta 10000</li>
+    <li>El vector no guarda los números: guarda si cada posición está tachada o no</li>
+    <li>Un módulo que aplica la criba, otro que dice si n es primo, y un main que los use</li>
+  </ul>
+  <aside class="nota" data-beat="1">Para quien termine. Se ponen los números del 2 al límite, aquí 20.</aside>
+  <aside class="nota" data-beat="2">El primero sin tachar, el 2, es primo. Se tachan todos sus múltiplos, saltando de 2 en 2.</aside>
+  <aside class="nota" data-beat="3">El siguiente sin tachar, el 3, es primo. Se tachan sus múltiplos, de 3 en 3. Con 20 ya no hay más que tachar.</aside>
+  <aside class="nota" data-beat="4">Los que quedan sin tachar son los primos. En el ejercicio, hasta 10000. La clave está en el tipo: las casillas no guardan los números, guardan si la posición está tachada. Los detalles, en el guion.</aside>
+</section>
+
+  <div id="progreso"></div>
+</div>
+</div>
+
+<div id="general"></div>
+<div id="apagon"></div>
+<div id="ayuda">→ / clic: siguiente · ← : anterior · O: escenas · P: presentador · F: pantalla completa · B: negro</div>
+
+<script src="motor.js"></script>
+<script src="escenas.js"></script>
+</body>
+</html>
