@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Programación · Sesión 9 · Vectores y pruebas</title>
+  <link rel="stylesheet" href="tema.css">
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="b-fondo" viewBox="0 0 400 300">
+      <rect width="400" height="300" fill="#f5efe4"/>
+      <rect x="215" y="72" width="180" height="7" fill="#8a5a2b"/>
+      <rect x="228" y="40" width="12" height="32" rx="3" fill="#3d7a52"/><rect x="232" y="32" width="4" height="10" fill="#3d7a52"/>
+      <rect x="252" y="46" width="14" height="26" rx="3" fill="#8f2d2d"/><rect x="257" y="38" width="4" height="10" fill="#8f2d2d"/>
+      <rect x="360" y="42" width="12" height="30" rx="3" fill="#c48a1c"/><rect x="364" y="34" width="4" height="10" fill="#c48a1c"/>
+      <rect x="378" y="48" width="12" height="24" rx="3" fill="#3d7a52"/>
+    </symbol>
+    <symbol id="b-barra" viewBox="0 0 400 300">
+      <rect x="150" y="214" width="250" height="86" fill="#a0682f"/>
+      <rect x="146" y="206" width="254" height="12" rx="3" fill="#6f4219"/>
+      <line x1="200" y1="232" x2="200" y2="300" stroke="#8a5523" stroke-width="3"/><line x1="290" y1="232" x2="290" y2="300" stroke="#8a5523" stroke-width="3"/>
+    </symbol>
+    <symbol id="b-tester" viewBox="0 0 400 300">
+      <rect x="66" y="214" width="16" height="84" rx="6" fill="#2b3440"/><rect x="92" y="214" width="16" height="84" rx="6" fill="#2b3440"/>
+      <rect x="60" y="134" width="56" height="86" rx="12" fill="#2f6fb0"/>
+      <circle cx="88" cy="108" r="25" fill="#f1c27d"/>
+      <path d="M63 102 Q88 72 113 102 Q100 90 88 92 Q74 90 63 102Z" fill="#4a3426"/>
+      <circle cx="79" cy="110" r="7" fill="none" stroke="#1c2024" stroke-width="2.5"/><circle cx="97" cy="110" r="7" fill="none" stroke="#1c2024" stroke-width="2.5"/><line x1="86" y1="110" x2="90" y2="110" stroke="#1c2024" stroke-width="2.5"/>
+      <circle cx="79" cy="110" r="2" fill="#1c2024"/><circle cx="97" cy="110" r="2" fill="#1c2024"/>
+      <path d="M81 122 Q88 126 95 122" fill="none" stroke="#1c2024" stroke-width="2.5" stroke-linecap="round"/>
+      <rect x="108" y="150" width="30" height="40" rx="3" fill="#fff" stroke="#6b4a2a" stroke-width="3"/>
+      <line x1="114" y1="162" x2="132" y2="162" stroke="#8f969f" stroke-width="2.5"/><line x1="114" y1="170" x2="132" y2="170" stroke="#8f969f" stroke-width="2.5"/><line x1="114" y1="178" x2="126" y2="178" stroke="#8f969f" stroke-width="2.5"/>
+      <rect x="66" y="150" width="30" height="12" rx="3" fill="#fff"/><text x="81" y="160" font-size="10" font-weight="700" text-anchor="middle" fill="#2f6fb0" font-family="Arial">TEST</text>
+    </symbol>
+    <symbol id="b-cliente" viewBox="0 0 400 300">
+      <rect x="66" y="214" width="16" height="84" rx="6" fill="#4a4f57"/><rect x="92" y="214" width="16" height="84" rx="6" fill="#4a4f57"/>
+      <rect x="60" y="134" width="56" height="86" rx="12" fill="#c0612b"/>
+      <circle cx="88" cy="108" r="25" fill="#d9a066"/>
+      <path d="M63 100 Q70 78 92 80 Q112 82 113 100 Q100 92 88 94 Q74 92 63 100Z" fill="#1f1a17"/>
+      <circle cx="80" cy="110" r="2.6" fill="#1c2024"/><circle cx="96" cy="110" r="2.6" fill="#1c2024"/>
+      <path d="M82 122 Q88 125 94 122" fill="none" stroke="#1c2024" stroke-width="2.5" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="b-camarero" viewBox="0 0 400 300">
+      <rect x="290" y="156" width="64" height="60" rx="12" fill="#ffffff" stroke="#c4c8ce" stroke-width="2"/>
+      <rect x="306" y="170" width="32" height="46" fill="#1c2024"/>
+      <path d="M314 160 L322 166 L314 172Z M330 160 L322 166 L330 172Z" fill="#a32020"/>
+      <circle cx="322" cy="128" r="25" fill="#e8b88a"/>
+      <path d="M298 122 Q300 98 322 100 Q346 100 346 124 Q340 110 322 110 Q306 110 298 122Z" fill="#7b7f86"/>
+      <path d="M306 136 Q312 132 316 136 M328 136 Q332 132 338 136" fill="none" stroke="#5a3d2b" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="313" cy="124" r="2.6" fill="#1c2024"/><circle cx="331" cy="124" r="2.6" fill="#1c2024"/>
+    </symbol>
+    <symbol id="b-jarra" viewBox="0 0 44 50">
+      <path d="M30 18 h6 a6 6 0 0 1 6 6 v8 a6 6 0 0 1 -6 6 h-6" fill="none" stroke="#c99a2e" stroke-width="4"/>
+      <rect x="4" y="12" width="28" height="36" rx="4" fill="#f2b632" stroke="#c99a2e" stroke-width="2"/>
+      <line x1="12" y1="20" x2="12" y2="42" stroke="#f7d27a" stroke-width="3"/>
+      <ellipse cx="11" cy="12" rx="8" ry="7" fill="#fff"/><ellipse cx="21" cy="10" rx="9" ry="8" fill="#fff"/><ellipse cx="29" cy="13" rx="6" ry="6" fill="#fff"/>
+    </symbol>
+    <symbol id="b-lagarto" viewBox="0 0 120 50">
+      <path d="M4 34 Q20 30 34 34 Q20 40 4 34Z" fill="#4c9a3b"/>
+      <ellipse cx="58" cy="32" rx="30" ry="11" fill="#5fb04a"/>
+      <ellipse cx="96" cy="28" rx="16" ry="10" fill="#5fb04a"/>
+      <circle cx="102" cy="24" r="3" fill="#1c2024"/>
+      <path d="M110 30 l8 -1" stroke="#a32020" stroke-width="2"/>
+      <path d="M40 40 l-6 9 M50 42 l2 8 M70 41 l-4 9 M78 39 l6 8" stroke="#4c9a3b" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="52" cy="28" r="3" fill="#7fc86a"/><circle cx="64" cy="27" r="3" fill="#7fc86a"/>
+    </symbol>
+    <symbol id="b-llama" viewBox="0 0 40 60">
+      <path d="M20 2 C30 18 38 26 36 40 C34 54 24 58 20 58 C10 58 2 52 4 40 C6 30 14 28 12 16 C18 22 20 14 20 2Z" fill="#e8501c"/>
+      <path d="M20 22 C26 32 30 38 28 46 C26 54 22 56 20 56 C14 56 10 52 12 44 C14 38 18 36 20 22Z" fill="#f7b32b"/>
+    </symbol>
+  </defs>
+</svg>
+<div id="marco">
+<div id="escenario">
+
+<!-- 1 · Portada -->
+<section class="escena" data-id="portada" data-titulo="Portada">
+  <img class="sello" src="logo-uex.png" alt="Logotipo de la Universidad de Extremadura">
+  <div class="portada">
+    <h1>Vectores<br>y pruebas</h1>
+    <div class="regla"></div>
+    <p>Programación · Sesión 9</p>
+    <p>Grado en Ingeniería de Tecnologías de Telecomunicación<br>Escuela Politécnica · Universidad de Extremadura</p>
+  </div>
+  <aside class="nota" data-beat="1">Hoy hay poca teoría nueva: seguimos con el proyecto de vectores de la semana pasada. Lo nuevo es que esta vez las pruebas las diseñáis vosotros, así que vamos a dedicar la explicación a cómo probar bien.</aside>
+</section>
+
+<!-- 2 · Hoy -->
+<section class="escena" data-id="hoy" data-titulo="¿Qué vamos a hacer hoy?" data-fuera>
+  <h2 class="titular grande">¿Qué vamos a hacer hoy?</h2>
+  <div class="partes tres">
+    <div class="parte">
+      <h3>Punto de partida</h3>
+      <p><span class="mono">vectorDeEnterosAmpl</span></p>
+      <p class="sub">La sesión 8 resuelta, o vuestro proyecto</p>
+    </div>
+    <div class="parte" data-in="2">
+      <h3>Ejercicio</h3>
+      <p>14 operaciones nuevas</p>
+    </div>
+    <div class="parte" data-in="3" data-on="3:destaca">
+      <h3>Lo nuevo</h3>
+      <p>Las pruebas las diseñáis vosotros</p>
+    </div>
+  </div>
+  <aside class="nota" data-beat="1">Descargad del aula virtual vectorDeEnterosAmpl.zip e importadlo en Eclipse. Es el proyecto de la sesión anterior con los módulos ya implementados. Si tenéis el vuestro terminado, podéis seguir con el vuestro.</aside>
+  <aside class="nota" data-beat="2">Hay que añadir 14 operaciones nuevas a lib_vector. Las vemos al final.</aside>
+  <aside class="nota" data-beat="3">La diferencia con la semana pasada: en la sesión 8 os lo dábamos todo hecho salvo la implementación, cabeceras y pruebas incluidas. Hoy hacéis todo: cabecera, pruebas e implementación. Y lo difícil de verdad es diseñar buenas pruebas. Así que empezamos por ahí.</aside>
+</section>
+
+<!-- 2 · Un tester entra en un bar (viñeta) -->
+<section class="escena" data-id="bar" data-titulo="A propósito de los tests">
+  <h2 class="titular mov" data-on="1-1:centro">A propósito de los tests…</h2>
+  <div class="tira">
+    <figure class="vineta " data-in="2"><svg viewBox="0 0 400 300" role="img" aria-label="1 cerveza"><use href="#b-fondo" width="400" height="300"/><use href="#b-camarero" width="400" height="300"/><path d="M312 142 Q322 151 332 142" fill="none" stroke="#1c2024" stroke-width="3" stroke-linecap="round"/><use href="#b-barra" width="400" height="300"/><use href="#b-jarra" x="212" y="156" width="44" height="50"/><use href="#b-tester" width="400" height="300"/><rect x="8" y="14" width="142" height="50" rx="12" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><path d="M46 64.5 L40 86 L68 64.5" fill="#fff" stroke="#1c2024" stroke-width="2.5" stroke-linejoin="round"/><text x="79.0" y="47" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">1 cerveza</text></svg><figcaption>Lo normal ✓</figcaption></figure>
+    <figure class="vineta " data-in="3"><svg viewBox="0 0 400 300" role="img" aria-label="3 cervezas"><use href="#b-fondo" width="400" height="300"/><use href="#b-camarero" width="400" height="300"/><path d="M312 142 Q322 151 332 142" fill="none" stroke="#1c2024" stroke-width="3" stroke-linecap="round"/><use href="#b-barra" width="400" height="300"/><use href="#b-jarra" x="176" y="156" width="44" height="50"/><use href="#b-jarra" x="214" y="156" width="44" height="50"/><use href="#b-jarra" x="252" y="156" width="44" height="50"/><use href="#b-tester" width="400" height="300"/><rect x="8" y="14" width="155" height="50" rx="12" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><path d="M46 64.5 L40 86 L68 64.5" fill="#fff" stroke="#1c2024" stroke-width="2.5" stroke-linejoin="round"/><text x="85.5" y="47" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">3 cervezas</text></svg><figcaption>Varias ✓</figcaption></figure>
+    <figure class="vineta " data-in="4"><svg viewBox="0 0 400 300" role="img" aria-label="0 cervezas"><use href="#b-fondo" width="400" height="300"/><use href="#b-camarero" width="400" height="300"/><path d="M313 145 L331 145" stroke="#1c2024" stroke-width="3" stroke-linecap="round"/><use href="#b-barra" width="400" height="300"/><rect x="214" y="168" width="28" height="36" rx="4" fill="none" stroke="#8f969f" stroke-width="2.5" stroke-dasharray="6 5"/><use href="#b-tester" width="400" height="300"/><rect x="8" y="14" width="155" height="50" rx="12" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><path d="M46 64.5 L40 86 L68 64.5" fill="#fff" stroke="#1c2024" stroke-width="2.5" stroke-linejoin="round"/><text x="85.5" y="47" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">0 cervezas</text><ellipse cx="352" cy="66" rx="38" ry="22" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><circle cx="340" cy="94" r="4" fill="#fff" stroke="#1c2024" stroke-width="2"/><text x="352" y="74" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">¿…?</text></svg><figcaption>Cero</figcaption></figure>
+    <figure class="vineta " data-in="5"><svg viewBox="0 0 400 300" role="img" aria-label="-1 cervezas"><use href="#b-fondo" width="400" height="300"/><use href="#b-camarero" width="400" height="300"/><ellipse cx="322" cy="146" rx="5" ry="7" fill="#1c2024"/><use href="#b-barra" width="400" height="300"/><g opacity=".55"><use href="#b-jarra" x="212" y="156" width="44" height="50"/></g><text x="228" y="150" text-anchor="middle" font-family="Arial" font-size="30" font-weight="700" fill="#a32020">−1</text><use href="#b-tester" width="400" height="300"/><rect x="8" y="14" width="168" height="50" rx="12" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><path d="M46 64.5 L40 86 L68 64.5" fill="#fff" stroke="#1c2024" stroke-width="2.5" stroke-linejoin="round"/><text x="92.0" y="47" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">-1 cervezas</text><ellipse cx="352" cy="66" rx="38" ry="22" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><circle cx="340" cy="94" r="4" fill="#fff" stroke="#1c2024" stroke-width="2"/><text x="352" y="74" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#a32020">¿¿??</text></svg><figcaption>Negativo</figcaption></figure>
+    <figure class="vineta " data-in="6"><svg viewBox="0 0 400 300" role="img" aria-label="99999999 cervezas"><use href="#b-fondo" width="400" height="300"/><use href="#b-camarero" width="400" height="300"/><ellipse cx="322" cy="146" rx="5" ry="7" fill="#1c2024"/><use href="#b-barra" width="400" height="300"/><use href="#b-jarra" x="158" y="166" width="33" height="38"/><use href="#b-jarra" x="180" y="166" width="33" height="38"/><use href="#b-jarra" x="202" y="166" width="33" height="38"/><use href="#b-jarra" x="224" y="166" width="33" height="38"/><use href="#b-jarra" x="246" y="166" width="33" height="38"/><use href="#b-jarra" x="268" y="166" width="33" height="38"/><use href="#b-jarra" x="158" y="134" width="33" height="38"/><use href="#b-jarra" x="180" y="134" width="33" height="38"/><use href="#b-jarra" x="202" y="134" width="33" height="38"/><use href="#b-jarra" x="224" y="134" width="33" height="38"/><use href="#b-jarra" x="246" y="134" width="33" height="38"/><use href="#b-jarra" x="268" y="134" width="33" height="38"/><use href="#b-jarra" x="158" y="102" width="33" height="38"/><use href="#b-jarra" x="180" y="102" width="33" height="38"/><use href="#b-jarra" x="202" y="102" width="33" height="38"/><use href="#b-jarra" x="224" y="102" width="33" height="38"/><use href="#b-jarra" x="246" y="102" width="33" height="38"/><use href="#b-jarra" x="268" y="102" width="33" height="38"/><use href="#b-tester" width="400" height="300"/><rect x="8" y="14" width="242" height="50" rx="12" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><path d="M46 64.5 L40 86 L68 64.5" fill="#fff" stroke="#1c2024" stroke-width="2.5" stroke-linejoin="round"/><text x="129.0" y="47" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">99999999 cervezas</text><path d="M352 104 q4 8 0 12 q-4 -4 0 -12Z M360 112 q4 8 0 12 q-4 -4 0 -12Z" fill="#5aa9e6"/></svg><figcaption>Enorme</figcaption></figure>
+    <figure class="vineta " data-in="7"><svg viewBox="0 0 400 300" role="img" aria-label="1 lagarto"><use href="#b-fondo" width="400" height="300"/><use href="#b-camarero" width="400" height="300"/><ellipse cx="322" cy="146" rx="5" ry="7" fill="#1c2024"/><use href="#b-barra" width="400" height="300"/><use href="#b-lagarto" x="168" y="160" width="120" height="50"/><use href="#b-tester" width="400" height="300"/><rect x="8" y="14" width="142" height="50" rx="12" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><path d="M46 64.5 L40 86 L68 64.5" fill="#fff" stroke="#1c2024" stroke-width="2.5" stroke-linejoin="round"/><text x="79.0" y="47" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">1 lagarto</text><ellipse cx="352" cy="66" rx="38" ry="22" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><circle cx="340" cy="94" r="4" fill="#fff" stroke="#1c2024" stroke-width="2"/><text x="352" y="74" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">¿?</text></svg><figcaption>Ni siquiera es una cerveza</figcaption></figure>
+    <figure class="vineta " data-in="8"><svg viewBox="0 0 400 300" role="img" aria-label="asdfghjk"><use href="#b-fondo" width="400" height="300"/><use href="#b-camarero" width="400" height="300"/><path d="M312 149 Q322 140 332 149" fill="none" stroke="#1c2024" stroke-width="3" stroke-linecap="round"/><use href="#b-barra" width="400" height="300"/><use href="#b-tester" width="400" height="300"/><rect x="8" y="14" width="130" height="50" rx="12" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><path d="M46 64.5 L40 86 L68 64.5" fill="#fff" stroke="#1c2024" stroke-width="2.5" stroke-linejoin="round"/><text x="73.0" y="47" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">asdfghjk</text><ellipse cx="352" cy="66" rx="38" ry="22" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><circle cx="340" cy="94" r="4" fill="#fff" stroke="#1c2024" stroke-width="2"/><text x="352" y="74" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">¿Qué?</text></svg><figcaption>Basura</figcaption></figure>
+    <figure class="vineta arde" data-in="9"><svg viewBox="0 0 400 300" role="img" aria-label="¿Dónde está el baño?"><use href="#b-fondo" width="400" height="300"/><use href="#b-camarero" width="400" height="300"/><ellipse cx="322" cy="146" rx="5" ry="7" fill="#1c2024"/><use href="#b-barra" width="400" height="300"/><use href="#b-cliente" width="400" height="300"/><rect x="8" y="14" width="280" height="50" rx="12" fill="#fff" stroke="#1c2024" stroke-width="2.5"/><path d="M46 64.5 L40 86 L68 64.5" fill="#fff" stroke="#1c2024" stroke-width="2.5" stroke-linejoin="round"/><text x="148.0" y="47" text-anchor="middle" font-family="Arial, Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="#1c2024">¿Dónde está el baño?</text><use href="#b-llama" x="160" y="150" width="40" height="60"/><use href="#b-llama" x="196" y="130" width="52" height="78"/><use href="#b-llama" x="244" y="152" width="38" height="57"/><use href="#b-llama" x="280" y="140" width="46" height="69"/><use href="#b-llama" x="330" y="150" width="44" height="66"/><use href="#b-llama" x="362" y="120" width="40" height="60"/><use href="#b-llama" x="178" y="222" width="44" height="66"/><use href="#b-llama" x="262" y="230" width="40" height="60"/><use href="#b-llama" x="340" y="226" width="46" height="69"/></svg><figcaption>En la inauguración</figcaption></figure>
+  </div>
+  <aside class="nota" data-beat="1">Para entrar en el tema, un chiste muy conocido entre programadores.</aside>
+  <aside class="nota" data-beat="2">Un tester, alguien cuyo trabajo es probar programas, entra en un bar y pide una cerveza. Es el caso normal: lo que todo el mundo prueba, y casi siempre funciona.</aside>
+  <aside class="nota" data-beat="3">Pide tres. Varias: también lo normal. Sigue funcionando.</aside>
+  <aside class="nota" data-beat="4">Pide cero cervezas. El cero es un clásico: divisiones entre cero, bucles que no se ejecutan, contadores que no se incrementan.</aside>
+  <aside class="nota" data-beat="5">Pide menos una. Un valor que no tiene sentido en el problema, pero que el programa puede recibir.</aside>
+  <aside class="nota" data-beat="6">Pide 99999999. ¿Hay un máximo? ¿Qué pasa al pasarlo?</aside>
+  <aside class="nota" data-beat="7">Pide un lagarto: ni siquiera es una cerveza. Datos de otro tipo.</aside>
+  <aside class="nota" data-beat="8">Pide «asdfghjk»: basura, lo que sale al aporrear el teclado.</aside>
+  <aside class="nota" data-beat="9">Y el remate: el día de la inauguración entra el primer cliente de verdad, pregunta dónde está el baño, algo que a nadie se le ocurrió probar, y el bar sale ardiendo. Los fallos no están en el caso normal, sino en los raros. Vamos a verlo con un ejemplo más serio.</aside>
+</section>
+
+<!-- 3 · El campo edad -->
+<section class="escena" data-id="edad" data-titulo="Probar un campo «edad»">
+  <h2 class="titular">¿Cómo probarías este formulario?</h2>
+
+  <div class="web">
+    <div class="web-barra"><i></i><i></i><i></i><span>bodega-online.es/comprar</span></div>
+    <div class="web-cuerpo">
+      <p class="web-tit">Vino tinto reserva · 12,50 €</p>
+      <p class="web-aviso">Venta solo a mayores de 18 años</p>
+      <label>Edad</label>
+      <div class="web-campo apila">
+        <span data-out="2">25</span>
+        <span data-in="2" data-out="3">50</span>
+        <span data-in="3" data-out="4">15</span>
+        <span data-in="4" data-out="5">450</span>
+        <span data-in="5" data-out="6">-19</span>
+        <span data-in="6" data-out="7">1.4</span>
+        <span data-in="7" data-out="8">JUAN</span>
+        <span data-in="8">TRUNCATE DATABASE</span>
+      </div>
+      <div class="web-boton">Comprar</div>
+      <div class="web-msg apila">
+        <span class="ok" data-out="3">✓ Compra realizada</span>
+        <span class="no" data-in="3" data-out="4">✕ No se vende alcohol a menores</span>
+        <span class="no" data-in="4">✕ No es una edad válida</span>
+      </div>
+    </div>
+  </div>
+
+  <table class="pruebas-edad">
+    <tr><th>Probamos</th><th>Resultado</th></tr>
+    <tr><td>25</td><td class="ok">✓ se vende</td></tr>
+    <tr data-in="2"><td>50</td><td class="ok">✓ se vende</td></tr>
+    <tr data-in="3"><td>15</td><td class="no">✕ menor de edad</td></tr>
+    <tr data-in="4"><td>450</td><td class="no">✕ no es una edad válida</td></tr>
+    <tr data-in="5"><td>-19</td><td class="no">✕ no es una edad válida</td></tr>
+    <tr data-in="6"><td>1.4</td><td class="no">✕ no es una edad válida</td></tr>
+    <tr data-in="7"><td>JUAN</td><td class="no">✕ no es una edad válida</td></tr>
+    <tr data-in="8"><td>TRUNCATE DATABASE</td><td class="no">✕ no es una edad válida</td></tr>
+  </table>
+
+  <p class="lema" data-in="9">El foco del testing ha de estar en los valores excepcionales</p>
+
+  <aside class="nota" data-beat="1">Un ejemplo fuera de la programación de la asignatura: una tienda online que vende alcohol y pide la edad. Tenemos que probar ese campo. ¿Qué escribiríais? Lo primero que hace todo el mundo: un 25. Funciona, se vende.</aside>
+  <aside class="nota" data-beat="2">Un 50: también bien. Con esto parece que funciona… pero no hemos probado casi nada: los dos van por el mismo camino.</aside>
+  <aside class="nota" data-beat="3">Un 15: no se puede vender alcohol a un menor, y la web lo rechaza. Ya probamos el otro camino. Y aquí hay una frontera que habría que mirar: 17 y 18.</aside>
+  <aside class="nota" data-beat="4">Un 450: nadie tiene 450 años. No es una edad válida, y la web lo dice. Hasta aquí, lo que tenía pensado quien lo programó.</aside>
+  <aside class="nota" data-beat="5">Ahora empiezan los raros. Un -19. Lo correcto: no es una edad válida. Pero si alguien solo comprueba «menor que 18», lo tomaría por un menor; y si solo comprueba «mayor que 120», lo daría por bueno. Depende de cómo esté escrito el if.</aside>
+  <aside class="nota" data-beat="6">1.4: un número con decimales. Lo correcto es rechazarlo: no es una edad válida. Pero ojo, si se lee como entero, se quedaría en 1, y con un 18.9 habría que pensar qué hacer.</aside>
+  <aside class="nota" data-beat="7">JUAN: ni siquiera es un número; tampoco es una edad válida. En C++, si leéis un int con cin y el usuario escribe letras, cin falla y la variable no tiene lo que esperáis. Probadlo algún día.</aside>
+  <aside class="nota" data-beat="8">Y el último: alguien que escribe una orden de base de datos en el campo, a ver si el programa la ejecuta. Lo que debe pasar: no es una edad válida, y punto. Es un ataque real, se llama inyección SQL, y ha tumbado webs de verdad. No es para esta asignatura, pero ilustra la idea: el usuario puede escribir cualquier cosa.</aside>
+  <aside class="nota" data-beat="9">La moraleja: probar no es ver que funciona con los valores normales, que casi siempre funcionan. Es buscar dónde falla. Los fallos están en los valores raros, en inglés edge cases. Ahora lo mismo con números.</aside>
+</section>
+
+<!-- 4 · Fronteras -->
+<section class="escena" data-id="frontera" data-titulo="Las fronteras">
+  <h2 class="titular">¿Qué valores probar?</h2>
+  <p class="cod-regla"><span class="c-pal">if</span> ( nota &gt;= 5 ) → aprobado</p>
+
+  <div class="recta">
+    <div class="zona sus"><span>suspenso</span></div>
+    <div class="zona apr"><span>aprobado</span></div>
+    <div class="eje"></div>
+    <span class="tic" style="--v:0">0</span><span class="tic" style="--v:1">1</span><span class="tic" style="--v:2">2</span><span class="tic" style="--v:3">3</span><span class="tic" style="--v:4">4</span><span class="tic" style="--v:5">5</span><span class="tic" style="--v:6">6</span><span class="tic" style="--v:7">7</span><span class="tic" style="--v:8">8</span><span class="tic" style="--v:9">9</span><span class="tic" style="--v:10">10</span>
+
+    <span class="punto" style="--v:2" data-in="2" data-on="3:atenua">2</span>
+    <span class="punto" style="--v:8" data-in="2" data-on="3:atenua">8</span>
+    <span class="punto clave" style="--v:4" data-in="3" data-on="4:atenua">4</span>
+    <span class="punto clave" style="--v:5" data-in="3" data-on="4:atenua">5</span>
+    <span class="punto" style="--v:0" data-in="4" data-on="5:atenua">0</span>
+    <span class="punto" style="--v:10" data-in="4" data-on="5:atenua">10</span>
+    <span class="punto fuera" style="--v:-1" data-in="5">-1</span>
+    <span class="punto fuera" style="--v:11" data-in="5">11</span>
+  </div>
+
+  <div class="pie-recta">
+    <p data-in="2" data-out="3"><b>Típicos:</b> uno de cada lado. Pasan… y prueban poco</p>
+    <p data-in="3" data-out="4"><b>La frontera:</b> si alguien escribe <span class="mono">nota &gt; 5</span>, solo lo pilla la prueba con el 5</p>
+    <p data-in="4" data-out="5"><b>Los extremos</b> del rango: el primero y el último valor válidos</p>
+    <p data-in="5"><b>Fuera de rango:</b> ¿qué dice la PRE? Si la PRE los excluye, no hace falta probarlos</p>
+  </div>
+
+  <aside class="nota" data-beat="1">Ahora en serio, con un ejemplo de una línea: aprobado si la nota es mayor o igual que 5. Notas enteras de 0 a 10. ¿Qué valores probaríais?</aside>
+  <aside class="nota" data-beat="2">Lo primero que se le ocurre a todo el mundo: un 2 y un 8, uno suspenso y otro aprobado. Están bien, pero pasan casi con cualquier código parecido.</aside>
+  <aside class="nota" data-beat="3">Donde están los fallos es en la frontera: el 4 y el 5. El error típico es poner &gt; en vez de &gt;=. Con el 2, el 8, el 0 o el 10 ese error no se nota; solo con el 5. Por eso, en cada comparación del código, probad el valor justo de la frontera y el de al lado.</aside>
+  <aside class="nota" data-beat="4">Los extremos: el 0 y el 10, el primer y el último valor válidos. En los vectores, el equivalente es la primera y la última posición.</aside>
+  <aside class="nota" data-beat="5">Y fuera de rango: un -1 o un 11. Aquí manda la PRE. Si la PRE dice que la nota está entre 0 y 10, quien llama se compromete a no pasar otra cosa, y no hace falta probarlo. Si la PRE no lo dice, el módulo debe hacer algo razonable y hay que probarlo.</aside>
+</section>
+
+<!-- 5 · En un vector -->
+<section class="escena" data-id="pertenece" data-titulo="En un vector: pruebaPertenece">
+  <h2 class="titular">En un vector, los extremos: <span class="mono">pruebaPertenece</span></h2>
+
+  <div class="panel cod-pert">
+<pre class="codigo">
+for ( i = 0; i &lt; MAX; i++ )
+    v[i] = i;
+</pre>
+  </div>
+  <p class="llamada-pert mono">pertenece ( v, x )</p>
+
+  <div class="vec con-indices" id="vec-pert" data-nombre="v" style="--y:420px"></div>
+
+  <p class="bajo" style="--i:0;top:630px" data-in="2">x = 0<br><b>true</b></p>
+  <p class="bajo" style="--i:6;top:630px" data-in="2">x = 6<br><b>true</b></p>
+  <p class="bajo" style="--i:9;top:630px" data-in="2">x = MAX-1<br><b>true</b></p>
+  <p class="bajo mal" style="--i:-1;top:300px" data-in="3">x = -1<br><b>false</b></p>
+  <p class="bajo mal" style="--i:10;top:420px" data-in="3">x = MAX<br><b>false</b></p>
+  <p class="bajo mal" style="--i:10;top:500px" data-in="3">x = 999<br><b>false</b></p>
+
+  <aside class="nota" data-beat="1">Lo mismo en un vector, con una prueba que ya tenéis en el proyecto: pruebaPertenece. Rellena el vector con 0, 1, 2… hasta MAX-1, y busca distintos valores. Fijaos en qué valores eligió quien la hizo, porque no son al azar.</aside>
+  <aside class="nota" data-beat="2">Los que sí están: el 0, que está en la primera posición; el 6, en medio; y MAX-1, en la última. Primera y última posición son los extremos del bucle: si alguien escribe i = 1 o i &lt; MAX-1, una de estas dos pruebas falla.</aside>
+  <aside class="nota" data-beat="3">Los que no están: -1, justo antes del primero; MAX, justo después del último; y 999, uno lejos. Son las fronteras por fuera. (En el comentario del .h pone -2, pero el código prueba -1.) Y fijaos en que hay pruebas para los dos resultados posibles, true y false.</aside>
+</section>
+
+<!-- 6 · Un módulo con ifs -->
+<section class="escena" data-id="ramas" data-titulo="Probar todas las ramas">
+  <h2 class="titular">Un ejemplo con tres <span class="mono">if</span>: <span class="mono">notaFinal</span></h2>
+
+  <div class="panel cod-nf">
+<pre class="codigo" data-foco="2-2:8-10 3-3:11-12 4-4:16-17">
+float notaFinal ( TipoVector notas ) {
+    int i;                     // índice de 0 a MAX-1
+    int presentadas = 0;       // contador
+    float suma = 0;            // acumulador
+    bool algunaBaja = false;   // bandera
+    float nota;                // resultado
+    for ( i = 0; i &lt; MAX; i++ ) {
+        if ( notas[i] != -1 ) {
+            suma = suma + notas[i];
+            presentadas++;
+            if ( notas[i] &lt; 4 )
+                algunaBaja = true;
+        }
+    }
+    nota = suma / presentadas;
+    if ( algunaBaja &amp;&amp; nota &gt; 4 )
+        nota = 4;
+    return nota;
+}
+</pre>
+  </div>
+
+  <div data-out="5">
+    <div class="spec">
+      <p><b>PRE:</b> cada nota entre 0 y 10, o -1 si no se presentó. Al menos una presentada</p>
+      <p><b>POST:</b> la media de las presentadas; si alguna es menor que 4, como mucho un 4</p>
+    </div>
+    <p class="rama" style="top:400px" data-in="2">if 1 · ¿se presentó?</p>
+    <p class="rama" style="top:502px" data-in="3">if 2 · ¿es una nota baja?</p>
+    <p class="rama" style="top:672px" data-in="4">if 3 · ¿hay que dejarla en 4?</p>
+  </div>
+
+  <table class="casos" data-in="5">
+    <tr><th></th><th>notas</th><th>debe dar</th><th>qué prueba</th></tr>
+    <tr data-on="5-5:nuevo"><td>1</td><td>5 6 7 8 9 5 6 7 8 9</td><td>7</td><td>Lo normal: ninguna baja</td></tr>
+    <tr data-in="6" data-on="6-6:nuevo"><td>2</td><td>8 8 8 8 8 8 8 8 8 2</td><td>4</td><td>Una baja, en la última posición; media 7.4</td></tr>
+    <tr data-in="7" data-on="7-7:nuevo"><td>3</td><td>3 3 3 3 3 3 3 3 3 3</td><td>3</td><td>Todas bajas: media 3, que no pasa de 4</td></tr>
+    <tr data-in="8" data-on="8-8:nuevo"><td>4</td><td>-1 6 6 6 6 6 6 6 6 -1</td><td>6</td><td>No presentadas, en los extremos</td></tr>
+    <tr data-in="9" data-on="9-9:nuevo"><td>5</td><td>4 9 9 9 9 9 9 9 9 9</td><td>8.5</td><td>Frontera: un 4 no es nota baja</td></tr>
+    <tr data-in="10" data-on="10-10:nuevo"><td>6</td><td>-1 -1 -1 -1 -1 -1 -1 -1 -1 7</td><td>7</td><td>Lo mínimo que permite la PRE: una presentada</td></tr>
+  </table>
+
+  <aside class="nota" data-beat="1">Un ejemplo que no está en la práctica, sobre las notas de 10 entregas. Cada nota va de 0 a 10, y un -1 significa que no se presentó. La nota final es la media de las presentadas, pero si alguna es menor que 4, la final se queda como mucho en un 4. Ya tiene los roles de las variables, como os pedimos. Vamos a ver qué pruebas tienen sentido mirando el código.</aside>
+  <aside class="nota" data-beat="2">Tiene tres if, y cada if tiene dos caminos: se cumple o no se cumple. Una buena prueba pasa por todos. El primero: si la nota no es -1, cuenta. Hay que probar notas presentadas y también algún -1.</aside>
+  <aside class="nota" data-beat="3">El segundo: si la nota es menor que 4, se levanta la bandera. Hace falta alguna nota baja y alguna que no lo sea. Y aquí hay una frontera: el 4.</aside>
+  <aside class="nota" data-beat="4">El tercero tiene dos condiciones con &amp;&amp;. Para que se cumpla, hace falta una baja y media mayor que 4. Para que no se cumpla hay dos maneras: que no haya bajas, o que las haya pero la media no pase de 4. Conviene probar las dos.</aside>
+  <aside class="nota" data-beat="5">Caso 1, lo normal: todas presentadas y ninguna baja. Debe dar la media, 7. Con este caso el if 1 siempre se cumple, el if 2 nunca y el if 3 tampoco.</aside>
+  <aside class="nota" data-beat="6">Caso 2: una nota baja, y la ponemos en la última posición, que es un extremo del bucle. La media es 7.4, así que debe dar 4. Pasa por los dos caminos del if 2, porque los 8 no son bajas y el 2 sí, y por primera vez se cumple el if 3.</aside>
+  <aside class="nota" data-beat="7">Caso 3: todas bajas. Hay bajas, pero la media es 3: el if 3 no se cumple por la otra mitad del &amp;&amp;. Debe dar 3, no 4. No estrena ningún camino, pero prueba la segunda condición del &amp;&amp;.</aside>
+  <aside class="nota" data-beat="8">Caso 4: no presentadas, y otra vez en los extremos, primera y última posición. La media de las ocho presentadas es 6. Con esto, el if 1 también pasa por su camino del no. Con estos cuatro casos hemos pasado por todos los caminos de los tres if.</aside>
+  <aside class="nota" data-beat="9">Pero todavía faltan los raros. Caso 5, la frontera del if 2: un 4 no es nota baja, porque la condición es menor estricto. Debe dar 8.5, no 4.</aside>
+  <aside class="nota" data-beat="10">Caso 6: lo mínimo que permite la PRE, una sola nota presentada. ¿Y si no hubiera ninguna? Se dividiría entre cero. La PRE lo excluye, por eso no se prueba; si la PRE no lo dijera, habría que tratarlo en el código y probarlo.</aside>
+</section>
+
+<!-- 7 · Qué pilla cada caso -->
+<section class="escena" data-id="fallos" data-titulo="Qué fallo pilla cada caso" data-fuera>
+  <h2 class="titular">¿Por qué seis casos? Cada fallo lo pillan casos distintos</h2>
+  <table class="fallos">
+    <tr><th>Si el código tuviera este fallo…</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+    <tr class="debe"><td>debe dar</td><td>7</td><td>4</td><td>3</td><td>6</td><td>8.5</td><td>7</td></tr>
+    <tr><td><span class="mono">suma / MAX</span> en vez de <span class="mono">suma / presentadas</span></td><td>·</td><td>·</td><td>·</td><td class="x">4.8</td><td>·</td><td class="x">0.7</td></tr>
+    <tr data-in="2"><td><span class="mono">notas[i] &lt;= 4</span> en vez de <span class="mono">&lt; 4</span></td><td>·</td><td>·</td><td>·</td><td>·</td><td class="x">4</td><td>·</td></tr>
+    <tr data-in="3"><td>el <span class="mono">if ( notas[i] &lt; 4 )</span> fuera del <span class="mono">if</span> del -1</td><td>·</td><td>·</td><td>·</td><td class="x">4</td><td>·</td><td class="x">4</td></tr>
+    <tr data-in="4"><td><span class="mono">if ( algunaBaja )</span>, sin <span class="mono">nota &gt; 4</span></td><td>·</td><td>·</td><td class="x">4</td><td>·</td><td>·</td><td>·</td></tr>
+    <tr data-in="5"><td><span class="mono">i &lt; MAX-1</span>: no llega a la última</td><td class="x">6.78</td><td class="x">8</td><td>·</td><td>·</td><td class="x">8.44</td><td class="x">-nan</td></tr>
+  </table>
+  <p class="pie-fallos">Valores obtenidos ejecutando cada versión · <span class="mono">·</span> = la prueba pasa y el fallo no se ve</p>
+  <p class="lema" data-in="6">Ningún caso los pilla todos: hacen falta varios, y pensados</p>
+
+  <aside class="nota" data-beat="1">Para ver que no son pruebas de adorno: he metido a propósito fallos típicos en notaFinal y he ejecutado los seis casos con cada versión. Estos son los valores reales que salen. Primer fallo: dividir entre MAX en vez de entre las presentadas. Solo lo pillan los casos con -1, el 4 y el 6. Sin ellos, el código parece perfecto.</aside>
+  <aside class="nota" data-beat="2">Menor o igual en vez de menor: solo lo pilla el caso 5, el de la frontera. Exactamente lo que vimos con el aprobado.</aside>
+  <aside class="nota" data-beat="3">Comprobar la nota baja fuera del if del -1: entonces un -1 cuenta como nota baja, porque -1 es menor que 4. Lo pillan los casos 4 y 6.</aside>
+  <aside class="nota" data-beat="4">Olvidar la segunda condición del &amp;&amp;: solo lo pilla el caso 3, el de todas bajas.</aside>
+  <aside class="nota" data-beat="5">Y el clásico de los bucles: no llegar a la última posición. Lo pillan varios, entre ellos el 2, que tiene la nota baja justo al final. En el caso 6 sale -nan: como la única nota está en la última posición, no cuenta ninguna y divide entre cero.</aside>
+  <aside class="nota" data-beat="6">Ninguna prueba sola detecta todos los fallos. Por eso hay que pensar los casos mirando el código y la especificación, y no poner tres vectores aleatorios.</aside>
+</section>
+
+<!-- Ejercicio: qué hay que hacer hoy -->
+<section class="escena" data-id="ejercicio" data-titulo="¿Qué vamos a hacer hoy?">
+  <h2 class="titular mov" data-on="1-1:centro">¿Qué vamos a hacer hoy?</h2>
+  <p class="hoy-sub" data-out="2">Implementar funciones nuevas y sus pruebas</p>
+  <p class="sub hoy-arriba" data-in="2">14 operaciones nuevas en <span class="mono">lib_vector</span>, cada una con sus pruebas</p>
+  <div class="ops ops14" data-in="2">
+    <span>rellenar</span><span>multiplicarPorEscalar</span><span>sustituir</span>
+    <span data-on="3:varios">buscar<i data-in="3">posición · -1</i></span><span>contarVeces</span><span>contarPares</span>
+    <span>productoEscalar</span><span>posMinimo</span><span>invertir</span>
+    <span data-on="3:varios">esSimetrico<i data-in="3">true · false</i></span><span data-on="3:varios">estaOrdenado<i data-in="3">true · false</i></span><span>contarDiferentes</span>
+    <span>mezclar</span><span data-on="3:varios">dueloDeVectores<i data-in="3">0 · 1 · 2</i></span>
+  </div>
+  <p class="lema" data-in="3">Una prueba, al menos, por cada resultado posible</p>
+
+  <aside class="nota" data-beat="1">Y ahora, lo que vais a hacer hoy: implementar funciones nuevas y, esta vez, también sus pruebas. Descargad del aula virtual vectorDeEnterosAmpl.zip, que es el proyecto de la sesión 8 con todo resuelto, o seguid con el vuestro.</aside>
+  <aside class="nota" data-beat="2">Estas son las 14 operaciones. Las especificaciones están en el guion; las cabeceras con PRE y POST las escribís vosotros a partir de ellas. Al menos tres pruebas por operación. La mayoría pueden ser supervisadas: vector aleatorio, se muestra, se llama y se muestra el resultado. Pero también podéis poner valores a mano en el vector, que es lo que permite probar los casos raros. mezclar es aleatoria: ahí la prueba es supervisada por fuerza.</aside>
+  <aside class="nota" data-beat="3">Lo más importante: si la función puede devolver varios valores, una prueba por cada uno. buscar, la posición y el -1; esSimetrico y estaOrdenado, true y false; dueloDeVectores, 0, 1 y 2. Y acordaos de las fronteras: el valor en la primera y en la última posición. Ahora vemos cómo se mete cada una en el proyecto.</aside>
+</section>
+
+<!-- 8 · Añadir una operación -->
+<section class="escena" data-id="pasos" data-titulo="Añadir una operación al proyecto">
+  <h2 class="titular">Añadir una operación al proyecto</h2>
+
+  <ol class="pasos seis">
+    <li data-on="1-1:activo"><b>Cabecera: PRE, POST y complejidad</b><span class="mono">lib_vector.h</span></li>
+    <li data-in="2" data-on="2-2:activo"><b>Diseñar las pruebas</b><span class="mono">lib_test_vector.h</span></li>
+    <li data-in="3" data-on="3-3:activo"><b>Implementar las pruebas</b><span class="mono">lib_test_vector.cpp</span></li>
+    <li data-in="4" data-on="4-4:activo"><b>Llamarlas en todasLasPruebas</b><span class="mono">lib_test_vector.cpp</span></li>
+    <li data-in="5" data-on="5-5:activo"><b>Implementar la operación</b><span class="mono">lib_vector.cpp</span></li>
+    <li data-in="6" data-on="6:activo"><b>Ejecutar y comprobar</b><span class="mono">ejecutar el proyecto</span></li>
+  </ol>
+
+  <div class="ejemplo pila">
+    <div class="panel" data-out="2">
+      <p class="fichero">lib_vector.h</p>
+<pre class="codigo">
+// PRE: notas iniciado; cada nota entre 0 y 10,
+//      o -1 si no se presentó. Al menos una
+//      nota presentada
+// POST: Devuelve la media de las presentadas.
+//       Si alguna es menor que 4, la nota
+//       final es como mucho 4
+// COMPLEJIDAD: O(n)
+float notaFinal ( TipoVector notas );
+</pre>
+    </div>
+    <div class="panel" data-in="2" data-out="3">
+      <p class="fichero">lib_test_vector.h</p>
+<pre class="codigo">
+// Prueba automática: seis casos
+// Caso 1: todas presentadas, ninguna baja.
+//         Debe dar la media, 7
+// Caso 2: una baja en la última posición,
+//         media 7.4. Debe dar 4
+// ...
+// Caso 6: solo una presentada. Debe dar 7
+void pruebaNotaFinal ( );
+</pre>
+    </div>
+    <div class="panel" data-in="3" data-out="4">
+      <p class="fichero">lib_test_vector.cpp</p>
+<pre class="codigo">
+// Caso 2: una baja en la última posición
+for ( i = 0; i &lt; MAX; i++ )
+    v[i] = 8;
+v[MAX-1] = 2;
+if ( notaFinal ( v ) != 4 )
+    cout &lt;&lt; "Error en módulo notaFinal (caso 2)"
+         &lt;&lt; endl;
+</pre>
+    </div>
+    <div class="panel" data-in="4" data-out="5">
+      <p class="fichero">lib_test_vector.cpp</p>
+<pre class="codigo" data-foco="4:5">
+void todasLasPruebas ( ) {
+    ...
+    pruebaPertenece();
+    pruebaNumerosMenoresIgualesMayores();
+    pruebaNotaFinal();
+    ...
+}
+</pre>
+    </div>
+    <div class="panel" data-in="5" data-out="6">
+      <p class="fichero">lib_vector.cpp</p>
+<pre class="codigo">
+float notaFinal ( TipoVector notas ) {
+    // la implementación que hemos visto
+}
+</pre>
+      <p class="aviso-pasos">La implementación, al final: las pruebas se piensan antes, sin mirar el código</p>
+    </div>
+    <div class="consola salida" data-in="6">
+      <h3>Consola · salida real, con el código bien</h3>
+<div class="txt">notaFinal: inicio del módulo de pruebas
+Pruebas automáticas
+notaFinal: fin del módulo de pruebas</div>
+      <h3 class="segunda">Con <span class="mono">&lt;= 4</span> en vez de <span class="mono">&lt; 4</span></h3>
+<div class="txt">notaFinal: inicio del módulo de pruebas
+Pruebas automáticas
+<span class="err">Error en módulo notaFinal (caso 5)</span>
+notaFinal: fin del módulo de pruebas</div>
+    </div>
+  </div>
+
+    <img class="sticker" src="img/sticker-romperla.png" alt="Sticker: ¡Vamos a romperla!" data-in="7">
+
+<aside class="nota" data-beat="1">Cómo se mete una operación nueva en el proyecto: seis pasos, siempre los mismos. Paso 1: la cabecera en lib_vector.h, con la PRE, la POST y la complejidad. Fijaos en que la PRE dice lo de «al menos una presentada»: eso es lo que nos ahorraba probar el vector todo a -1.</aside>
+  <aside class="nota" data-beat="2">Paso 2: diseñar las pruebas, en lib_test_vector.h, como comentario encima de la cabecera de la prueba. Es lo que acabamos de hacer en la pizarra: qué casos, con qué vector, y qué debe dar cada uno. Mínimo tres pruebas por operación.</aside>
+  <aside class="nota" data-beat="3">Paso 3: implementar la prueba en lib_test_vector.cpp, igual que las que ya hay. Esta es automática: se prepara el vector, se llama y, si no da lo esperado, se escribe un error. Las supervisadas, como las de iniciarAleatorio, muestran el vector y quien comprueba sois vosotros. Copiad el estilo de las que hay.</aside>
+  <aside class="nota" data-beat="4">Paso 4, el que más se olvida: añadir la llamada en todasLasPruebas. Si no, la prueba existe pero nunca se ejecuta, y no os enteráis.</aside>
+  <aside class="nota" data-beat="5">Paso 5: ahora sí, la implementación. Que vaya después tiene sentido: si pensáis las pruebas mirando vuestro código, probaréis lo que el código hace, no lo que tiene que hacer.</aside>
+  <aside class="nota" data-beat="6">Paso 6: ejecutar. Esta es la salida real del proyecto con notaFinal añadida. Con el código bien, no sale ningún error. Con el fallo del menor o igual, salta el caso 5. Si se puede, enseñadlo en Eclipse.</aside>
+  <aside class="nota" data-beat="7">Y ahora, a trabajar. ¡Vamos a romperla!</aside>
+</section>
+
+<!-- 9 · Normas -->
+<section class="escena" data-id="normas" data-titulo="Normas para los bucles" data-fuera>
+  <h2 class="titular">Normas de la asignatura en los bucles</h2>
+  <div class="reglas-bucle">
+    <p><span class="mono c-pal">for</span> cuando se recorre el vector entero</p>
+    <p><span class="mono c-pal">while</span> cuando se puede salir antes, con una bandera</p>
+  </div>
+
+  <div class="panel mal-panel cod-mal" data-in="2">
+    <p class="fichero">✕ Nunca: return ni break dentro de un bucle</p>
+<pre class="codigo">
+for ( i = 0; i &lt; MAX; i++ )
+    if ( v[i] == x )
+        return true;
+return false;
+</pre>
+  </div>
+
+  <div class="panel cod-bien" data-in="3">
+    <p class="fichero">✓ Bandera y un solo return al final</p>
+<pre class="codigo">
+existe = false;
+i = 0;
+while ( i &lt; MAX &amp;&amp; !existe ) {
+    if ( v[i] == x )
+        existe = true;
+    i++;
+}
+return existe;
+</pre>
+  </div>
+
+  <p class="lema bajo-normas" data-in="4">Un resultado true/false se guarda en una variable y se devuelve; nada de <span class="mono">if (…) return true; else return false;</span></p>
+
+  <aside class="nota" data-beat="1">Unas normas de la asignatura, las mismas que en teoría. El for, para recorrer el vector entero. Si se puede salir antes, por ejemplo al encontrar algo, un while con una bandera. Esta distinción la hacemos en teoría; si usáis un for con la bandera en la condición, como el pertenece del proyecto, no pasa nada.</aside>
+  <aside class="nota" data-beat="2">Lo que no se puede hacer nunca: return o break dentro de un bucle. El break solo en el switch. Este código funciona, pero no se acepta.</aside>
+  <aside class="nota" data-beat="3">La forma correcta: una bandera que empieza en false, el while acaba cuando se recorre todo o cuando se encuentra, y un solo return al final. Os sirve como patrón para varias de las operaciones de hoy.</aside>
+  <aside class="nota" data-beat="4">Y en las funciones que devuelven true o false: el resultado en una variable, como existe aquí, y se devuelve al final. Nada de if condición return true, else return false.</aside>
+</section>
+
+
+  <div id="progreso"></div>
+</div>
+</div>
+
+<div id="general"></div>
+<div id="apagon"></div>
+<div id="ayuda">→ / clic: siguiente · ← : anterior · O: escenas · P: presentador · F: pantalla completa · B: negro</div>
+
+<script src="motor.js"></script>
+<script src="escenas.js"></script>
+</body>
+</html>
