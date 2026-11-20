@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Tema Sesión 10: el mismo de la sesión 9. Sobrio, de aula: fondo blanco,
+   un acento verde oscuro y letra grande, porque se proyecta en el laboratorio.
+   ========================================================================== */
+
+:root {
+  --fondo: #ffffff;
+  --texto: #1c2024;
+  --suave: #474d56;
+  --linea: #1c2024;
+  --acento: #0b5d3b;
+  --tinte: #cde5d7;
+  --error: #a32020;
+  --aviso: #8a5a00;
+  --letra: "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  --mono: "Liberation Mono", Consolas, Menlo, "DejaVu Sans Mono", monospace;
+  --margen: 60px 110px 60px;
+  --t: .4s;
+  --curva: cubic-bezier(.2, .7, .2, 1);
+}
+
+.titular { font-size: 58px; line-height: 1.15; font-weight: 700; }
+.mono { font-family: var(--mono); }
+
+/* portada */
+.portada { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.portada h1 { font-size: 130px; font-weight: 700; line-height: 1.05; }
+.portada .regla { width: 180px; height: 6px; background: var(--acento); margin: 36px 0; }
+.portada p { font-size: 40px; line-height: 1.4; }
+.portada p + p { color: var(--suave); font-size: 32px; }
+.sello { position: absolute; right: 150px; top: 50%; translate: 0 -50%; height: 440px; width: auto; }
+
+/* código */
+.panel { border-left: 6px solid var(--acento); background: #eceef0; padding: 14px 26px; }
+pre.codigo { font-family: var(--mono); font-size: 34px; line-height: 1.42; }
+pre.codigo.con-foco .linea { opacity: .45; }
+pre.codigo.con-foco .linea.foco { background: var(--tinte); opacity: 1; }
+.c-com { color: var(--suave); }
+.c-pal { color: var(--acento); font-weight: 700; }
+
+/* piezas apiladas en el mismo sitio (no usar .pila: base le da height:100%) */
+.apila { display: grid; }
+.apila > * { grid-area: 1 / 1; }
+
+/* ---- vectores de vectores ------------------------------------------------ */
+.cod-dim { position: absolute; left: 110px; top: 150px; width: 1700px; border-left: 6px solid var(--acento); background: #eceef0; padding: 14px 26px; }
+.mundo { position: absolute; inset: 0; pointer-events: none; }
+.c3 {
+  position: absolute; display: grid; place-items: center;
+  border: 2px solid var(--linea); background: #fff; font: 700 44px var(--mono);
+  transition: left .8s var(--curva), top .8s var(--curva), width .8s var(--curva), height .8s var(--curva),
+              font-size .8s var(--curva), opacity .45s ease, background .3s ease, border-color .3s ease;
+}
+.c3.fila-on { background: var(--tinte); }
+.c3.diana { background: var(--acento); color: #fff; border-color: var(--acento); }
+.c3.capa1 { background: #f1f3f4; }
+.c3.capa2 { background: #e2e5e8; }
+.marco3 {
+  position: absolute; border: 3px solid var(--acento);
+  transition: left .8s var(--curva), top .8s var(--curva), width .8s var(--curva), height .8s var(--curva), opacity .45s ease;
+}
+.rot3 {
+  position: absolute; font: 700 34px var(--mono); color: var(--acento); white-space: nowrap;
+  transition: left .8s var(--curva), top .8s var(--curva), opacity .45s ease;
+}
+.rot3.gris { text-align: right; z-index: 50; color: var(--suave); font-weight: 400; font-size: 28px; }
+.oc { opacity: 0 !important; }
+
+/* ---- patronesMatriz ------------------------------------------------------ */
+.ventana { position: absolute; left: 110px; top: 160px; width: 680px; border: 2px solid #8f969f; box-shadow: 0 10px 30px rgba(0,0,0,.18); }
+.barra { background: #2b3036; color: #e9ecef; font: 400 22px var(--letra); padding: 8px 16px; }
+.lienzo { background: #fff; padding: 40px 0 20px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.tablero { display: grid; grid-template-columns: repeat(9, 62px); grid-template-rows: repeat(9, 62px); background: #c8c8c8; border: 2px solid #fff; outline: 2px solid #c8c8c8; }
+.tablero i { border: 1px solid #fff; background-clip: padding-box; transition: background .15s ease; }
+.msg { font: 700 30px var(--letra); color: rgb(20,105,216); min-height: 36px; }
+
+.lado { position: absolute; left: 870px; top: 160px; width: 940px; }
+.lado pre.codigo { font-size: 30px; }
+.explica { font-size: 36px; line-height: 1.3; margin-top: 30px; }
+.explica b { color: var(--acento); }
+.fichero { font: 700 26px var(--mono); color: var(--acento); margin-bottom: 10px; }
+
+.minis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px 26px; margin-top: 14px; }
+.mini figcaption { font: 400 24px var(--mono); margin-top: 8px; text-align: center; }
+.mini .rej { display: grid; grid-template-columns: repeat(9, 1fr); width: 200px; aspect-ratio: 1; background: #fff; border: 1px solid #fff; outline: 1px solid #c8c8c8; margin: 0 auto; }
+.mini .rej i { border: 1px solid #fff; }
+.minis .mini { opacity: 0; translate: 0 16px; transition: opacity .4s ease, translate .4s var(--curva); transition-delay: calc(var(--k) * 70ms); }
+.minis.ver .mini { opacity: 1; translate: 0 0; }
+
+.lema-pat { position: absolute; left: 870px; top: 900px; width: 940px; font-size: 36px; line-height: 1.25; font-weight: 700; color: var(--acento); border-top: 4px solid var(--acento); padding-top: 14px; }
+
+/* ---- hoy ----------------------------------------------------------------- */
+.partes { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 160px; }
+.parte { border-top: 6px solid var(--acento); padding-top: 26px; }
+.parte h3 { font-size: 34px; font-weight: 400; color: var(--acento); margin: 0 0 14px; }
+.parte p { font-size: 58px; line-height: 1.15; font-weight: 700; margin-bottom: 22px; }
+.parte > span { font-size: 34px; line-height: 1.35; color: var(--suave); display: block; }

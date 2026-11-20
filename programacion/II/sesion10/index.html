@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Programación · Sesión 10 · Matrices</title>
+  <link rel="stylesheet" href="tema.css">
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+<div id="marco">
+<div id="escenario">
+
+<!-- 1 · Portada -->
+<section class="escena" data-id="portada" data-titulo="Portada">
+  <img class="sello" src="logo-uex.png" alt="Logotipo de la Universidad de Extremadura">
+  <div class="portada">
+    <h1>Matrices</h1>
+    <div class="regla"></div>
+    <p>Programación · Sesión 10</p>
+    <p>Ingeniería Informática · Escuela Politécnica · Universidad de Extremadura</p>
+  </div>
+  <aside class="nota" data-beat="1">Sesión corta de explicación: qué es una matriz, en cinco minutos, porque ya lo habéis visto en teoría. Luego los patrones con matrices y, al final, la actividad recuperable.</aside>
+</section>
+
+<!-- 2 · De vector a matriz, y de matriz a cubo -->
+<section class="escena" data-id="dimensiones" data-titulo="Vectores de vectores">
+  <h2 class="titular">Vectores de vectores</h2>
+
+  <div class="cod-dim">
+    <pre class="codigo">const int N = 3;
+typedef int TipoVector[N];</pre>
+    <div class="apila">
+      <pre class="codigo" data-out="2">TipoVector a;</pre>
+      <pre class="codigo" data-in="2" data-out="3">TipoVector a, b, c;</pre>
+      <pre class="codigo" data-in="3" data-out="5">typedef TipoVector TipoMatriz[N];   // un vector de vectores
+TipoMatriz m;                       // m[0], m[1] y m[2] son vectores</pre>
+      <pre class="codigo" data-in="5" data-out="6">typedef int TipoMatriz[N][N];       // lo mismo, escrito de una vez
+TipoMatriz m;</pre>
+      <pre class="codigo" data-in="6" data-out="7">typedef int TipoMatriz[N][N];
+m[1][2] = 7;                        // fila 1, columna 2</pre>
+      <pre class="codigo" data-in="7" data-out="8">typedef int TipoMatriz[N][N];
+TipoMatriz m, n, p;</pre>
+      <pre class="codigo" data-in="8" data-out="9">typedef TipoMatriz TipoCubo[N];     // un vector de matrices
+TipoCubo c;                         // c[0], c[1] y c[2] son matrices</pre>
+      <pre class="codigo" data-in="9">typedef int TipoCubo[N][N][N];      // lo mismo, escrito de una vez
+c[capa][fila][col] = 7;</pre>
+    </div>
+  </div>
+
+  <div class="mundo" id="mundo"></div>
+
+  <aside class="nota" data-beat="1">Empezamos por lo que ya conocéis: un vector de 3 enteros. Un tipo con typedef y una variable a de ese tipo.</aside>
+  <aside class="nota" data-beat="2">Declaramos tres vectores: a, b y c. Tres variables sueltas, cada una con sus tres casillas.</aside>
+  <aside class="nota" data-beat="3">Ahora metemos cada vector en una casilla de otro vector. Un vector puede guardar cualquier tipo, también vectores. Esto es m: un vector de 3 casillas donde cada casilla es un vector de 3 enteros. m[0] es un vector entero, igual que lo era a.</aside>
+  <aside class="nota" data-beat="4">Si en lugar de dibujar las casillas de m en horizontal las dibujamos una debajo de otra, cada vector queda como una fila.</aside>
+  <aside class="nota" data-beat="5">Quitamos los marcos y lo que queda es una matriz: filas y columnas. En C++ se escribe de una vez, con dos corchetes, y es exactamente lo mismo. El primer índice es la fila y el segundo la columna.</aside>
+  <aside class="nota" data-beat="6">Para acceder a una celda: m[1] es la fila 1, que es un vector; y m[1][2] es la casilla 2 de ese vector. Se lee siempre fila y luego columna.</aside>
+  <aside class="nota" data-beat="7">Y la idea se repite. Si tengo varias matrices de 3 por 3…</aside>
+  <aside class="nota" data-beat="8">…puedo meterlas en un vector: c es un vector de matrices. c[0] es una matriz entera.</aside>
+  <aside class="nota" data-beat="9">Si las apilo en profundidad, tengo un cubo: tres índices, capa, fila y columna. Se puede seguir añadiendo dimensiones tanto como haga falta, pero hoy nos quedamos en dos: matrices.</aside>
+</section>
+
+<!-- 3 · El juego de los patrones -->
+<section class="escena" data-id="patrones" data-titulo="patronesMatriz">
+  <h2 class="titular">El proyecto patronesMatriz</h2>
+
+  <div class="ventana panel-ventana">
+    <div class="barra">patronesMatriz</div>
+    <div class="lienzo">
+      <div class="tablero" id="tablero"></div>
+      <p class="msg" id="msg-tablero">Fila 0</p>
+    </div>
+  </div>
+
+  <div class="lado apila">
+    <div data-out="2">
+      <pre class="codigo panel">const int MAX = 9;
+typedef int TipoMatriz[MAX][MAX];</pre>
+      <p class="explica">Cada celda guarda un <b>número de color</b>, del 0 al 6</p>
+      <p class="explica"><span class="mono">pintarMatriz ( m )</span> pinta la rejilla con esos colores. Ya está hecho.</p>
+    </div>
+    <div data-in="2" data-out="4">
+      <p class="fichero">tadPatrones.cpp · ya hecho</p>
+      <pre class="codigo panel" data-foco="2-2:4-5 3-3:6-9">void fila0 ( TipoMatriz &amp;m, int color1, int color2 ) {
+    int fila, col;
+
+    for (fila = 0; fila &lt; MAX; fila++)
+        for (col = 0; col &lt; MAX; col++)
+            if (fila == 0)
+                m[fila][col] = color1;
+            else
+                m[fila][col] = color2;
+}</pre>
+    </div>
+    <div data-in="4">
+      <p class="fichero">tadPatrones.cpp · los tienes que hacer tú</p>
+      <div class="minis" id="minis"></div>
+    </div>
+  </div>
+
+  <p class="lema-pat" data-in="5">Recorre toda la matriz y decide el color de cada celda según su fila y su columna</p>
+
+  <aside class="nota" data-beat="1">El proyecto de hoy dibuja patrones en una rejilla de 9 por 9 con el entorno gráfico. La matriz es de enteros y cada número es un color; las constantes COLOR_NEGRO, COLOR_ROJO, etc. están en entornoMatriz.h. El programa principal llama a cada patrón y luego a pintarMatriz, que ya está hecho.</aside>
+  <aside class="nota" data-beat="2">El único patrón que viene hecho es fila0. Para recorrer una matriz entera hacen falta dos bucles for anidados: el de fuera recorre las filas y el de dentro, las columnas de esa fila.</aside>
+  <aside class="nota" data-beat="3">Y dentro, en cada celda, un if decide el color: si está en la fila 0, color1; si no, color2. Esa es toda la idea del ejercicio.</aside>
+  <aside class="nota" data-beat="4">Tenéis que implementar los otros ocho en tadPatrones.cpp: damero, corona, diagonales, cruz, líneas horizontales y verticales y los dos triángulos. La especificación está en tadPatrones.h. Los dibujos son cómo los interpretamos: en las líneas, se alternan los colores; en diagonales van las dos; el triángulo superior izquierdo incluye la diagonal secundaria y el superior derecho, la principal.</aside>
+  <aside class="nota" data-beat="5">La clave: todos son el mismo esquema que fila0, cambiando la condición del if. Pensad qué cumplen la fila y la columna de las celdas que van en color1. El programa los enseña todos seguidos, con un segundo de pausa entre uno y otro.</aside>
+</section>
+
+<!-- 4 · Hoy -->
+<section class="escena" data-id="hoy" data-titulo="Hoy">
+  <h2 class="titular">Hoy</h2>
+  <div class="partes">
+    <div class="parte">
+      <h3>Primero</h3>
+      <p>patronesMatriz</p>
+      <span>Implementa los 8 patrones de <span class="mono">tadPatrones.cpp</span></span>
+    </div>
+    <div class="parte" data-in="2">
+      <h3>Al final</h3>
+      <p>Actividad recuperable 02</p>
+      <span>Proyecto <span class="mono">actividad2.zip</span> del aula virtual. Se entrega el <span class="mono">.cpp</span> y el folio.</span>
+    </div>
+  </div>
+  <aside class="nota" data-beat="1">Primero, los patrones. Es el calentamiento de matrices antes de la actividad.</aside>
+  <aside class="nota" data-beat="2">Al final, la actividad recuperable. El enunciado lo tenéis en papel. Podéis consultar los materiales de la asignatura, pero no Internet ni inteligencia artificial. Al terminar, subís el .cpp a la tarea del aula virtual y entregáis el folio con la lista de comprobación marcada.</aside>
+</section>
+
+  <div id="progreso"></div>
+</div>
+</div>
+
+<div id="general"></div>
+<div id="apagon"></div>
+<div id="ayuda">→ / clic: siguiente · ← : anterior · O: escenas · P: presentador · F: pantalla completa · B: negro</div>
+
+<script src="motor.js"></script>
+<script src="escenas.js"></script>
+</body>
+</html>
