@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Programación · Sesión 11 · Contenedores y ficheros de texto</title>
+  <link rel="stylesheet" href="tema.css">
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+<div id="marco">
+<div id="escenario">
+
+<!-- 1 · Portada -->
+<section class="escena" data-id="portada" data-titulo="Portada">
+  <img class="sello" src="logo-uex.png" alt="Logotipo de la Universidad de Extremadura">
+  <div class="portada">
+    <h1>Contenedores<br>y ficheros de texto</h1>
+    <div class="regla"></div>
+    <p>Programación · Sesión 11</p>
+    <p>Ingeniería Informática · Escuela Politécnica · Universidad de Extremadura</p>
+  </div>
+  <aside class="nota" data-beat="1">Hoy juntamos dos cosas que habéis visto en teoría esta semana: un vector cuyas casillas no son enteros sino estudiantes, y los ficheros de texto. Os cuento en unos minutos cómo es el proyecto y cómo trabajar, y el resto de la sesión es vuestra.</aside>
+</section>
+
+<!-- 2 · Vectores -->
+<section class="escena" data-id="vectores" data-titulo="Vectores">
+  <h2 class="titular">Vectores</h2>
+  <div class="tres">
+    <div class="fila3" data-in="1"><div><pre class="codigo">int v[5];</pre><p>un vector de enteros</p></div><div class="vfila int"><div class="cas" data-i="0"><span>7</span></div><div class="cas" data-i="1"><span>12</span></div><div class="cas" data-i="2"><span>5</span></div><div class="cas" data-i="3"><span>3</span></div><div class="cas" data-i="4"><span>9</span></div></div></div>
+    <div class="fila3" data-in="2"><div><pre class="codigo">int m[5][4];</pre><p>un vector de vectores: una matriz</p></div><div class="vfila mat"><div class="cas" data-i="0"><span class="mini"><i>3</i><i>8</i><i>1</i><i>6</i></span></div><div class="cas" data-i="1"><span class="mini"><i>2</i><i>9</i><i>4</i><i>7</i></span></div><div class="cas" data-i="2"><span class="mini"><i>5</i><i>0</i><i>3</i><i>8</i></span></div><div class="cas" data-i="3"><span class="mini"><i>1</i><i>6</i><i>2</i><i>9</i></span></div><div class="cas" data-i="4"><span class="mini"><i>4</i><i>7</i><i>5</i><i>0</i></span></div></div></div>
+    <div class="fila3" data-in="3"><div><pre class="codigo">🦎 v[5];</pre><p>un vector de lagartos (no existe en C++)</p></div><div class="vfila liz"><div class="cas" data-i="0"><span class="liz">🦎</span></div><div class="cas" data-i="1"><span class="liz">🦎</span></div><div class="cas" data-i="2"><span class="liz">🦎</span></div><div class="cas" data-i="3"><span class="liz">🦎</span></div><div class="cas" data-i="4"><span class="liz">🦎</span></div></div></div>
+  </div>
+
+  <p class="ilustrativo">Valores de ejemplo</p>
+
+  <aside class="nota" data-beat="1">Empezamos por lo conocido. Esto es un vector de enteros: cinco casillas seguidas, cada una con un int, y se llega a cada una por su posición, de la 0 a la 4.</aside>
+  <aside class="nota" data-beat="2">Debajo, otro vector. En una casilla puede ir cualquier tipo: si en cada casilla meto otro vector, tengo un vector de vectores: es lo que visteis la semana pasada, una matriz. m[2] es un vector entero de 4 enteros.</aside>
+  <aside class="nota" data-beat="3">Y si existiera el tipo lagarto, que no existe, tendría un vector de lagartos. Mirad los tres juntos: el vector es el mismo, cinco casillas de la 0 a la 4. Lo único que cambia es lo que hay dentro de cada casilla.</aside>
+</section>
+
+<!-- 3 · Estructuras -->
+<section class="escena" data-id="estructuras" data-titulo="Estructuras">
+  <h2 class="titular">Estructuras</h2>
+  <div class="cod2">
+    <pre class="codigo">struct Estudiante {
+    string nombre;
+    string apellidos;
+    float nota;
+};
+Estudiante e;</pre>
+  </div>
+  <div class="ficha-e">
+    <p><span class="mono">e.nombre</span><b>"Oliver"</b></p>
+    <p><span class="mono">e.apellidos</span><b>"Bennett"</b></p>
+    <p><span class="mono">e.nota</span><b>6.5</b></p>
+  </div>
+
+  <aside class="nota" data-beat="1">Así que podemos definir nuestro propio tipo. Un struct junta varios datos en uno: un estudiante tiene nombre, apellidos y nota. A cada campo se llega con un punto: e.nombre, e.apellidos, e.nota. En el proyecto Estudiante es un TAD hecho, y desde fuera se usan sus operaciones, obtenerNombre, obtenerNota… Estos datos son los de las pruebas del proyecto.</aside>
+</section>
+
+<!-- 4 · Vectores de estructuras -->
+<section class="escena" data-id="vectores-estructuras" data-titulo="Vectores de estructuras" data-fuera>
+  <h2 class="titular">Vectores de estructuras</h2>
+  <div class="cod2">
+    <pre class="codigo">Estudiante v[5];</pre>
+  </div>
+  <div class="vec2 est">
+    <div class="cas" data-i="0"><span class="num">7</span><span class="mini"><i>3</i><i>8</i><i>1</i><i>6</i></span><span class="liz">🦎</span><div class="ficha"><b>Oliver</b><span>Bennett</span><em>6.5</em></div></div>
+    <div class="cas" data-i="1"><span class="num">12</span><span class="mini"><i>2</i><i>9</i><i>4</i><i>7</i></span><span class="liz">🦎</span><div class="ficha"><b>Claire</b><span>Sterling</span><em>8.5</em></div></div>
+    <div class="cas" data-i="2"><span class="num">5</span><span class="mini"><i>5</i><i>0</i><i>3</i><i>8</i></span><span class="liz">🦎</span><div class="ficha"><b>Liam</b><span>Vance</span><em>4</em></div></div>
+    <div class="cas libre" data-i="3"><span class="num">3</span><span class="mini"><i>1</i><i>6</i><i>2</i><i>9</i></span><span class="liz">🦎</span><div class="ficha"><b>Chloe</b><span>Mercer</span><em>9.25</em></div></div>
+    <div class="cas libre" data-i="4"><span class="num">9</span><span class="mini"><i>4</i><i>7</i><i>5</i><i>0</i></span><span class="liz">🦎</span><div class="ficha"><b>Noah</b><span>Bennett</span><em>7</em></div></div>
+    <div class="puntos extra">…</div>
+    <div class="cas libre extra" data-i="99"></div>
+  </div>
+
+  <aside class="nota" data-beat="1">Y ese tipo se puede meter en un vector igual que los enteros o los lagartos: un vector de estudiantes. Cada casilla es un estudiante completo.</aside>
+</section>
+
+<!-- 5 · De vectores de estructuras a estructuras con vectores de estructuras -->
+<section class="escena" data-id="grupo" data-titulo="Estructuras con vectores de estructuras">
+  <div class="apila tit5">
+    <h2 class="titular" data-out="2">Vectores de estructuras</h2>
+    <h2 class="titular" data-in="2" data-out="3">Estructuras con vectores</h2>
+    <h2 class="titular" data-in="3">Estructuras con vectores de estructuras</h2>
+  </div>
+  <div class="cod2 apila">
+    <pre class="codigo" data-out="2">Estudiante v[5];</pre>
+    <pre class="codigo" data-in="2" data-out="3">const int MAX = 100;
+struct vov {                  // vector de ocupación variable
+    int vector[MAX];
+    int ocupadas;
+};
+vov v;</pre>
+    <pre class="codigo" data-in="3" data-out="4">const int MAX_GRUPO = 100;
+struct Grupo {
+    Estudiante vector[MAX_GRUPO];
+    int ocupadas;
+};
+Grupo g;</pre>
+    <pre class="codigo" data-in="4">g.vector[1]                   // un Estudiante entero
+obtenerNombre(g.vector[1])    // "Claire"
+obtenerNota(g.vector[1])      // 8.5</pre>
+  </div>
+  <div class="marco-g" data-in="2" data-on="2-2:corto"><i data-on="3:fuera">v</i><i data-on="2-2:fuera">g</i></div>
+  <div class="vec2" data-on="1-1:est 2-2:int 2:grupo 3:est 4:mira">
+    <div class="cas" data-i="0"><span class="num">7</span><span class="mini"><i>3</i><i>8</i><i>1</i><i>6</i></span><span class="liz">🦎</span><div class="ficha"><b>Oliver</b><span>Bennett</span><em>6.5</em></div></div>
+    <div class="cas" data-i="1"><span class="num">12</span><span class="mini"><i>2</i><i>9</i><i>4</i><i>7</i></span><span class="liz">🦎</span><div class="ficha"><b>Claire</b><span>Sterling</span><em>8.5</em></div></div>
+    <div class="cas" data-i="2"><span class="num">5</span><span class="mini"><i>5</i><i>0</i><i>3</i><i>8</i></span><span class="liz">🦎</span><div class="ficha"><b>Liam</b><span>Vance</span><em>4</em></div></div>
+    <div class="cas libre" data-i="3"><span class="num">3</span><span class="mini"><i>1</i><i>6</i><i>2</i><i>9</i></span><span class="liz">🦎</span><div class="ficha"><b>Chloe</b><span>Mercer</span><em>9.25</em></div></div>
+    <div class="cas libre" data-i="4"><span class="num">9</span><span class="mini"><i>4</i><i>7</i><i>5</i><i>0</i></span><span class="liz">🦎</span><div class="ficha"><b>Noah</b><span>Bennett</span><em>7</em></div></div>
+    <div class="puntos extra">…</div>
+    <div class="cas libre extra" data-i="99"></div>
+  </div>
+
+  <p class="campo-vec" data-in="3">vector</p>
+  <div class="ocup" data-in="2"><span>ocupadas</span><b>3</b></div>
+  <p class="ilustrativo" data-in="2" data-out="3">Valores de ejemplo</p>
+
+  <aside class="nota" data-beat="1">Y ese tipo se puede meter en un vector igual que los enteros o los lagartos: un vector de estudiantes. Cada casilla es un estudiante completo.</aside>
+  <aside class="nota" data-beat="2">Ahora al revés: una estructura que tiene dentro un vector. Es el vector de ocupación variable que visteis en teoría: un vector de tamaño fijo, aquí 100, y un contador de cuántas casillas se usan. Las usadas van seguidas desde la 0; de ocupadas en adelante hay basura y no se mira. Van juntos en un struct para que viajen siempre a la vez.</aside>
+  <aside class="nota" data-beat="3">Y juntando las dos cosas: una estructura con un vector de estructuras. Es el TAD Grupo del proyecto: el mismo vector de ocupación variable, pero en cada casilla un estudiante. El campo del vector se llama vector: es solo el nombre que le hemos dado, igual que ocupadas.</aside>
+  <aside class="nota" data-beat="4">Para usarlo: g.vector[1] es un estudiante entero, no un número. Para llegar a su nombre o a su nota, las operaciones del TAD Estudiante sobre esa casilla.</aside>
+</section>
+
+<!-- 6 · Persistencia -->
+<section class="escena" data-id="fichero" data-titulo="Persistencia">
+  <h2 class="titular">Persistencia</h2>
+
+  <div class="caja4 mem4">
+    <h3>Memoria <span>se pierde al terminar</span></h3>
+    <div class="apila">
+      <div class="filas4" data-on="3:fuera">
+        <p class="rotulo">g</p>
+        <div class="reg"><b>Oliver</b><span>Bennett</span><em>6.5</em></div>
+        <div class="reg"><b>Claire</b><span>Sterling</span><em>8.5</em></div>
+        <div class="reg"><b>Liam</b><span>Vance</span><em>4</em></div>
+      </div>
+      <div class="vars" data-in="3" data-out="8">
+        <div data-on="4:ve"><span class="mono">nombre</span><b>"Oliver"</b></div>
+        <div data-on="5:ve"><span class="mono">apellidos</span><b>"Bennett"</b></div>
+        <div data-on="6:ve"><span class="mono">nota</span><b>6.5</b></div>
+        <div data-on="7:ve"><span class="mono">basura</span><b>""</b></div>
+      </div>
+      <div class="mem7" data-in="8">
+        <div class="e7" data-on="9:fuera"><p class="rotulo">e</p><div class="reg"><b>Oliver</b><span>Bennett</span><em>6.5</em></div></div>
+        <div class="g7">
+          <div class="cab7"><p class="rotulo">g</p><div class="ocup7"><span class="mono">ocupadas</span><b><i data-out="9">0</i><i data-in="9" data-out="10">1</i><i data-in="10" data-out="11">2</i><i data-in="11">3</i></b></div></div>
+          <div class="marco7">
+            <div class="reg hueco" data-on="9:lleno"><b>Oliver</b><span>Bennett</span><em>6.5</em></div>
+            <div class="reg hueco sig7" data-on="10:lleno"><b>Claire</b><span>Sterling</span><em>8.5</em></div>
+            <div class="reg hueco sig7" data-on="11:lleno"><b>Liam</b><span>Vance</span><em>4</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caja4 fich4">
+    <h3>Disco <span>se queda</span></h3>
+    <div class="txt">
+      <p class="barra-f">prueba_grupo_temp.txt</p>
+      <div class="lineas">
+        <p data-in="2" style="transition-delay:.1s"><span class="tk" data-on="4-4:act 5:ya">Oliver</span><span class="tk" data-on="4-4:act 5:ya">;</span><span class="tk" data-on="5-5:act 6:ya">Bennett</span><span class="tk" data-on="5-5:act 6:ya">;</span><span class="tk" data-on="6-6:act 7:ya">6.5</span><span class="tk salto" data-on="6-6:pend 7-7:act 8:ya">↵</span></p>
+        <p data-in="2" data-on="10-10:act 11:ya" style="transition-delay:.5s">Claire;Sterling;8.5<span class="salto">↵</span></p>
+        <p data-in="2" data-on="11-11:act" style="transition-delay:.9s">Liam;Vance;4<span class="salto">↵</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flecha4" data-in="2" data-out="3"><svg viewBox="0 0 120 40" width="120" height="40"><line x1="8" y1="20" x2="100" y2="20" stroke="currentColor" stroke-width="6"/><polygon points="112,20 92,6 92,34" fill="currentColor"/></svg></div>
+  <div class="flecha4" data-in="3"><svg viewBox="0 0 120 40" width="120" height="40"><line x1="112" y1="20" x2="20" y2="20" stroke="currentColor" stroke-width="6"/><polygon points="8,20 28,6 28,34" fill="currentColor"/></svg></div>
+
+  <div class="cod4 apila" data-in="2">
+    <div data-out="3">
+      <p class="fichero">volcarFichero · resumido</p>
+      <pre class="codigo">ofstream salida(nombreFichero);         // se crea vacío
+if (!salida) …                          // ¿se ha podido abrir?
+for (i = 0; i &lt; g.ocupadas; i++) {
+    salida &lt;&lt; obtenerNombre(g.vector[i]) &lt;&lt; ';';
+    salida &lt;&lt; obtenerApellidos(g.vector[i]) &lt;&lt; ';';
+    salida &lt;&lt; obtenerNota(g.vector[i]) &lt;&lt; endl;
+}
+salida.close();</pre>
+    </div>
+    <div data-in="3">
+      <p class="fichero">cargarFichero · resumido</p>
+      <pre class="codigo" data-foco="4-4:3 5-5:4 6-6:5 7-7:6 8-8:7 9-9:8 10-11:3-8">ifstream entrada(nombreFichero);
+iniciar(g);
+while (getline(entrada, nombre, ';')) {
+    getline(entrada, apellidos, ';');
+    entrada &gt;&gt; nota;
+    getline(entrada, basura);           // se come el salto de línea
+    crearEstudiante(nombre, apellidos, nota, e);
+    insertar(g, e);
+}</pre>
+    </div>
+  </div>
+
+
+  <aside class="nota" data-beat="1">El grupo vive en memoria: cuando el programa termina, se pierde. Para guardarlo hace falta un fichero, que está en disco y se queda. Usamos ficheros de texto, como en teoría.</aside>
+  <aside class="nota" data-beat="2">volcarFichero, que en el proyecto os damos hecha, escribe una línea por estudiante: nombre, punto y coma, apellidos, punto y coma, nota y salto de línea. Se escribe igual que con cout. Fijaos en que se comprueba si se ha podido abrir con if (!salida), igual que en teoría. Este es el fichero real que deja la prueba de ficheros; la nota 4 sale sin decimales.</aside>
+  <aside class="nota" data-beat="3">cargarFichero, también hecha, hace lo contrario: lee el fichero y vuelve a llenar el grupo. Este es su código; vamos a seguirlo paso a paso con la primera línea.</aside>
+  <aside class="nota" data-beat="4">Empieza el while: getline con ';' lee hasta el punto y coma y se lo come: en nombre queda Oliver.</aside>
+  <aside class="nota" data-beat="5">Otro getline hasta el siguiente punto y coma: los apellidos. Con getline, el nombre o los apellidos pueden llevar espacios.</aside>
+  <aside class="nota" data-beat="6">La nota se lee con >>, que convierte el texto 6.5 en un float. Pero deja el salto de línea sin leer.</aside>
+  <aside class="nota" data-beat="7">Por eso el último getline: se come el salto de línea, y basura queda vacía. Si no estuviera, el siguiente nombre empezaría por un salto de línea. Es lo que visteis en teoría sobre mezclar >> y getline.</aside>
+  <aside class="nota" data-beat="8">Con los tres datos se crea el registro: crearEstudiante junta nombre, apellidos y nota en un estudiante, e. Todavía está suelto, fuera del grupo, que iniciar dejó vacío.</aside>
+  <aside class="nota" data-beat="9">insertar lo mete en el grupo: va a la primera casilla libre y ocupadas sube de 0 a 1.</aside>
+  <aside class="nota" data-beat="10">Y el while vuelve a empezar: todo el cuerpo otra vez con la segunda línea. Claire entra en la siguiente casilla y ocupadas pasa a 2.</aside>
+  <aside class="nota" data-beat="11">Lo mismo con Liam: ocupadas, 3. Ya no quedan líneas, getline no puede leer y el while termina. Por eso cargarFichero se apoya en iniciar e insertar: hasta que no las tengáis, no funciona. Y usad los ficheros como os hemos enseñado en teoría, no de otras formas que encontréis por ahí.</aside>
+</section>
+
+<!-- 7 · El proyecto acta -->
+<section class="escena" data-id="proyecto" data-titulo="El proyecto acta">
+  <h2 class="titular">El proyecto <span class="mono">acta</span></h2>
+
+  <div class="ventana explorador">
+    <div class="barra">acta · src</div>
+    <div class="archivos">
+      <div class="arch" data-on="5:on"><span class="mono">acta.cpp</span><em>main</em></div>
+      <div class="arch" data-on="2-2:on"><span class="mono">estudiante.h</span><em>hecho</em></div>
+      <div class="arch" data-on="2-2:on"><span class="mono">estudiante.cpp</span><em>hecho</em></div>
+      <div class="arch" data-on="2-2:on"><span class="mono">pruebasEstudiante.h</span><em>hecho</em></div>
+      <div class="arch" data-on="2-2:on"><span class="mono">pruebasEstudiante.cpp</span><em>hecho</em></div>
+      <div class="arch" data-on="3-3:on"><span class="mono">grupo.h</span><em class="tu">especificación</em></div>
+      <div class="arch" data-on="4-4:on"><span class="mono">grupo.cpp</span><em class="tu">lo haces tú</em></div>
+      <div class="arch" data-on="5:on"><span class="mono">pruebasGrupo.h</span><em>hecho</em></div>
+      <div class="arch" data-on="5:on"><span class="mono">pruebasGrupo.cpp</span><em>hecho</em></div>
+    </div>
+  </div>
+
+  <div class="lado3 apila">
+    <div class="dos-tad" data-out="2">
+      <div><h3>Estudiante</h3><p>Un estudiante: nombre, apellidos y nota</p><span>Hecho y probado</span></div>
+      <div><h3>Grupo</h3><p>El contenedor: hasta 100 estudiantes</p><span class="tu">Lo implementas tú</span></div>
+    </div>
+    <div data-in="2" data-out="3">
+      <p class="fichero">estudiante.h · resumido</p>
+      <pre class="codigo panel">void   crearEstudiante (nombre, apellidos, nota, e);
+string obtenerNombre (e);
+string obtenerApellidos (e);
+float  obtenerNota (e);
+void   modificarNota (e, nuevaNota);
+string obtenerCalificacion (e);   // "Notable"
+void   mostrarEstudiante (e);</pre>
+    </div>
+    <div data-in="3" data-out="4">
+      <p class="fichero">grupo.h</p>
+      <pre class="codigo panel" data-foco="3:3-8">// PRE = {g es un grupo iniciado y
+//        e es un estudiante creado}
+// POST = {si g no está lleno y no existe otro
+//         estudiante en g con el mismo nombre y
+//         apellidos que e, inserta e en g y
+//         devuelve true; en caso contrario,
+//         no modifica g y devuelve false}
+// COMPL = { TODO }
+bool insertar (Grupo &amp;g, Estudiante e);</pre>
+    </div>
+    <div data-in="4" data-out="5">
+      <p class="fichero">grupo.cpp</p>
+      <pre class="codigo panel">bool insertar (Grupo &amp;g, Estudiante e) {
+     // TODO
+    return false; // ¡BORRA ESTO!
+}</pre>
+      <p class="explica">Ya hechas: <span class="mono">cargarFichero</span>, <span class="mono">volcarFichero</span> y <span class="mono">mostrarGrupo</span></p>
+    </div>
+    <div data-in="5">
+      <p class="fichero">acta.cpp</p>
+      <pre class="codigo panel">int main() {
+    pruebasEstudiante();
+    todasLasPruebasGrupo();
+    return 0;
+}</pre>
+    </div>
+  </div>
+
+  <aside class="nota" data-beat="1">El proyecto se llama acta y está en el aula virtual. Tiene dos TAD: Estudiante, que es un estudiante suelto, y Grupo, que es el contenedor. Estudiante os lo damos hecho; Grupo lo tenéis que implementar vosotros.</aside>
+  <aside class="nota" data-beat="2">Estudiante: su .h, su .cpp y sus pruebas, todo hecho. Estas son sus operaciones, resumidas. Las vais a usar desde Grupo para llegar a los datos de cada casilla.</aside>
+  <aside class="nota" data-beat="3">En grupo.h está la especificación de cada operación: precondición, postcondición y complejidad. Leed bien la postcondición, que dice qué hay que devolver en cada caso. Aquí, por ejemplo, insertar no admite dos estudiantes con el mismo nombre y apellidos. La complejidad está por rellenar: cuando implementéis cada operación, poned el tamaño del problema y el orden.</aside>
+  <aside class="nota" data-beat="4">En grupo.cpp están todas las cabeceras con un TODO y un return provisional para que compile. Ese return hay que borrarlo. Ya están hechas las dos de ficheros, cargarFichero y volcarFichero, y también mostrarGrupo, que os sirve para ver el contenido.</aside>
+  <aside class="nota" data-beat="5">Las pruebas de Grupo están todas hechas, y el main solo llama a las pruebas.</aside>
+</section>
+
+<!-- 8 · Plan de trabajo -->
+<section class="escena" data-id="plan" data-titulo="Plan de trabajo">
+  <h2 class="titular">Plan de trabajo</h2>
+
+  <ol class="pasos">
+    <li data-on="1-1:activo"><b>Leer la especificación y las pruebas</b><span class="mono">grupo.h · pruebasGrupo.h</span></li>
+    <li data-in="2" data-on="2-2:activo"><b>Inicialización, estado e inserción</b><span class="mono">grupo.cpp</span></li>
+    <li data-in="3" data-on="3-3:activo"><b>Revisar las operaciones con ficheros y ejecutar sus pruebas</b><span class="mono">grupo.cpp</span></li>
+    <li data-in="4" data-on="4-5:activo"><b>Implementar los módulos que faltan</b><span class="mono">grupo.cpp · grupo.h</span></li>
+    <li data-in="6" data-on="6:activo"><b>Si acabas: nuevas operaciones</b><span class="mono">grupo.h · grupo.cpp · pruebasGrupo</span></li>
+  </ol>
+
+  <div class="ejemplo apila">
+    <div class="panel" data-out="2">
+      <p class="fichero">pruebasGrupo.h · resumido</p>
+      <pre class="codigo">// Caso 1: 3 estudiantes distintos, grupo vacío
+// Caso 2: un duplicado (mismo nombre y apellidos)
+// Caso 3: mismo apellido, distinto nombre
+// Caso 4: llenar hasta MAX_GRUPO y uno más
+void pruebaInsertarYLleno();</pre>
+    </div>
+    <div data-in="2" data-out="3">
+      <div class="panel">
+        <p class="fichero">grupo.cpp</p>
+        <pre class="codigo">void iniciar (Grupo &amp;g);
+int  cuantos (Grupo g);
+bool estaVacio (Grupo g);
+bool estaLleno (Grupo g);
+bool buscar (Grupo g, string nombre,
+             string apellidos, Estudiante &amp;e);
+bool insertar (Grupo &amp;g, Estudiante e);</pre>
+      </div>
+    </div>
+    <div class="esquema" data-in="3" data-out="4">
+      <svg viewBox="0 0 960 400" width="960" height="400" role="img" aria-label="El grupo en memoria y el fichero, con volcarFichero y cargarFichero">
+        <text x="10" y="58" class="e-rot">g</text>
+        <rect x="10" y="74" width="300" height="250" class="e-caja"/>
+        <rect x="30" y="94" width="260" height="62" class="e-reg"/><text x="160" y="135" class="e-nom">Oliver</text>
+        <rect x="30" y="168" width="260" height="62" class="e-reg"/><text x="160" y="209" class="e-nom">Claire</text>
+        <rect x="30" y="242" width="260" height="62" class="e-reg"/><text x="160" y="283" class="e-nom">Liam</text>
+
+        <path d="M650 74 H860 L920 134 V334 H650 Z" class="e-fich"/>
+        <path d="M860 74 V134 H920" class="e-dobla"/>
+        <line x1="680" y1="170" x2="880" y2="170" class="e-lin"/>
+        <line x1="680" y1="210" x2="890" y2="210" class="e-lin"/>
+        <line x1="680" y1="250" x2="850" y2="250" class="e-lin"/>
+        <text x="785" y="370" class="e-pie">fichero de texto</text>
+
+        <line x1="335" y1="160" x2="610" y2="160" class="e-fle"/><polygon points="628,160 604,146 604,174" class="e-pun"/>
+        <text x="480" y="140" class="e-op">volcarFichero</text>
+        <line x1="625" y1="250" x2="350" y2="250" class="e-fle"/><polygon points="332,250 356,236 356,264" class="e-pun"/>
+        <text x="480" y="300" class="e-op">cargarFichero</text>
+      </svg>
+    </div>
+    <div data-in="4" data-out="5">
+      <div class="panel">
+        <p class="fichero">grupo.cpp</p>
+        <pre class="codigo">modificarNota
+notaMasAlta
+calcularMedia
+eliminar
+eliminarMenores</pre>
+      </div>
+      <p class="aviso-pasos">Una, sus pruebas, y a la siguiente</p>
+    </div>
+    <div data-in="5" data-out="6">
+      <div class="panel">
+        <p class="fichero">grupo.h</p>
+        <pre class="codigo" data-foco="5:2-5">// PRE = {g es un grupo iniciado}
+// POST = {devuelve la media aritmética de las
+//         notas de los estudiantes de g,
+//         o -1 si el grupo está vacío}
+// COMPL = { TODO }
+float calcularMedia (Grupo g);</pre>
+      </div>
+      <p class="aviso-pasos">Lee bien qué se devuelve en cada caso, y rellena la complejidad</p>
+    </div>
+    <div data-in="6">
+      <div class="panel">
+        <p class="fichero">nuevas operaciones del TAD Grupo</p>
+        <pre class="codigo">actualizarDesdeFichero
+volcarAprobados
+ordenarPorApellidos
+volcarActaCompleta
+unirGrupos</pre>
+      </div>
+      <p class="aviso-pasos">¿Y los no presentados? ¿Qué habría que cambiar?</p>
+    </div>
+  </div>
+
+  <img class="pegatina" data-in="7" src="img/vamos.png" alt="Pegatina: C/C++ Come on!">
+
+  <aside class="nota" data-beat="1">El plan que os proponemos. Primero, leer: estudiante.h, grupo.h y las pruebas. Las pruebas dicen qué casos límite se van a comprobar; por ejemplo, las de insertar.</aside>
+  <aside class="nota" data-beat="2">Después, lo básico: iniciar, cuantos, estaVacio, estaLleno, buscar e insertar. Buscar va antes que insertar porque insertar no admite repetidos y tiene que buscar primero. Con esto ya funcionan las operaciones de ficheros.</aside>
+  <aside class="nota" data-beat="3">Con eso, revisad cargarFichero y volcarFichero, que están hechas: volcar pasa el grupo al fichero y cargar lo trae de vuelta, apoyándose en iniciar e insertar. Ejecutad sus pruebas: vuelcan un grupo, lo cargan en otro y comprueban que coinciden.</aside>
+  <aside class="nota" data-beat="4">Y luego, el resto, de una en una: implementáis una, ejecutáis sus pruebas y no pasáis a la siguiente hasta que no den errores. Hacer pequeños main de prueba propios también ayuda: crear un grupo con vuestros datos, volcarlo y abrir el fichero para ver cómo queda.</aside>
+  <aside class="nota" data-beat="5">Dos cosas. Muchas operaciones devuelven un bool o un valor especial, como -1 si el grupo está vacío: leed bien la postcondición. Y en grupo.h, la complejidad de cada operación está por rellenar: tamaño del problema y orden.</aside>
+  <aside class="nota" data-beat="6">Lo normal es no acabar lo anterior hoy. Pero si alguien acaba, en el guion tiene operaciones nuevas para practicar: actualizar notas desde un fichero tras la revisión, volcar solo los aprobados, ordenar por apellidos, el acta completa ordenada con la media, y unir dos grupos sin repetir a nadie. Para cada una, como siempre: especificación en grupo.h, código en grupo.cpp y pruebas. Y una pregunta de diseño: hasta ahora todos se han presentado; ¿qué cambiaríais para guardar también a los no presentados?</aside>
+  <aside class="nota" data-beat="7">Y a trabajar. ¡Vamos!</aside>
+</section>
+
+<!-- 9 · Si te sobra tiempo -->
+<section class="escena" data-id="ampliaciones" data-titulo="Ampliaciones" data-fuera>
+  <h2 class="titular">Si acabas · Nuevas operaciones del TAD Grupo</h2>
+  <ul class="lista-amp">
+    <li><b>a)</b><span class="mono">actualizarDesdeFichero</span>: notas cambiadas tras la revisión, desde un fichero</li>
+    <li><b>b)</b><span class="mono">volcarAprobados</span>: solo los de nota ≥ 5, a un fichero</li>
+    <li><b>c)</b><span class="mono">ordenarPorApellidos</span>: con un algoritmo de ordenación de clase</li>
+    <li><b>d)</b><span class="mono">volcarActaCompleta</span>: acta ordenada, con calificación, presentados y media</li>
+    <li><b>e)</b><span class="mono">unirGrupos</span>: dos grupos en uno, sin repetir a nadie</li>
+    <li data-in="2"><b>f)</b>No presentados: ¿qué habría que cambiar para guardarlos?</li>
+  </ul>
+  <p class="aviso-amp" data-in="2">Cada una: especificación en <span class="mono">grupo.h</span>, código en <span class="mono">grupo.cpp</span> y pruebas en <span class="mono">pruebasGrupo</span></p>
+
+  <aside class="nota" data-beat="1">Lo normal es no acabar lo anterior hoy. Pero si alguien acaba, en el guion tiene operaciones nuevas para practicar. Todas trabajan con el grupo y varias con ficheros.</aside>
+  <aside class="nota" data-beat="2">Y una pregunta de diseño: hasta ahora todos se han presentado. ¿Qué cambiaríais para guardar también a los no presentados? Para cada operación nueva, como siempre: especificación, implementación y pruebas.</aside>
+</section>
+
+  <div id="progreso"></div>
+</div>
+</div>
+
+<div id="general"></div>
+<div id="apagon"></div>
+<div id="ayuda">→ / clic: siguiente · ← : anterior · O: escenas · P: presentador · F: pantalla completa · B: negro</div>
+
+<script src="motor.js"></script>
+<script src="escenas.js"></script>
+</body>
+</html>

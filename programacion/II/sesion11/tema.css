@@ -1,0 +1,211 @@
+/* ==========================================================================
+   Tema Sesión 11: el mismo de las sesiones 9 y 10. Sobrio, de aula: fondo blanco,
+   un acento verde oscuro y letra grande, porque se proyecta en el laboratorio.
+   ========================================================================== */
+
+:root {
+  --fondo: #ffffff;
+  --texto: #1c2024;
+  --suave: #474d56;
+  --linea: #1c2024;
+  --acento: #0b5d3b;
+  --tinte: #cde5d7;
+  --error: #a32020;
+  --aviso: #8a5a00;
+  --letra: "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  --mono: "Liberation Mono", Consolas, Menlo, "DejaVu Sans Mono", monospace;
+  --margen: 60px 110px 60px;
+  --t: .4s;
+  --curva: cubic-bezier(.2, .7, .2, 1);
+}
+
+.titular { font-size: 58px; line-height: 1.15; font-weight: 700; }
+.mono { font-family: var(--mono); }
+
+/* portada */
+.portada { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.portada h1 { font-size: 130px; font-weight: 700; line-height: 1.05; }
+.portada .regla { width: 180px; height: 6px; background: var(--acento); margin: 36px 0; }
+.portada p { font-size: 40px; line-height: 1.4; }
+.portada p + p { color: var(--suave); font-size: 32px; }
+.sello { position: absolute; right: 150px; top: 50%; translate: 0 -50%; height: 440px; width: auto; }
+
+/* código */
+.panel { border-left: 6px solid var(--acento); background: #eceef0; padding: 14px 26px; }
+pre.codigo { font-family: var(--mono); font-size: 34px; line-height: 1.42; }
+pre.codigo.con-foco .linea { opacity: .45; }
+pre.codigo.con-foco .linea.foco { background: var(--tinte); opacity: 1; }
+.c-com { color: var(--suave); }
+.c-pal { color: var(--acento); font-weight: 700; }
+
+/* piezas apiladas en el mismo sitio (no usar .pila: base le da height:100%) */
+.apila { display: grid; }
+.apila > * { grid-area: 1 / 1; }
+
+
+.ilustrativo { position: absolute; left: 110px; bottom: 26px; font-size: 22px; font-style: italic; color: var(--suave); }
+.fuera { opacity: 0 !important; pointer-events: none; }
+.fichero { font: 700 26px var(--mono); color: var(--acento); margin-bottom: 10px; }
+.explica { font-size: 34px; line-height: 1.3; margin-top: 26px; }
+.ventana { border: 2px solid #8f969f; box-shadow: 0 10px 30px rgba(0,0,0,.14); background: #fff; }
+.barra { background: #2b3036; color: #e9ecef; font: 400 24px var(--letra); padding: 8px 16px; }
+
+/* ---- vectores de cualquier tipo --------------------------------------------- */
+.cod2 { position: absolute; left: 110px; top: 160px; width: 1700px; }
+.cod2 > pre { align-self: start; border-left: 6px solid var(--acento); background: #eceef0; padding: 14px 26px; }
+.vec2 { position: absolute; left: 110px; top: 580px; display: flex; gap: 14px; align-items: flex-start; transition: opacity var(--t) ease; }
+.cas {
+  position: relative; width: 130px; height: 130px; border: 2px solid var(--linea); background: #fff;
+  display: grid; grid-template: 100% / 100%; place-items: center;
+  transition: width .7s var(--curva), height .7s var(--curva), background .3s ease, border-color .3s ease;
+}
+.cas::after { content: "[" attr(data-i) "]"; position: absolute; top: calc(100% + 8px); left: 0; right: 0; text-align: center; font: 400 26px var(--mono); color: var(--suave); }
+.cas > * { grid-area: 1 / 1; opacity: 0; transition: opacity .4s ease; }
+.cas .num { font: 700 48px var(--mono); }
+.cas .liz { font-size: 76px; line-height: 1; font-family: "Noto Color Emoji", "Segoe UI Emoji", "Apple Color Emoji", sans-serif; }
+.mini { display: flex; }
+.mini i { width: 50px; height: 50px; border: 2px solid var(--suave); margin-left: -2px; display: grid; place-items: center; font: 700 26px var(--mono); font-style: normal; }
+.ficha { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.ficha b { font-size: 34px; font-weight: 700; }
+.ficha span { font-size: 30px; }
+.ficha em { font: 700 36px var(--mono); font-style: normal; color: var(--acento); padding: 0 10px; transition: background .3s ease, color .3s ease; }
+.puntos { width: 70px; height: 190px; display: grid; place-items: center; font-size: 48px; color: var(--suave); }
+.extra { opacity: 0; transition: opacity .4s ease; }
+.vec2.int .num, .vec2.mat .mini, .vec2.liz .liz, .vec2.est .ficha { opacity: 1; }
+.vec2.mat .cas { width: 236px; height: 86px; }
+.vec2.est .cas { width: 250px; height: 190px; }
+.vec2.grupo .extra { opacity: 1; }
+.vec2.grupo .cas.libre { background: #eceef0; }
+.vec2.grupo .cas.libre > * { opacity: 0; }
+.vec2.mira .cas:nth-child(2) { border: 4px solid var(--acento); background: var(--tinte); }
+.vec2.mira .cas:nth-child(2) em { background: var(--acento); color: #fff; }
+.ficha-e { position: absolute; left: 110px; top: 560px; width: 760px; border: 2px solid var(--linea); background: #fff; padding: 10px 0; }
+.ficha-e p { display: grid; grid-template-columns: 300px 1fr; align-items: center; padding: 10px 30px; font-size: 36px; }
+.ficha-e p + p { border-top: 1px solid #d3d6da; }
+.ficha-e .mono { color: var(--acento); font-weight: 700; }
+.ficha-e b { font: 700 38px var(--mono); }
+.marco-g { position: absolute; left: 80px; top: 540px; width: 1730px; height: 470px; border: 3px solid var(--acento); transition: width .7s var(--curva), opacity var(--t) ease; }
+.marco-g.corto { width: 1000px; }
+.marco-g i { transition: opacity .3s ease; }
+.tit5 { width: max-content; }
+.marco-g i { position: absolute; left: -2px; top: -46px; font: 700 36px var(--mono); font-style: normal; color: var(--acento); }
+.ocup { position: absolute; left: 110px; top: 880px; display: flex; align-items: center; gap: 20px; }
+.ocup span { font: 400 34px var(--mono); }
+.ocup b { width: 100px; height: 90px; border: 2px solid var(--linea); display: grid; place-items: center; font: 700 44px var(--mono); }
+
+.tres { position: absolute; left: 110px; top: 170px; width: 1700px; display: flex; flex-direction: column; gap: 100px; }
+.fila3 { display: grid; grid-template-columns: 560px 1fr; align-items: center; }
+.fila3 pre.codigo { font-size: 40px; font-weight: 700; }
+.fila3 p { font-size: 28px; color: var(--suave); margin-top: 6px; }
+.vfila { display: flex; gap: 14px; }
+.vfila .cas > * { opacity: 1; }
+.vfila.int .cas > span { font: 700 48px var(--mono); }
+.vfila.mat .cas { width: 206px; height: 80px; }
+.vfila.mat .mini i { width: 44px; height: 44px; font-size: 24px; }
+.vfila.mat { gap: 12px; }
+
+/* ---- el proyecto ------------------------------------------------------------ */
+.explorador { position: absolute; left: 110px; top: 160px; width: 640px; }
+.archivos { padding: 12px 0; }
+.arch { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 22px; font-size: 30px; transition: background .3s ease; }
+.arch em { font: 400 24px var(--letra); font-style: normal; color: var(--suave); }
+.arch em.tu { color: var(--acento); font-weight: 700; }
+.arch.on { background: var(--tinte); }
+.lado3 { position: absolute; left: 830px; top: 160px; width: 980px; }
+.lado3 pre.codigo { font-size: 27px; }
+.dos-tad { display: flex; flex-direction: column; gap: 60px; }
+.dos-tad > div { border-top: 6px solid var(--acento); padding-top: 20px; }
+.dos-tad h3 { font: 700 30px var(--mono); color: var(--acento); margin-bottom: 10px; }
+.dos-tad p { font-size: 46px; line-height: 1.15; font-weight: 700; margin-bottom: 12px; }
+.dos-tad span { font-size: 32px; color: var(--suave); }
+.dos-tad span.tu { color: var(--acento); font-weight: 700; }
+pre.consola { margin: 26px 0 0; padding: 16px 22px; background: #1e2226; color: #e6e6e6; font: 400 21px/1.45 var(--mono); white-space: pre; }
+
+/* ---- memoria y fichero ------------------------------------------------------ */
+.caja4 { position: absolute; top: 160px; height: 400px; }
+.caja4 h3 { font-size: 32px; font-weight: 700; margin-bottom: 18px; }
+.caja4 h3 span { font-weight: 400; font-size: 26px; color: var(--suave); margin-left: 14px; }
+.mem4 { left: 110px; width: 650px; }
+.flecha4 { position: absolute; left: 770px; top: 340px; color: var(--acento); }
+.fich4 { left: 900px; width: 910px; }
+.filas4 { display: flex; flex-direction: column; gap: 12px; transition: opacity var(--t) ease; }
+.rotulo { font: 700 32px var(--mono); color: var(--acento); }
+.reg { display: grid; grid-template-columns: 1.1fr 1.3fr .6fr; align-items: baseline; border: 2px solid var(--linea); padding: 12px 22px; font-size: 32px; }
+.reg em { font: 700 32px var(--mono); font-style: normal; color: var(--acento); text-align: right; }
+.reg.nuevo { background: var(--tinte); }
+.mem7 { display: flex; flex-direction: column; gap: 14px; }
+.e7 { display: flex; align-items: center; gap: 22px; max-height: 80px; transition: opacity var(--t) ease, max-height .5s var(--curva); }
+.e7 .reg { flex: 1; }
+.e7.fuera { max-height: 0; }
+.cab7 { display: flex; align-items: center; justify-content: space-between; }
+.marco7 { border: 3px solid var(--acento); padding: 10px 14px; display: flex; flex-direction: column; gap: 10px; }
+.mem7 .reg { padding: 8px 20px; transition: background .4s ease, max-height .5s var(--curva), padding .5s var(--curva), border-width .5s, margin .5s; max-height: 70px; overflow: hidden; }
+.reg > * { transition: opacity .4s ease; }
+.reg.hueco { background: #eceef0; }
+.reg.hueco > * { opacity: 0; }
+.reg.hueco.lleno { background: var(--tinte); }
+.reg.hueco.lleno > * { opacity: 1; }
+.mem7 .reg.sig7:not(.lleno) { max-height: 0; padding-block: 0; border-width: 0; margin-top: -10px; }
+.ocup7 { display: flex; align-items: center; gap: 16px; font-size: 28px; }
+.ocup7 b { display: grid; width: 64px; height: 52px; border: 2px solid var(--linea); place-items: center; font: 700 34px var(--mono); }
+.ocup7 b i { grid-area: 1 / 1; font-style: normal; }
+.lineas p { transition: background .3s ease, opacity .3s ease, translate var(--t) var(--curva); }
+.lineas p.act { background: var(--tinte); }
+.lineas p.ya { opacity: .3; }
+.vars { display: flex; flex-direction: column; gap: 14px; margin-top: 46px; }
+.vars > div { display: grid; grid-template-columns: 220px 1fr; align-items: center; font-size: 32px; opacity: .25; transition: opacity .3s ease; }
+.vars > div.ve { opacity: 1; }
+.vars b { font: 700 34px var(--mono); border: 2px solid var(--linea); padding: 6px 18px; width: max-content; min-width: 120px; }
+.txt { border: 2px solid #8f969f; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.14); }
+.barra-f { background: #2b3036; color: #e9ecef; font: 400 24px var(--letra); padding: 8px 16px; }
+.lineas { padding: 18px 24px; min-height: 230px; font: 400 44px/1.55 var(--mono); }
+.salto { color: #9aa1a9; }
+.tk { padding: 0 1px; transition: background .3s ease, color .3s ease, opacity .3s ease; }
+.tk.act { background: var(--acento); color: #fff; }
+.tk.pend { outline: 3px solid var(--aviso); color: var(--aviso); }
+.tk.ya { opacity: .3; }
+.cod4 { position: absolute; left: 110px; top: 600px; width: 1700px; border-left: 6px solid var(--acento); background: #eceef0; padding: 12px 26px; }
+.cod4 pre.codigo { font-size: 29px; }
+
+/* ---- plan (como en las sesiones 8 y 9) ------------------------------------ */
+.pasos { position: absolute; left: 110px; top: 170px; width: 700px; margin: 0; padding: 0; list-style: none; counter-reset: paso; }
+.pasos li { counter-increment: paso; position: relative; padding: 13px 14px 13px 76px; min-height: 124px; font-size: 31px; line-height: 1.2; color: var(--suave); border-left: 6px solid transparent; transition: opacity var(--t) var(--curva), translate var(--t) var(--curva), color .25s ease, background .25s ease, border-color .25s ease; }
+.pasos li::before { content: counter(paso); position: absolute; left: 18px; top: 12px; font: 700 44px var(--mono); }
+.pasos li b { display: block; font-weight: 700; }
+.pasos li .mono { display: block; font-size: 26px; margin-top: 4px; }
+.pasos li.activo { color: var(--texto); background: var(--tinte); border-left-color: var(--acento); }
+.pasos li.activo::before, .pasos li.activo .mono { color: var(--acento); }
+.ejemplo { position: absolute; left: 850px; top: 170px; width: 960px; }
+.ejemplo pre.codigo { font-size: 28px; }
+.aviso-pasos { font-size: 32px; font-weight: 700; color: var(--acento); margin-top: 18px; }
+.consola.salida { background: #1c2024; color: #e9ecef; padding: 14px 26px; font: 400 28px/1.6 var(--mono); align-self: start; }
+.consola.salida h3 { font: 400 22px var(--letra); color: #c4c8ce; margin-bottom: 6px; }
+.consola .sal { white-space: pre; }
+.ejemplo > * { align-self: start; }
+.esquema svg { display: block; }
+.e-rot { font: 700 34px var(--mono); fill: var(--acento); }
+.e-caja { fill: none; stroke: var(--acento); stroke-width: 3; }
+.e-reg { fill: var(--tinte); stroke: var(--linea); stroke-width: 2; }
+.e-nom { font: 700 30px var(--letra); fill: var(--texto); text-anchor: middle; }
+.e-fich { fill: #fff; stroke: var(--linea); stroke-width: 3; stroke-linejoin: round; }
+.e-dobla { fill: #eceef0; stroke: var(--linea); stroke-width: 3; stroke-linejoin: round; }
+.e-lin { stroke: #9aa1a9; stroke-width: 6; stroke-linecap: round; }
+.e-pie { font: 400 26px var(--letra); fill: var(--suave); text-anchor: middle; }
+.e-fle { stroke: var(--acento); stroke-width: 6; }
+.e-pun { fill: var(--acento); }
+.e-op { font: 700 28px var(--mono); fill: var(--acento); text-anchor: middle; }
+
+/* ---- ampliaciones (como en la sesión 9) ------------------------------------ */
+.lista-amp { position: absolute; left: 110px; top: 175px; width: 1700px; margin: 0; padding: 0; list-style: none; font-size: 34px; line-height: 1.3; }
+.lista-amp li { padding: 14px 0 14px 70px; position: relative; border-bottom: 1px solid #8f969f; }
+.lista-amp li b { position: absolute; left: 0; font-family: var(--mono); color: var(--acento); }
+.lista-amp li .mono { font-weight: 700; }
+.aviso-amp { position: absolute; left: 110px; top: 860px; font-size: 32px; font-weight: 700; color: var(--acento); }
+
+.vec2.int .puntos { height: 130px; }
+
+/* pegatina final */
+.pegatina { position: absolute; right: 70px; bottom: 40px; width: 560px; height: auto; rotate: -6deg; filter: drop-shadow(0 12px 18px rgba(0,0,0,.25));
+  transition: opacity .25s ease, scale .45s cubic-bezier(.3,1.6,.5,1); }
+.pegatina.oculto { translate: none; scale: 1.7; }
+.campo-vec { position: absolute; left: 110px; top: 542px; font: 400 30px var(--mono); color: var(--texto); }
